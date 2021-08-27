@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "D+ifGq1xmpjeo8a03lAtP4jbcKVOtUGd3qNCDQBFO8d0F2fwZPzEvg3LYaM6+j9d849CeXpV1aKYbvMB7u4Yfg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Jasio\\source\\repos\\StringManager\\StringManager\\StringManager\\StringManager.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Jasio\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\Jasio\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\Jasio\\.nuget\\packages\\swashbuckle.aspnetcore\\5.6.3\\swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
+    "C:\\Users\\Jasio\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.6.3\\swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
+    "C:\\Users\\Jasio\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.6.3\\swashbuckle.aspnetcore.swaggergen.5.6.3.nupkg.sha512",
+    "C:\\Users\\Jasio\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.6.3\\swashbuckle.aspnetcore.swaggerui.5.6.3.nupkg.sha512"
+  ],
+  "logs": []
+}
