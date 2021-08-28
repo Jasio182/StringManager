@@ -1,0 +1,12 @@
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.Core\bin\Debug\net5.0\StringManager.Core.deps.json
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.Core\bin\Debug\net5.0\StringManager.Core.dll
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.Core\bin\Debug\net5.0\ref\StringManager.Core.dll
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.Core\bin\Debug\net5.0\StringManager.Core.pdb
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.Core\obj\Debug\net5.0\StringManager.Core.csproj.AssemblyReference.cache
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.Core\obj\Debug\net5.0\StringManager.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.Core\obj\Debug\net5.0\StringManager.Core.AssemblyInfoInputs.cache
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.Core\obj\Debug\net5.0\StringManager.Core.AssemblyInfo.cs
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.Core\obj\Debug\net5.0\StringManager.Core.csproj.CoreCompileInputs.cache
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.Core\obj\Debug\net5.0\StringManager.Core.dll
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.Core\obj\Debug\net5.0\ref\StringManager.Core.dll
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.Core\obj\Debug\net5.0\StringManager.Core.pdb
