@@ -16,11 +16,3 @@ C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.DataAccess
 C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.DataAccess\obj\Debug\net5.0\ref\StringManager.DataAccess.dll
 C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.DataAccess\obj\Debug\net5.0\StringManager.DataAccess.pdb
 C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.DataAccess\obj\Debug\net5.0\StringManager.DataAccess.genruntimeconfig.cache
-C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.DataAccess\bin\Debug\net5.0\StringManager.deps.json
-C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.DataAccess\bin\Debug\net5.0\StringManager.runtimeconfig.json
-C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.DataAccess\bin\Debug\net5.0\StringManager.runtimeconfig.dev.json
-C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.DataAccess\bin\Debug\net5.0\appsettings.Development.json
-C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.DataAccess\bin\Debug\net5.0\appsettings.json
-C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.DataAccess\bin\Debug\net5.0\StringManager.exe
-C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.DataAccess\bin\Debug\net5.0\StringManager.dll
-C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager.DataAccess\bin\Debug\net5.0\StringManager.pdb

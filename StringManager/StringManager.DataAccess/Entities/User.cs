@@ -13,6 +13,6 @@ namespace StringManager.DataAccess.Entities
 
         public PlayStyle PlayStyle { get; set; }
 
-        public List<MyInstrument> MyInstruments { get; set; }
+        public IEnumerable<MyInstrument> MyInstruments { get; set; }
     }
 }

@@ -59,3 +59,13 @@ C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager\bin\Debug\
 C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager\bin\Debug\net5.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.pdb
 C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager\bin\Debug\net5.0\MediatR.dll
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager\bin\Debug\net5.0\MediatR.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager\bin\Debug\net5.0\StringManager.Core.dll
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager\bin\Debug\net5.0\StringManager.DataAccess.dll
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager\bin\Debug\net5.0\StringManager.Services.dll
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager\bin\Debug\net5.0\StringManager.DataAccess.pdb
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager\bin\Debug\net5.0\StringManager.Services.pdb
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager\bin\Debug\net5.0\StringManager.Core.pdb
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager\bin\Debug\net5.0\AutoMapper.dll
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

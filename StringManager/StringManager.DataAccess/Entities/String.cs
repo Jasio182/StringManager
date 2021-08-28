@@ -11,8 +11,8 @@ namespace StringManager.DataAccess.Entities
 
         public double SpecificWeight { get; set; }
 
-        public List<InstalledString> InstalledStrings { get; set; }
+        public IEnumerable<InstalledString> InstalledStrings { get; set; }
 
-        public List<StringInSet> StringSets { get; set; }
+        public IEnumerable<StringInSet> StringSets { get; set; }
     }
 }
