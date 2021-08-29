@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using StringManager.DataAccess.Entities;
 
-namespace StringManager.Core.Mappings
+namespace StringManager.Services.Mappings
 {
-    public class ToneProfile : Profile
+    public class ToneMapping : Profile
     {
-        public ToneProfile()
+        public ToneMapping()
         {
-            CreateMap<Tone, Models.Tone>()
-                .ForMember(x=>x.Id, y=>y.MapFrom(z=>z.Id))
+            CreateMap<Tone, Core.Models.Tone>()
+                .ForMember(x => x.Id, y => y.MapFrom(z => z.Id))
                 .ForMember(x => x.Name, y => y.MapFrom(z => z.Name))
                 .ForMember(x => x.Frequency, y => y.MapFrom(z => z.Frequency))
                 .ForMember(x => x.WaveLenght, y => y.MapFrom(z => z.WaveLenght));

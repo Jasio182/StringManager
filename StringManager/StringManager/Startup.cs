@@ -7,7 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using StringManager.DataAccess;
+using StringManager.Services;
 using StringManager.Services.API.Domain.Responses;
+using StringManager.Services.Mappings;
 
 namespace StringManager
 {
@@ -23,6 +25,8 @@ namespace StringManager
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IQueryExecutor, QueryExecutor>();
+            services.AddAutoMapper(typeof(ToneMapping).Assembly);
             services.AddMediatR(typeof(ResponseBase<>));
             services.AddDbContext<StringManagerStorageContext>(
                 opt => opt.UseSqlServer(Configuration.GetConnectionString("StringManagerConnectionString")));
