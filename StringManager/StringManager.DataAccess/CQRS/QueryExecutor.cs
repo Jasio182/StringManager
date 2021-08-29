@@ -1,8 +1,7 @@
-﻿using StringManager.DataAccess;
-using StringManager.DataAccess.CQRS.Queries;
+﻿using StringManager.DataAccess.CQRS.Queries;
 using System.Threading.Tasks;
 
-namespace StringManager.Services
+namespace StringManager.DataAccess.CQRS
 {
     public class QueryExecutor : IQueryExecutor
     {

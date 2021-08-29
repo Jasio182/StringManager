@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using StringManager.Core.Models;
+using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.API.Domain.Responses;

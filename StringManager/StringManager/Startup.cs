@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using StringManager.DataAccess;
-using StringManager.Services;
+using StringManager.DataAccess.CQRS;
 using StringManager.Services.API.Domain.Responses;
 using StringManager.Services.Mappings;
 
@@ -26,6 +26,7 @@ namespace StringManager
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IQueryExecutor, QueryExecutor>();
+            services.AddTransient<ICommandExecutor, CommandExecutor>();
             services.AddAutoMapper(typeof(ToneMapping).Assembly);
             services.AddMediatR(typeof(ResponseBase<>));
             services.AddDbContext<StringManagerStorageContext>(

@@ -3,7 +3,7 @@
     "additionalProbingPaths": [
       "C:\\Users\\Jasio\\.dotnet\\store\\|arch|\\|tfm|",
       "C:\\Users\\Jasio\\.nuget\\packages",
-      "D:\\ProgramFiles\\MicrosoftVisualStudio\\Shared\\NuGetPackages",
+      "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
       "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet"
     ]
   }
