@@ -8,6 +8,6 @@ namespace StringManager.DataAccess.Entities
 
         public int NumberOfStrings { get; set; }
 
-        public IEnumerable<StringInSet> Strings { get; set; }
+        public IEnumerable<StringInSet> StringsInSet { get; set; }
     }
 }
