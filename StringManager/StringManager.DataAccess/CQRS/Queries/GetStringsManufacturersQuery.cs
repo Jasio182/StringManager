@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.DataAccess.CQRS.Queries
 {
-    class GetStringsManufacturersQuery : QueryBase<List<Manufacturer>>
+    public class GetStringsManufacturersQuery : QueryBase<List<Manufacturer>>
     {
         public override async Task<List<Manufacturer>> Execute(StringManagerStorageContext context)
         {

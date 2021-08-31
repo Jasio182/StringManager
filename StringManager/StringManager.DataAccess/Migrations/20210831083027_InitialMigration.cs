@@ -150,7 +150,8 @@ namespace StringManager.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Position = table.Column<int>(type: "int", nullable: false),
                     StringsSetId = table.Column<int>(type: "int", nullable: true),
-                    StringId = table.Column<int>(type: "int", nullable: true)
+                    StringId = table.Column<int>(type: "int", nullable: true),
+                    ToneId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -165,6 +166,12 @@ namespace StringManager.DataAccess.Migrations
                         name: "FK_StringsInSets_StringsSets_StringsSetId",
                         column: x => x.StringsSetId,
                         principalTable: "StringsSets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_StringsInSets_Tones_ToneId",
+                        column: x => x.ToneId,
+                        principalTable: "Tones",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -247,6 +254,11 @@ namespace StringManager.DataAccess.Migrations
                 name: "IX_StringsInSets_StringsSetId",
                 table: "StringsInSets",
                 column: "StringsSetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StringsInSets_ToneId",
+                table: "StringsInSets",
+                column: "ToneId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -261,13 +273,13 @@ namespace StringManager.DataAccess.Migrations
                 name: "MyInstruments");
 
             migrationBuilder.DropTable(
-                name: "Tones");
-
-            migrationBuilder.DropTable(
                 name: "Strings");
 
             migrationBuilder.DropTable(
                 name: "StringsSets");
+
+            migrationBuilder.DropTable(
+                name: "Tones");
 
             migrationBuilder.DropTable(
                 name: "Instruments");

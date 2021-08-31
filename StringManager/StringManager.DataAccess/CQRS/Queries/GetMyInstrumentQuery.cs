@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.DataAccess.CQRS.Queries
 {
-    class GetMyInstrumentQuery : QueryBase<MyInstrument>
+    public class GetMyInstrumentQuery : QueryBase<MyInstrument>
     {
         public int Id { get; set; }
 

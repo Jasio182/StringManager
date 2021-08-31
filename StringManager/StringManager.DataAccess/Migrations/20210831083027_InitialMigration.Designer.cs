@@ -10,7 +10,7 @@ using StringManager.DataAccess;
 namespace StringManager.DataAccess.Migrations
 {
     [DbContext(typeof(StringManagerStorageContext))]
-    [Migration("20210828130357_InitialMigration")]
+    [Migration("20210831083027_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -177,11 +177,16 @@ namespace StringManager.DataAccess.Migrations
                     b.Property<int?>("StringsSetId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ToneId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("StringId");
 
                     b.HasIndex("StringsSetId");
+
+                    b.HasIndex("ToneId");
 
                     b.ToTable("StringsInSets");
                 });
@@ -296,9 +301,11 @@ namespace StringManager.DataAccess.Migrations
 
             modelBuilder.Entity("StringManager.DataAccess.Entities.String", b =>
                 {
-                    b.HasOne("StringManager.DataAccess.Entities.Manufacturer", null)
+                    b.HasOne("StringManager.DataAccess.Entities.Manufacturer", "Manufacturer")
                         .WithMany("Strings")
                         .HasForeignKey("ManufacturerId");
+
+                    b.Navigation("Manufacturer");
                 });
 
             modelBuilder.Entity("StringManager.DataAccess.Entities.StringInSet", b =>
@@ -308,8 +315,12 @@ namespace StringManager.DataAccess.Migrations
                         .HasForeignKey("StringId");
 
                     b.HasOne("StringManager.DataAccess.Entities.StringsSet", "StringsSet")
-                        .WithMany("Strings")
+                        .WithMany("StringsInSet")
                         .HasForeignKey("StringsSetId");
+
+                    b.HasOne("StringManager.DataAccess.Entities.Tone", null)
+                        .WithMany("StringsInSets")
+                        .HasForeignKey("ToneId");
 
                     b.Navigation("String");
 
@@ -342,7 +353,12 @@ namespace StringManager.DataAccess.Migrations
 
             modelBuilder.Entity("StringManager.DataAccess.Entities.StringsSet", b =>
                 {
-                    b.Navigation("Strings");
+                    b.Navigation("StringsInSet");
+                });
+
+            modelBuilder.Entity("StringManager.DataAccess.Entities.Tone", b =>
+                {
+                    b.Navigation("StringsInSets");
                 });
 
             modelBuilder.Entity("StringManager.DataAccess.Entities.User", b =>

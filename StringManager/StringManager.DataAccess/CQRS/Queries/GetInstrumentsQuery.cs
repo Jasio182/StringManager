@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.DataAccess.CQRS.Queries
 {
-    class GetInstrumentsQuery : QueryBase<List<Instrument>>
+    public class GetInstrumentsQuery : QueryBase<List<Instrument>>
     {
         public override async Task<List<Instrument>> Execute(StringManagerStorageContext context)
         {

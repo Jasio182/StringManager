@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.DataAccess.CQRS.Queries
 {
-    class GetStringsSetsQuery : QueryBase<List<StringsSet>>
+    public class GetStringsSetsQuery : QueryBase<List<StringsSet>>
     {
         public StringType StringType { get; set; }
 

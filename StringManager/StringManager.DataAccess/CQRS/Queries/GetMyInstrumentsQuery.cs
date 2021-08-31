@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.DataAccess.CQRS.Queries
 {
-    class GetMyInstrumentsQuery : QueryBase<List<MyInstrument>>
+    public class GetMyInstrumentsQuery : QueryBase<List<MyInstrument>>
     {
         public int UserId { get; set; }
 
