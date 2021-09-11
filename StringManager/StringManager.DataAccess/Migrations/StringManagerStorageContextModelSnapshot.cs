@@ -228,6 +228,49 @@ namespace StringManager.DataAccess.Migrations
                     b.ToTable("Tones");
                 });
 
+            modelBuilder.Entity("StringManager.DataAccess.Entities.ToneInTuning", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ToneId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TuningId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ToneId");
+
+                    b.HasIndex("TuningId");
+
+                    b.ToTable("ToneInTuning");
+                });
+
+            modelBuilder.Entity("StringManager.DataAccess.Entities.Tuning", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NumberOfStrings")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tunings");
+                });
+
             modelBuilder.Entity("StringManager.DataAccess.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -325,6 +368,21 @@ namespace StringManager.DataAccess.Migrations
                     b.Navigation("StringsSet");
                 });
 
+            modelBuilder.Entity("StringManager.DataAccess.Entities.ToneInTuning", b =>
+                {
+                    b.HasOne("StringManager.DataAccess.Entities.Tone", "Tone")
+                        .WithMany("TonesInTuning")
+                        .HasForeignKey("ToneId");
+
+                    b.HasOne("StringManager.DataAccess.Entities.Tuning", "Tuning")
+                        .WithMany("TonesInTuning")
+                        .HasForeignKey("TuningId");
+
+                    b.Navigation("Tone");
+
+                    b.Navigation("Tuning");
+                });
+
             modelBuilder.Entity("StringManager.DataAccess.Entities.Instrument", b =>
                 {
                     b.Navigation("MyInstruments");
@@ -357,6 +415,13 @@ namespace StringManager.DataAccess.Migrations
             modelBuilder.Entity("StringManager.DataAccess.Entities.Tone", b =>
                 {
                     b.Navigation("StringsInSets");
+
+                    b.Navigation("TonesInTuning");
+                });
+
+            modelBuilder.Entity("StringManager.DataAccess.Entities.Tuning", b =>
+                {
+                    b.Navigation("TonesInTuning");
                 });
 
             modelBuilder.Entity("StringManager.DataAccess.Entities.User", b =>

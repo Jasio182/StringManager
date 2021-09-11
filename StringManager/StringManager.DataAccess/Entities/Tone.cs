@@ -12,5 +12,7 @@ namespace StringManager.DataAccess.Entities
         public int WaveLenght { get; set; }
 
         public IEnumerable<StringInSet> StringsInSets { get; set; }
+
+        public IEnumerable<ToneInTuning> TonesInTuning { get; set; }
     }
 }

@@ -19,11 +19,10 @@ namespace StringManager.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Tone>> GetTonesAsync()
+        public async Task<ActionResult> GetTonesAsync([FromQuery] GetTonesRequest request)
         {
-            var request = new GetTonesRequest();
             var response = await mediator.Send(request);
-            return response.Data;
+            return Ok(response.Data);
         }
     }
 }

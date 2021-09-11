@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class RemovedMyInstrumentHandler : IRequestHandler<RemovedMyInstrumentRequest, RemovedMyInstrumentResponse>
+    public class RemoveMyInstrumentHandler : IRequestHandler<RemoveMyInstrumentRequest, RemoveMyInstrumentResponse>
     {
         private readonly IMapper mapper;
         private readonly ICommandExecutor commandExecutor;
 
-        public RemovedMyInstrumentHandler(IMapper mapper, ICommandExecutor commandExecutor)
+        public RemoveMyInstrumentHandler(IMapper mapper, ICommandExecutor commandExecutor)
         {
             this.mapper = mapper;
             this.commandExecutor = commandExecutor;
         }
 
-        public async Task<RemovedMyInstrumentResponse> Handle(RemovedMyInstrumentRequest request, CancellationToken cancellationToken)
+        public async Task<RemoveMyInstrumentResponse> Handle(RemoveMyInstrumentRequest request, CancellationToken cancellationToken)
         {
             var command = new RemoveMyInstrumentCommand()
             {
@@ -28,7 +28,7 @@ namespace StringManager.Services.API.Handlers
             };
             var removedMyInstrumentFromDb = await commandExecutor.Execute(command);
             var mappedRemovedMyInstrument = mapper.Map<Core.Models.MyInstrument>(removedMyInstrumentFromDb);
-            return new RemovedMyInstrumentResponse()
+            return new RemoveMyInstrumentResponse()
             {
                 Data = mappedRemovedMyInstrument
             };

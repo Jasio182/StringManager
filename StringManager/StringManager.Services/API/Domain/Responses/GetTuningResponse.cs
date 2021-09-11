@@ -2,7 +2,7 @@
 
 namespace StringManager.Services.API.Domain.Responses
 {
-    public class RemovedMyInstrumentResponse : ResponseBase<MyInstrument>
+    public class GetTuningResponse : ResponseBase<Tuning>
     {
     }
 }
