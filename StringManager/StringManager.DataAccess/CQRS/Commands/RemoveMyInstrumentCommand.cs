@@ -1,14 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StringManager.DataAccess.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace StringManager.DataAccess.CQRS.Commands
 {
-    class RemoveMyInstrumentCommand : CommandBase<int, MyInstrument>
+    public class RemoveMyInstrumentCommand : CommandBase<int, MyInstrument>
     {
         public override async Task<MyInstrument> Execute(StringManagerStorageContext context)
         {

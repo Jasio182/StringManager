@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.DataAccess.CQRS.Commands
 {
-    class ModifyInstalledStringCommand : CommandBase<InstalledString, InstalledString>
+    public class ModifyInstalledStringCommand : CommandBase<InstalledString, InstalledString>
     {
         public override async Task<InstalledString> Execute(StringManagerStorageContext context)
         {

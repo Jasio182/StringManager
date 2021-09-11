@@ -3,12 +3,8 @@ using StringManager.Services.API.Domain.Responses;
 
 namespace StringManager.Services.API.Domain.Requests
 {
-    public class ModifyInstalledStringRequest : IRequest<ModifyInstalledStringResponse>
+    public class RemovedMyInstrumentRequest : IRequest<RemovedMyInstrumentResponse>
     {
         public int Id { get; set; }
-
-        public int StringId { get; set; }
-
-        public int ToneId { get; set; }
     }
 }
