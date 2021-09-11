@@ -52,6 +52,12 @@ namespace StringManager.Services.API.Handlers
             {
                 Parameter = myInstrumentToAdd
             };
+            var addedMyInstrument = await commandExecutor.Execute(command);
+            var mappedAddedMyInstrument = mapper.Map<Core.Models.MyInstrument>(addedMyInstrument);
+            return new AddMyInstrumentResponse()
+            {
+                Data = mappedAddedMyInstrument
+            };
         }
     }
 }

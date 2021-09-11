@@ -6071,7 +6071,7 @@
   },
   "packageFolders": {
     "C:\\Users\\Jasio\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "D:\\ProgramFiles\\MicrosoftVisualStudio\\Shared\\NuGetPackages": {},
     "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
@@ -6084,7 +6084,7 @@
       "outputPath": "C:\\Users\\Jasio\\source\\repos\\StringManager\\StringManager\\StringManager.Services\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "D:\\ProgramFiles\\MicrosoftVisualStudio\\Shared\\NuGetPackages",
         "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
