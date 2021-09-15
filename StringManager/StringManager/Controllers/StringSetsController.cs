@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.API.Domain.Responses;
 using System.Threading.Tasks;
@@ -8,9 +9,12 @@ namespace StringManager.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class StringSetsController : ApiControllerBase
+    public class StringSetsController : ApiControllerBase<StringSetsController>
     {
-        public StringSetsController(IMediator mediator) : base(mediator) { }
+        public StringSetsController(IMediator mediator, ILogger<StringSetsController> logger) : base(mediator, logger)
+        {
+            logger.LogInformation("StringSetsController started");
+        }
 
         [HttpGet]
         public Task<IActionResult> GetStringsSetsAsync([FromQuery] GetStringsSetsRequest request)

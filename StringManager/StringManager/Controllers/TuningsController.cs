@@ -1,9 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using StringManager.Core.Models;
+using Microsoft.Extensions.Logging;
 using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.API.Domain.Responses;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace StringManager.Controllers
@@ -11,9 +10,12 @@ namespace StringManager.Controllers
 
     [ApiController]
     [Route("[controller]")]
-    public class TuningsController : ApiControllerBase
+    public class TuningsController : ApiControllerBase<TuningsController>
     {
-        public TuningsController(IMediator mediator) : base(mediator) { }
+        public TuningsController(IMediator mediator, ILogger<TuningsController> logger) : base(mediator, logger)
+        {
+            logger.LogInformation("TuningsController started");
+        }
 
         [HttpGet]
         public Task<IActionResult> GetTuningsAsync([FromQuery] GetTuningsRequest request)

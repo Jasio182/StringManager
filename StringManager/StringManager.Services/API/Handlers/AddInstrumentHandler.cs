@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.CQRS.Queries;
@@ -18,12 +19,17 @@ namespace StringManager.Services.API.Handlers
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
         private readonly ICommandExecutor commandExecutor;
+        private readonly ILogger<AddInstrumentHandler> logger;
 
-        public AddInstrumentHandler(IQueryExecutor queryExecutor, IMapper mapper, ICommandExecutor commandExecutor)
+        public AddInstrumentHandler(IQueryExecutor queryExecutor,
+                                    IMapper mapper,
+                                    ICommandExecutor commandExecutor,
+                                    ILogger<AddInstrumentHandler> logger)
         {
             this.queryExecutor = queryExecutor;
             this.mapper = mapper;
             this.commandExecutor = commandExecutor;
+            this.logger = logger;
         }
 
         public async Task<AddInstrumentResponse> Handle(AddInstrumentRequest request, CancellationToken cancellationToken)
@@ -37,6 +43,7 @@ namespace StringManager.Services.API.Handlers
                 var manufacturerFromDb = await queryExecutor.Execute(queryManufacturer);
                 if (manufacturerFromDb == null)
                 {
+                    logger.LogError("Manufacturer of given Id of " + request.ManufacturerId + " has not been found");
                     return new AddInstrumentResponse()
                     {
                         Error = new ErrorModel(ErrorType.BadRequest)
@@ -61,8 +68,9 @@ namespace StringManager.Services.API.Handlers
                     Data = mappedAddedInstrument
                 };
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
+                logger.LogError(e, "Exception has occured");
                 return new AddInstrumentResponse()
                 {
                     Error = new ErrorModel(ErrorType.InternalServerError)

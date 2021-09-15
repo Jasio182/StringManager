@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
@@ -17,11 +18,15 @@ namespace StringManager.Services.API.Handlers
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
+        private readonly ILogger<GetMyInstrumentHandler> logger;
 
-        public GetMyInstrumentHandler(IQueryExecutor queryExecutor, IMapper mapper)
+        public GetMyInstrumentHandler(IQueryExecutor queryExecutor,
+                                      IMapper mapper,
+                                      ILogger<GetMyInstrumentHandler> logger)
         {
             this.queryExecutor = queryExecutor;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         public async Task<GetMyInstrumentResponse> Handle(GetMyInstrumentRequest request, CancellationToken cancellationToken)
@@ -40,8 +45,9 @@ namespace StringManager.Services.API.Handlers
                     Data = mappedMyInstrument
                 };
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
+                logger.LogError(e, "Exception has occured");
                 return new GetMyInstrumentResponse()
                 {
                     Error = new ErrorModel(ErrorType.InternalServerError)

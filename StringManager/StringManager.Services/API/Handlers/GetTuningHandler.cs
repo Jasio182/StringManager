@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
@@ -16,11 +17,15 @@ namespace StringManager.Services.API.Handlers
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
+        private readonly ILogger<GetTuningHandler> logger;
 
-        public GetTuningHandler(IQueryExecutor queryExecutor, IMapper mapper)
+        public GetTuningHandler(IQueryExecutor queryExecutor,
+                                IMapper mapper,
+                                ILogger<GetTuningHandler> logger)
         {
             this.queryExecutor = queryExecutor;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         public async Task<GetTuningResponse> Handle(GetTuningRequest request, CancellationToken cancellationToken)
@@ -40,8 +45,9 @@ namespace StringManager.Services.API.Handlers
                     Data = mappedTuningFromDb
                 };
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
+                logger.LogError(e, "Exception has occured");
                 return new GetTuningResponse()
                 {
                     Error = new ErrorModel(ErrorType.InternalServerError)

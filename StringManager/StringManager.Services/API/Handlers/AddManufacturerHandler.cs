@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.Entities;
@@ -16,11 +17,15 @@ namespace StringManager.Services.API.Handlers
     {
         private readonly IMapper mapper;
         private readonly ICommandExecutor commandExecutor;
+        private readonly ILogger<AddManufacturerHandler> logger;
 
-        public AddManufacturerHandler(IMapper mapper, ICommandExecutor commandExecutor)
+        public AddManufacturerHandler(IMapper mapper,
+                                      ICommandExecutor commandExecutor,
+                                      ILogger<AddManufacturerHandler> logger)
         {
             this.mapper = mapper;
             this.commandExecutor = commandExecutor;
+            this.logger = logger;
         }
 
         public async Task<AddManufacturerResponse> Handle(AddManufacturerRequest request, CancellationToken cancellationToken)
@@ -42,8 +47,9 @@ namespace StringManager.Services.API.Handlers
                     Data = mappedAddedManufacturer
                 };
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
+                logger.LogError(e, "Exception has occured");
                 return new AddManufacturerResponse()
                 {
                     Error = new ErrorModel(ErrorType.InternalServerError)

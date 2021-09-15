@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
@@ -17,11 +18,15 @@ namespace StringManager.Services.API.Handlers
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
+        private readonly ILogger<GetTonesHandler> logger;
 
-        public GetTonesHandler(IQueryExecutor queryExecutor, IMapper mapper)
+        public GetTonesHandler(IQueryExecutor queryExecutor,
+                               IMapper mapper,
+                               ILogger<GetTonesHandler> logger)
         {
             this.queryExecutor = queryExecutor;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         public async Task<GetTonesResponse> Handle(GetTonesRequest request, CancellationToken cancellationToken)
@@ -37,8 +42,9 @@ namespace StringManager.Services.API.Handlers
                 };
                 return response;
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
+                logger.LogError(e, "Exception has occured");
                 return new GetTonesResponse()
                 {
                     Error = new ErrorModel(ErrorType.InternalServerError)

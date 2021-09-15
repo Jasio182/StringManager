@@ -1,6 +1,7 @@
 ﻿
 using AutoMapper;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.CQRS.Queries;
@@ -19,12 +20,17 @@ namespace StringManager.Services.API.Handlers
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
         private readonly ICommandExecutor commandExecutor;
+        private readonly ILogger<AddMyInstrumentHandler> logger;
 
-        public AddMyInstrumentHandler(IQueryExecutor queryExecutor, IMapper mapper, ICommandExecutor commandExecutor)
+        public AddMyInstrumentHandler(IQueryExecutor queryExecutor,
+                                      IMapper mapper,
+                                      ICommandExecutor commandExecutor,
+                                      ILogger<AddMyInstrumentHandler> logger)
         {
             this.queryExecutor = queryExecutor;
             this.mapper = mapper;
             this.commandExecutor = commandExecutor;
+            this.logger = logger;
         }
 
         public async Task<AddMyInstrumentResponse> Handle(AddMyInstrumentRequest request, CancellationToken cancellationToken)
@@ -38,6 +44,7 @@ namespace StringManager.Services.API.Handlers
                 var userFromDb = await queryExecutor.Execute(queryUser);
                 if (userFromDb == null)
                 {
+                    logger.LogError("User of given Id of " + request.UserId + " has not been found");
                     return new AddMyInstrumentResponse()
                     {
                         Error = new ErrorModel(ErrorType.BadRequest)
@@ -50,6 +57,7 @@ namespace StringManager.Services.API.Handlers
                 var instrumentFromDb = await queryExecutor.Execute(queryInstrument);
                 if (instrumentFromDb == null)
                 {
+                    logger.LogError("Instrument of given Id of " + request.InstrumentId + " has not been found");
                     return new AddMyInstrumentResponse()
                     {
                         Error = new ErrorModel(ErrorType.BadRequest)
@@ -77,8 +85,9 @@ namespace StringManager.Services.API.Handlers
                     Data = mappedAddedMyInstrument
                 };
             }
-            catch(System.Exception)
+            catch(System.Exception e)
             {
+                logger.LogError(e, "Exception has occured");
                 return new AddMyInstrumentResponse()
                 {
                     Error = new ErrorModel(ErrorType.InternalServerError)

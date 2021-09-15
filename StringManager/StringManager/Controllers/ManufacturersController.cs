@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.API.Domain.Responses;
 using System.Threading.Tasks;
@@ -8,9 +9,12 @@ namespace StringManager.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class ManufacturersController : ApiControllerBase
+    public class ManufacturersController : ApiControllerBase<ManufacturersController>
     {
-        public ManufacturersController(IMediator mediator) : base(mediator) { }
+        public ManufacturersController(IMediator mediator, ILogger<ManufacturersController> logger) : base(mediator, logger)
+        {
+            logger.LogInformation("ManufacturersController started");
+        }
 
         [HttpGet]
         [Route("instruments")]

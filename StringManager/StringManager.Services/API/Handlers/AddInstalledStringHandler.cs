@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.CQRS.Queries;
@@ -18,12 +19,17 @@ namespace StringManager.Services.API.Handlers
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
         private readonly ICommandExecutor commandExecutor;
+        private readonly ILogger<AddInstalledStringHandler> logger;
 
-        public AddInstalledStringHandler(IQueryExecutor queryExecutor, IMapper mapper, ICommandExecutor commandExecutor)
+        public AddInstalledStringHandler(IQueryExecutor queryExecutor,
+                                         IMapper mapper, 
+                                         ICommandExecutor commandExecutor,
+                                         ILogger<AddInstalledStringHandler> logger)
         {
             this.queryExecutor = queryExecutor;
             this.mapper = mapper;
             this.commandExecutor = commandExecutor;
+            this.logger = logger;
         }
 
         public async Task<AddInstalledStringResponse> Handle(AddInstalledStringRequest request, CancellationToken cancellationToken)
@@ -37,6 +43,7 @@ namespace StringManager.Services.API.Handlers
                 var stringFromDb = await queryExecutor.Execute(queryString);
                 if (stringFromDb == null)
                 {
+                    logger.LogError("String of given Id of " + request.StringId + " has not been found");
                     return new AddInstalledStringResponse()
                     {
                         Error = new ErrorModel(ErrorType.BadRequest)
@@ -49,6 +56,7 @@ namespace StringManager.Services.API.Handlers
                 var toneFromDb = await queryExecutor.Execute(queryTone);
                 if (toneFromDb == null)
                 {
+                    logger.LogError("Tone of given Id of " + request.ToneId + " has not been found");
                     return new AddInstalledStringResponse()
                     {
                         Error = new ErrorModel(ErrorType.BadRequest)
@@ -61,6 +69,7 @@ namespace StringManager.Services.API.Handlers
                 var myInstrumentFromDb = await queryExecutor.Execute(queryMyInstrument);
                 if (myInstrumentFromDb == null)
                 {
+                    logger.LogError("MyInstrument of given Id of " + request.MyInstrumentId + " has not been found");
                     return new AddInstalledStringResponse()
                     {
                         Error = new ErrorModel(ErrorType.BadRequest)
@@ -84,8 +93,9 @@ namespace StringManager.Services.API.Handlers
                     Data = mappedAddedInstalledString
                 };
             }
-            catch(System.Exception)
+            catch(System.Exception e)
             {
+                logger.LogError(e, "Exception has occured");
                 return new AddInstalledStringResponse()
                 {
                     Error = new ErrorModel(ErrorType.InternalServerError)
