@@ -3,8 +3,10 @@ using MediatR;
 using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
+using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.API.Domain.Responses;
+using StringManager.Services.API.ErrorHandling;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,20 +26,30 @@ namespace StringManager.Services.API.Handlers
 
         public async Task<GetStringsSetsResponse> Handle(GetStringsSetsRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetStringsSetsQuery()
+            try
             {
-                StringType = request.StringType
-            };
-            var stringSetsFromDb = await queryExecutor.Execute(query);
-            var mappedStringSets = mapper.Map<List<StringsSet>>(stringSetsFromDb);
-            for(int i = 0; i< stringSetsFromDb.Count; i++)
-            {
-                mappedStringSets[i].StringsInSet = mapper.Map<List<StringInSet>>(stringSetsFromDb[i].StringsInSet);
+                var query = new GetStringsSetsQuery()
+                {
+                    StringType = request.StringType
+                };
+                var stringSetsFromDb = await queryExecutor.Execute(query);
+                var mappedStringSets = mapper.Map<List<StringsSet>>(stringSetsFromDb);
+                for (int i = 0; i < stringSetsFromDb.Count; i++)
+                {
+                    mappedStringSets[i].StringsInSet = mapper.Map<List<StringInSet>>(stringSetsFromDb[i].StringsInSet);
+                }
+                return new GetStringsSetsResponse()
+                {
+                    Data = mappedStringSets
+                };
             }
-            return new GetStringsSetsResponse()
+            catch (System.Exception)
             {
-                Data = mappedStringSets
-            };
+                return new GetStringsSetsResponse()
+                {
+                    Error = new ErrorModel(ErrorType.InternalServerError)
+                };
+            }
         }
     }
 }

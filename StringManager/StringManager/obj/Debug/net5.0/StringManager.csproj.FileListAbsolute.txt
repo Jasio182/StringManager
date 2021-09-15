@@ -71,3 +71,6 @@ C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager\bin\Debug\
 C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager\bin\Debug\net5.0\Microsoft.DotNet.PlatformAbstractions.dll
 C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager\bin\Debug\net5.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager\bin\Debug\net5.0\FluentValidation.dll
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager\bin\Debug\net5.0\FluentValidation.AspNetCore.dll
+C:\Users\Jasio\source\repos\StringManager\StringManager\StringManager\bin\Debug\net5.0\FluentValidation.DependencyInjectionExtensions.dll

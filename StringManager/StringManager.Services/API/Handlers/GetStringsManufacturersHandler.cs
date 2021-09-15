@@ -3,8 +3,10 @@ using MediatR;
 using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
+using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.API.Domain.Responses;
+using StringManager.Services.API.ErrorHandling;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,13 +26,23 @@ namespace StringManager.Services.API.Handlers
 
         public async Task<GetStringsManufacturersResponse> Handle(GetStringsManufacturersRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetStringsManufacturersQuery();
-            var stringsManufacturersFromDb = await queryExecutor.Execute(query);
-            var mappedStringsManufacturers = mapper.Map<List<Manufacturer>>(stringsManufacturersFromDb);
-            return new GetStringsManufacturersResponse()
+            try
             {
-                Data = mappedStringsManufacturers
-            };
+                var query = new GetStringsManufacturersQuery();
+                var stringsManufacturersFromDb = await queryExecutor.Execute(query);
+                var mappedStringsManufacturers = mapper.Map<List<Manufacturer>>(stringsManufacturersFromDb);
+                return new GetStringsManufacturersResponse()
+                {
+                    Data = mappedStringsManufacturers
+                };
+            }
+            catch (System.Exception)
+            {
+                return new GetStringsManufacturersResponse()
+                {
+                    Error = new ErrorModel(ErrorType.InternalServerError)
+                };
+            }
         }
     }
 }

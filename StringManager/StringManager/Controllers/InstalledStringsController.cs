@@ -1,33 +1,27 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using StringManager.Services.API.Domain.Requests;
+using StringManager.Services.API.Domain.Responses;
 using System.Threading.Tasks;
 
 namespace StringManager.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class InstalledStringsController : ControllerBase
+    public class InstalledStringsController : ApiControllerBase
     {
-        private readonly IMediator mediator;
-
-        public InstalledStringsController(IMediator mediator)
-        {
-            this.mediator = mediator;
-        }
+        public InstalledStringsController(IMediator mediator) : base(mediator) { }
 
         [HttpPost]
-        public async Task<ActionResult> AddInstalledStringAsync([FromBody] AddInstalledStringRequest request)
+        public Task<IActionResult> AddInstalledStringAsync([FromBody] AddInstalledStringRequest request)
         {
-            var response = await mediator.Send(request);
-            return Ok(response.Data);
+            return HandleResult<AddInstalledStringRequest, AddInstalledStringResponse>(request);
         }
 
         [HttpPut]
-        public async Task<ActionResult> ModifyInstalledStringAsync([FromBody] ModifyInstalledStringRequest request)
+        public Task<IActionResult> ModifyInstalledStringAsync([FromBody] ModifyInstalledStringRequest request)
         {
-            var response = await mediator.Send(request);
-            return Ok(response.Data);
+            return HandleResult<ModifyInstalledStringRequest, ModifyInstalledStringResponse>(request);
         }
     }
 }

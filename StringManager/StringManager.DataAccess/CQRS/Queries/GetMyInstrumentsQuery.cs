@@ -8,7 +8,7 @@ namespace StringManager.DataAccess.CQRS.Queries
 {
     public class GetMyInstrumentsQuery : QueryBase<List<MyInstrument>>
     {
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
 
         public override async Task<List<MyInstrument>> Execute(StringManagerStorageContext context)
         {
@@ -16,7 +16,7 @@ namespace StringManager.DataAccess.CQRS.Queries
                 .Include(myInstrument=>myInstrument.Instrument)
                 .ThenInclude(instrument=>instrument.Manufacturer)
                 .Include(myInstrument => myInstrument.User)
-                .Where(myInstrument=>myInstrument.User.Id == UserId).ToListAsync();
+                .Where(myInstrument=>UserId==null || myInstrument.User.Id == UserId).ToListAsync();
             return myInstruments;
         }
     }

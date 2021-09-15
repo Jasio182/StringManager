@@ -1,55 +1,46 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using StringManager.Services.API.Domain.Requests;
+using StringManager.Services.API.Domain.Responses;
 using System.Threading.Tasks;
 
 namespace StringManager.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class MyInstrumentsController : ControllerBase
+    public class MyInstrumentsController : ApiControllerBase
     {
-        private readonly IMediator mediator;
-
-        public MyInstrumentsController(IMediator mediator)
-        {
-            this.mediator = mediator;
-        }
+        public MyInstrumentsController(IMediator mediator) : base(mediator) { }
 
         [HttpGet]
-        public async Task<ActionResult> GetMyInstrumentsAsync([FromQuery] GetMyInstrumentsRequest request)
+        public Task<IActionResult> GetMyInstrumentsAsync([FromQuery] GetMyInstrumentsRequest request)
         {
-            var response = await mediator.Send(request);
-            return Ok(response.Data);
+            return HandleResult<GetMyInstrumentsRequest, GetMyInstrumentsResponse>(request);
         }
 
         [HttpGet]
         [Route("{Id}")]
-        public async Task<ActionResult> GetMyInstrumentAsync([FromQuery] GetMyInstrumentRequest request)
+        public Task<IActionResult> GetMyInstrumentAsync([FromQuery] GetMyInstrumentRequest request)
         {
-            var response = await mediator.Send(request);
-            return Ok(response.Data);
+            return HandleResult<GetMyInstrumentRequest, GetMyInstrumentResponse>(request);
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddMyInstrumentAsync([FromBody] AddMyInstrumentRequest request)
+        public Task<IActionResult> AddMyInstrumentAsync([FromBody] AddMyInstrumentRequest request)
         {
-            var response = await mediator.Send(request);
-            return Ok(response.Data);
+            return HandleResult<AddMyInstrumentRequest, AddMyInstrumentResponse>(request);
         }
 
         [HttpPut]
-        public async Task<ActionResult> ModifyMyInstrumentAsync([FromBody] ModifyMyInstrumentRequest request)
+        public Task<IActionResult> ModifyMyInstrumentAsync([FromBody] ModifyMyInstrumentRequest request)
         {
-            var response = await mediator.Send(request);
-            return Ok(response.Data);
+            return HandleResult<ModifyMyInstrumentRequest, ModifyMyInstrumentResponse>(request);
         }
 
         [HttpDelete]
-        public async Task<ActionResult> RemoveMyInstrumentAsync([FromBody] RemoveMyInstrumentRequest request)
+        public Task<IActionResult> RemoveMyInstrumentAsync([FromBody] RemoveMyInstrumentRequest request)
         {
-            var response = await mediator.Send(request);
-            return Ok(response.Data);
+            return HandleResult<RemoveMyInstrumentRequest, RemoveMyInstrumentResponse>(request);
         }
     }
 }

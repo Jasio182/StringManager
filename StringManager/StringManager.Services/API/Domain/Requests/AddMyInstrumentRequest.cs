@@ -20,7 +20,5 @@ namespace StringManager.Services.API.Domain.Requests
         public DateTime LastDeepCleaning { get; set; }
 
         public DateTime LastStringChange { get; set; }
-
-        public DateTime NextStringChange { get; set; }
     }
 }

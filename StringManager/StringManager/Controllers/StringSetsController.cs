@@ -1,36 +1,28 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using StringManager.Services.API.Domain.Requests;
+using StringManager.Services.API.Domain.Responses;
 using System.Threading.Tasks;
 
 namespace StringManager.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class StringSetsController : ControllerBase
+    public class StringSetsController : ApiControllerBase
     {
-        private readonly IMediator mediator;
-
-        public StringSetsController(IMediator mediator)
-        {
-            this.mediator = mediator;
-        }
+        public StringSetsController(IMediator mediator) : base(mediator) { }
 
         [HttpGet]
-        public async Task<ActionResult> GetStringsSetsAsync([FromQuery] GetStringsSetsRequest request)
+        public Task<IActionResult> GetStringsSetsAsync([FromQuery] GetStringsSetsRequest request)
         {
-            var response = await mediator.Send(request);
-            return Ok(response.Data);
+            return HandleResult<GetStringsSetsRequest, GetStringsSetsResponse>(request);
         }
 
         [HttpGet]
         [Route("{Id}")]
-        public async Task<ActionResult> GetStringsSetAsync([FromQuery] GetStringsSetRequest request)
+        public Task<IActionResult> GetStringsSetAsync([FromQuery] GetStringsSetRequest request)
         {
-            var response = await mediator.Send(request);
-            if (response.Data == null)
-                return NotFound();
-            return Ok(response.Data);
+            return HandleResult<GetStringsSetRequest, GetStringsSetResponse>(request);
         }
     }
 }

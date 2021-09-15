@@ -1,11 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "kVTccHgYtfbcOOT4WcXlPVDY6Fa43CjC/SgFhceCLwq+ZmGdHxUPG8sWy1BWb8ssmCNYUjVqQKod0TIi32rMEg==",
+  "dgSpecHash": "M8FykLFFe0Qkh0zCoK7woznmWjTRR1Uvw9+IemnjU8WELRLkHTVxe2U+bTXrqpH+B+z/JHla4820N24vnFR0OQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Jasio\\source\\repos\\StringManager\\StringManager\\StringManager.Services\\StringManager.Services.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Jasio\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\Jasio\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
+    "C:\\Users\\Jasio\\.nuget\\packages\\fluentvalidation\\10.3.3\\fluentvalidation.10.3.3.nupkg.sha512",
+    "C:\\Users\\Jasio\\.nuget\\packages\\fluentvalidation.aspnetcore\\10.3.3\\fluentvalidation.aspnetcore.10.3.3.nupkg.sha512",
+    "C:\\Users\\Jasio\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\10.3.3\\fluentvalidation.dependencyinjectionextensions.10.3.3.nupkg.sha512",
     "C:\\Users\\Jasio\\.nuget\\packages\\mediatr\\9.0.0\\mediatr.9.0.0.nupkg.sha512",
     "C:\\Users\\Jasio\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\9.0.0\\mediatr.extensions.microsoft.dependencyinjection.9.0.0.nupkg.sha512",
     "C:\\Users\\Jasio\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",

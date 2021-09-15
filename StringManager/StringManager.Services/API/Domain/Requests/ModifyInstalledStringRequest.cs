@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using StringManager.Services.API.Domain.Responses;
 
 namespace StringManager.Services.API.Domain.Requests
@@ -7,8 +8,8 @@ namespace StringManager.Services.API.Domain.Requests
     {
         public int Id { get; set; }
 
-        public int StringId { get; set; }
+        public int? StringId { get; set; }
 
-        public int ToneId { get; set; }
+        public int? ToneId { get; set; }
     }
 }

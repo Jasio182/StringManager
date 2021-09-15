@@ -1,42 +1,35 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using StringManager.Services.API.Domain.Requests;
+using StringManager.Services.API.Domain.Responses;
 using System.Threading.Tasks;
 
 namespace StringManager.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class ManufacturersController : ControllerBase
+    public class ManufacturersController : ApiControllerBase
     {
-        private readonly IMediator mediator;
-
-        public ManufacturersController(IMediator mediator)
-        {
-            this.mediator = mediator;
-        }
+        public ManufacturersController(IMediator mediator) : base(mediator) { }
 
         [HttpGet]
         [Route("instruments")]
-        public async Task<ActionResult> GetInstrumentsManufacturersAsync([FromQuery] GetInstrumentsManufacturersRequest request)
+        public Task<IActionResult> GetInstrumentsManufacturersAsync([FromQuery] GetInstrumentsManufacturersRequest request)
         {
-            var response = await mediator.Send(request);
-            return Ok(response.Data);
+            return HandleResult<GetInstrumentsManufacturersRequest, GetInstrumentsManufacturersResponse>(request);
         }
 
         [HttpGet]
         [Route("strings")]
-        public async Task<ActionResult> GetStringsManufacturersAsync([FromQuery] GetStringsManufacturersRequest request)
+        public Task<IActionResult> GetStringsManufacturersAsync([FromQuery] GetStringsManufacturersRequest request)
         {
-            var response = await mediator.Send(request);
-            return Ok(response.Data);
+            return HandleResult<GetStringsManufacturersRequest, GetStringsManufacturersResponse>(request);
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddManufacturerAsync([FromBody] AddManufacturerRequest request)
+        public Task<IActionResult> AddManufacturerAsync([FromBody] AddManufacturerRequest request)
         {
-            var response = await mediator.Send(request);
-            return Ok(response.Data);
+            return HandleResult<AddManufacturerRequest, AddManufacturerResponse>(request);
         }
     }
 }

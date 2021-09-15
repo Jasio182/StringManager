@@ -2,8 +2,10 @@
 using MediatR;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
+using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.API.Domain.Responses;
+using StringManager.Services.API.ErrorHandling;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,16 +24,33 @@ namespace StringManager.Services.API.Handlers
 
         public async Task<RemoveMyInstrumentResponse> Handle(RemoveMyInstrumentRequest request, CancellationToken cancellationToken)
         {
-            var command = new RemoveMyInstrumentCommand()
+            try
             {
-                Parameter = request.Id
-            };
-            var removedMyInstrumentFromDb = await commandExecutor.Execute(command);
-            var mappedRemovedMyInstrument = mapper.Map<Core.Models.MyInstrument>(removedMyInstrumentFromDb);
-            return new RemoveMyInstrumentResponse()
+                var command = new RemoveMyInstrumentCommand()
+                {
+                    Parameter = request.Id
+                };
+                var removedMyInstrumentFromDb = await commandExecutor.Execute(command);
+                if (removedMyInstrumentFromDb == null)
+                {
+                    return new RemoveMyInstrumentResponse()
+                    {
+                        Error = new ErrorModel(ErrorType.NotFound)
+                    };
+                }
+                var mappedRemovedMyInstrument = mapper.Map<Core.Models.MyInstrument>(removedMyInstrumentFromDb);
+                return new RemoveMyInstrumentResponse()
+                {
+                    Data = mappedRemovedMyInstrument
+                };
+            }
+            catch (System.Exception)
             {
-                Data = mappedRemovedMyInstrument
-            };
+                return new RemoveMyInstrumentResponse()
+                {
+                    Error = new ErrorModel(ErrorType.InternalServerError)
+                };
+            }
         }
     }
 }

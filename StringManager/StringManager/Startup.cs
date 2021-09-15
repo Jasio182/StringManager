@@ -1,6 +1,8 @@
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +11,7 @@ using Microsoft.OpenApi.Models;
 using StringManager.DataAccess;
 using StringManager.DataAccess.CQRS;
 using StringManager.Services.API.Domain.Responses;
+using StringManager.Services.API.Validators;
 using StringManager.Services.Mappings;
 
 namespace StringManager
@@ -25,6 +28,12 @@ namespace StringManager
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvcCore().AddFluentValidation(fv 
+                => fv.RegisterValidatorsFromAssemblyContaining<AddInstalledStringRequestValidator>());
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
             services.AddTransient<IQueryExecutor, QueryExecutor>();
             services.AddTransient<ICommandExecutor, CommandExecutor>();
             services.AddAutoMapper(typeof(ToneMapping).Assembly);

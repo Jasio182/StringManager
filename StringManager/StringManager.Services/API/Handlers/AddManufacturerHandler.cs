@@ -3,8 +3,10 @@ using MediatR;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.Entities;
+using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.API.Domain.Responses;
+using StringManager.Services.API.ErrorHandling;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,20 +25,30 @@ namespace StringManager.Services.API.Handlers
 
         public async Task<AddManufacturerResponse> Handle(AddManufacturerRequest request, CancellationToken cancellationToken)
         {
-            var manufacturerToAdd = new Manufacturer()
+            try
             {
-                Name = request.Name
-            };
-            var command = new AddManufacturerCommand()
+                var manufacturerToAdd = new Manufacturer()
+                {
+                    Name = request.Name
+                };
+                var command = new AddManufacturerCommand()
+                {
+                    Parameter = manufacturerToAdd
+                };
+                var addedManufacturer = await commandExecutor.Execute(command);
+                var mappedAddedManufacturer = mapper.Map<Core.Models.Manufacturer>(addedManufacturer);
+                return new AddManufacturerResponse()
+                {
+                    Data = mappedAddedManufacturer
+                };
+            }
+            catch (System.Exception)
             {
-                Parameter = manufacturerToAdd
-            };
-            var addedManufacturer = await commandExecutor.Execute(command);
-            var mappedAddedManufacturer = mapper.Map<Core.Models.Manufacturer>(addedManufacturer);
-            return new AddManufacturerResponse()
-            {
-                Data = mappedAddedManufacturer
-            };
+                return new AddManufacturerResponse()
+                {
+                    Error = new ErrorModel(ErrorType.InternalServerError)
+                };
+            }
         }
     }
 }

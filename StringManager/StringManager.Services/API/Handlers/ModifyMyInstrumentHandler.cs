@@ -3,8 +3,10 @@ using MediatR;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.CQRS.Queries;
+using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.API.Domain.Responses;
+using StringManager.Services.API.ErrorHandling;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,26 +27,50 @@ namespace StringManager.Services.API.Handlers
 
         public async Task<ModifyMyInstrumentResponse> Handle(ModifyMyInstrumentRequest request, CancellationToken cancellationToken)
         {
-            var myInstrumentQuery = new GetMyInstrumentQuery()
+            try
             {
-                Id = request.Id
-            };
-            var myInstrumentFromDb = await queryExecutor.Execute(myInstrumentQuery);
-            var myInstrumentToUpdate = myInstrumentFromDb;
-            myInstrumentToUpdate.OwnName = request.OwnName;
-            myInstrumentToUpdate.LastDeepCleaning = request.LastDeepCleaning;
-            myInstrumentToUpdate.LastStringChange = request.LastStringChange;
-            myInstrumentToUpdate.NextStringChange = request.NextStringChange;
-            var command = new ModifyMyInstrumentCommand()
+                var myInstrumentQuery = new GetMyInstrumentQuery()
+                {
+                    Id = request.Id
+                };
+                var myInstrumentFromDb = await queryExecutor.Execute(myInstrumentQuery);
+                if (myInstrumentFromDb == null)
+                {
+                    return new ModifyMyInstrumentResponse()
+                    {
+                        Error = new ErrorModel(ErrorType.NotFound)
+                    };
+                }
+                var myInstrumentToUpdate = myInstrumentFromDb;
+                if (request.GuitarPlace != null)
+                    myInstrumentToUpdate.GuitarPlace = (Core.Enums.WhereGuitarKept)request.GuitarPlace;
+                if (request.HoursPlayedWeekly != null)
+                    myInstrumentToUpdate.HoursPlayedWeekly = (int)request.HoursPlayedWeekly;
+                if (request.OwnName != null)
+                    myInstrumentToUpdate.OwnName = request.OwnName;
+                if (request.LastDeepCleaning != null)
+                    myInstrumentToUpdate.LastDeepCleaning = (System.DateTime)request.LastDeepCleaning;
+                if (request.LastStringChange != null)
+                    myInstrumentToUpdate.LastStringChange = (System.DateTime)request.LastStringChange;
+                //myInstrumentToUpdate.NextStringChange = request.NextStringChange; //todo
+                var command = new ModifyMyInstrumentCommand()
+                {
+                    Parameter = myInstrumentToUpdate
+                };
+                var modifiedMyInstrument = await commandExecutor.Execute(command);
+                var mappedModifiedMyInstrument = mapper.Map<Core.Models.MyInstrument>(modifiedMyInstrument);
+                return new ModifyMyInstrumentResponse()
+                {
+                    Data = mappedModifiedMyInstrument
+                };
+            }
+            catch (System.Exception)
             {
-                Parameter = myInstrumentToUpdate
-            };
-            var modifiedMyInstrument = await commandExecutor.Execute(command);
-            var mappedModifiedMyInstrument = mapper.Map<Core.Models.MyInstrument>(modifiedMyInstrument);
-            return new ModifyMyInstrumentResponse()
-            {
-                Data = mappedModifiedMyInstrument
-            };
+                return new ModifyMyInstrumentResponse()
+                {
+                    Error = new ErrorModel(ErrorType.InternalServerError)
+                };
+            }
         }
     }
 }

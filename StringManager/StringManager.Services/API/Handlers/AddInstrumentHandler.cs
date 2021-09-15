@@ -4,8 +4,10 @@ using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.DataAccess.Entities;
+using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.API.Domain.Responses;
+using StringManager.Services.API.ErrorHandling;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,29 +28,47 @@ namespace StringManager.Services.API.Handlers
 
         public async Task<AddInstrumentResponse> Handle(AddInstrumentRequest request, CancellationToken cancellationToken)
         {
-            var queryManufacturer = new GetManufacturerQuery()
+            try
             {
-                Id = request.ManufacturerId
-            };
-            var manufacturerFromDb = await queryExecutor.Execute(queryManufacturer);
-            var instrumentToAdd = new Instrument()
+                var queryManufacturer = new GetManufacturerQuery()
+                {
+                    Id = request.ManufacturerId
+                };
+                var manufacturerFromDb = await queryExecutor.Execute(queryManufacturer);
+                if (manufacturerFromDb == null)
+                {
+                    return new AddInstrumentResponse()
+                    {
+                        Error = new ErrorModel(ErrorType.BadRequest)
+                    };
+                }
+                var instrumentToAdd = new Instrument()
+                {
+                    Model = request.Model,
+                    NumberOfStrings = request.NumberOfStrings,
+                    ScaleLenghtBass = request.ScaleLenghtBass,
+                    ScaleLenghtTreble = request.ScaleLenghtTreble,
+                    Manufacturer = manufacturerFromDb
+                };
+                var command = new AddInstrumentCommand()
+                {
+                    Parameter = instrumentToAdd
+                };
+                var addedInstrument = await commandExecutor.Execute(command);
+                var mappedAddedInstrument = mapper.Map<Core.Models.Instrument>(addedInstrument);
+                return new AddInstrumentResponse()
+                {
+                    Data = mappedAddedInstrument
+                };
+            }
+            catch (System.Exception)
             {
-                Model = request.Model,
-                NumberOfStrings = request.NumberOfStrings,
-                ScaleLenghtBass = request.ScaleLenghtBass,
-                ScaleLenghtTreble = request.ScaleLenghtTreble,
-                Manufacturer = manufacturerFromDb
-            };
-            var command = new AddInstrumentCommand()
-            {
-                Parameter = instrumentToAdd
-            };
-            var addedInstrument = await commandExecutor.Execute(command);
-            var mappedAddedInstrument = mapper.Map<Core.Models.Instrument>(addedInstrument);
-            return new AddInstrumentResponse()
-            {
-                Data = mappedAddedInstrument
-            };
+                return new AddInstrumentResponse()
+                {
+                    Error = new ErrorModel(ErrorType.InternalServerError)
+                };
+            }
+
         }
     }
 }

@@ -2,8 +2,10 @@
 using MediatR;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
+using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.API.Domain.Responses;
+using StringManager.Services.API.ErrorHandling;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,20 +25,28 @@ namespace StringManager.Services.API.Handlers
 
         public async Task<GetTuningResponse> Handle(GetTuningRequest request, CancellationToken cancellationToken)
         {
-            var response = new GetTuningResponse();
-            var query = new GetTuningQuery()
+            try
             {
-                Id = request.Id
-            };
-            var tuningFromDb = await queryExecutor.Execute(query);
-            if (tuningFromDb != null)
-            {
+                var query = new GetTuningQuery()
+                {
+                    Id = request.Id
+                };
+                var tuningFromDb = await queryExecutor.Execute(query);
                 var mappedTuningFromDb = mapper.Map<Core.Models.Tuning>(tuningFromDb);
                 var mappedTonesInTuning = mapper.Map<List<Core.Models.ToneInTuning>>(tuningFromDb.TonesInTuning);
                 mappedTuningFromDb.TonesInTuning = mappedTonesInTuning;
-                response.Data = mappedTuningFromDb;
+                return new GetTuningResponse()
+                {
+                    Data = mappedTuningFromDb
+                };
             }
-            return response;
+            catch (System.Exception)
+            {
+                return new GetTuningResponse()
+                {
+                    Error = new ErrorModel(ErrorType.InternalServerError)
+                };
+            }
         }
     }
 }

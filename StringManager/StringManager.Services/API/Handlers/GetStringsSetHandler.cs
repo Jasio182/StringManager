@@ -3,8 +3,10 @@ using MediatR;
 using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
+using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.API.Domain.Responses;
+using StringManager.Services.API.ErrorHandling;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,17 +26,27 @@ namespace StringManager.Services.API.Handlers
 
         public async Task<GetStringsSetResponse> Handle(GetStringsSetRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetStringsSetQuery()
+            try
             {
-                Id = request.Id
-            };
-            var stringsSetFromDb = await queryExecutor.Execute(query);
-            var mappedStringsSet = mapper.Map<StringsSet>(stringsSetFromDb);
-            mappedStringsSet.StringsInSet = mapper.Map<List<StringInSet>>(stringsSetFromDb.StringsInSet);
-            return new GetStringsSetResponse()
+                var query = new GetStringsSetQuery()
+                {
+                    Id = request.Id
+                };
+                var stringsSetFromDb = await queryExecutor.Execute(query);
+                var mappedStringsSet = mapper.Map<StringsSet>(stringsSetFromDb);
+                mappedStringsSet.StringsInSet = mapper.Map<List<StringInSet>>(stringsSetFromDb.StringsInSet);
+                return new GetStringsSetResponse()
+                {
+                    Data = mappedStringsSet
+                };
+            }
+            catch (System.Exception)
             {
-                Data = mappedStringsSet
-            };
+                return new GetStringsSetResponse()
+                {
+                    Error = new ErrorModel(ErrorType.InternalServerError)
+                };
+            }
         }
     }
 }

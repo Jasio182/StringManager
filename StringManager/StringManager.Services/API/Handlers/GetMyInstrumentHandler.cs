@@ -3,8 +3,10 @@ using MediatR;
 using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
+using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.API.Domain.Responses;
+using StringManager.Services.API.ErrorHandling;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,17 +26,27 @@ namespace StringManager.Services.API.Handlers
 
         public async Task<GetMyInstrumentResponse> Handle(GetMyInstrumentRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetMyInstrumentQuery()
+            try
             {
-                Id = request.Id
-            };
-            var myInstrumentFromDb = await queryExecutor.Execute(query);
-            var mappedMyInstrument = mapper.Map<MyInstrument>(myInstrumentFromDb);
-            mappedMyInstrument.InstalledStrings = mapper.Map<List<InstalledString>>(myInstrumentFromDb.InstalledStrings);
-            return new GetMyInstrumentResponse()
+                var query = new GetMyInstrumentQuery()
+                {
+                    Id = request.Id
+                };
+                var myInstrumentFromDb = await queryExecutor.Execute(query);
+                var mappedMyInstrument = mapper.Map<MyInstrument>(myInstrumentFromDb);
+                mappedMyInstrument.InstalledStrings = mapper.Map<List<InstalledString>>(myInstrumentFromDb.InstalledStrings);
+                return new GetMyInstrumentResponse()
+                {
+                    Data = mappedMyInstrument
+                };
+            }
+            catch (System.Exception)
             {
-                Data = mappedMyInstrument
-            };
+                return new GetMyInstrumentResponse()
+                {
+                    Error = new ErrorModel(ErrorType.InternalServerError)
+                };
+            }
         }
     }
 }

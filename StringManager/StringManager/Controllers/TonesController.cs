@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using StringManager.Core.Models;
 using StringManager.Services.API.Domain.Requests;
+using StringManager.Services.API.Domain.Responses;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,20 +10,14 @@ namespace StringManager.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TonesController : ControllerBase
+    public class TonesController : ApiControllerBase
     {
-        private readonly IMediator mediator;
-
-        public TonesController(IMediator mediator)
-        {
-            this.mediator = mediator;
-        }
+        public TonesController(IMediator mediator) : base(mediator) { }
 
         [HttpGet]
-        public async Task<ActionResult> GetTonesAsync([FromQuery] GetTonesRequest request)
+        public Task<IActionResult> GetTonesAsync([FromQuery] GetTonesRequest request)
         {
-            var response = await mediator.Send(request);
-            return Ok(response.Data);
+            return HandleResult<GetTonesRequest, GetTonesResponse>(request);
         }
     }
 }

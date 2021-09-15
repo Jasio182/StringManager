@@ -4,8 +4,10 @@ using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.DataAccess.Entities;
+using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.API.Domain.Responses;
+using StringManager.Services.API.ErrorHandling;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,38 +28,69 @@ namespace StringManager.Services.API.Handlers
 
         public async Task<AddInstalledStringResponse> Handle(AddInstalledStringRequest request, CancellationToken cancellationToken)
         {
-            var queryString = new GetStringQuery()
+            try
             {
-                Id = request.StringId
-            };
-            var stringFromDb = await queryExecutor.Execute(queryString);
-            var queryTone = new GetToneQuery()
+                var queryString = new GetStringQuery()
+                {
+                    Id = request.StringId
+                };
+                var stringFromDb = await queryExecutor.Execute(queryString);
+                if (stringFromDb == null)
+                {
+                    return new AddInstalledStringResponse()
+                    {
+                        Error = new ErrorModel(ErrorType.BadRequest)
+                    };
+                }
+                var queryTone = new GetToneQuery()
+                {
+                    Id = request.ToneId
+                };
+                var toneFromDb = await queryExecutor.Execute(queryTone);
+                if (toneFromDb == null)
+                {
+                    return new AddInstalledStringResponse()
+                    {
+                        Error = new ErrorModel(ErrorType.BadRequest)
+                    };
+                }
+                var queryMyInstrument = new GetMyInstrumentQuery()
+                {
+                    Id = request.MyInstrumentId
+                };
+                var myInstrumentFromDb = await queryExecutor.Execute(queryMyInstrument);
+                if (myInstrumentFromDb == null)
+                {
+                    return new AddInstalledStringResponse()
+                    {
+                        Error = new ErrorModel(ErrorType.BadRequest)
+                    };
+                }
+                var installedStringToAdd = new InstalledString()
+                {
+                    MyInstrument = myInstrumentFromDb,
+                    String = stringFromDb,
+                    Tone = toneFromDb,
+                    Position = request.Position
+                };
+                var command = new AddInstalledStringCommand()
+                {
+                    Parameter = installedStringToAdd
+                };
+                var addedInstalledString = await commandExecutor.Execute(command);
+                var mappedAddedInstalledString = mapper.Map<Core.Models.InstalledString>(addedInstalledString);
+                return new AddInstalledStringResponse()
+                {
+                    Data = mappedAddedInstalledString
+                };
+            }
+            catch(System.Exception)
             {
-                Id = request.ToneId
-            };
-            var toneFromDb = await queryExecutor.Execute(queryTone);
-            var queryMyInstrument = new GetMyInstrumentQuery()
-            {
-                Id = request.MyInstrumentId
-            };
-            var myInstrumentFromDb = await queryExecutor.Execute(queryMyInstrument);
-            var installedStringToAdd = new InstalledString()
-            {
-                MyInstrument = myInstrumentFromDb,
-                String = stringFromDb,
-                Tone = toneFromDb,
-                Position = request.Position
-            };
-            var command = new AddInstalledStringCommand()
-            {
-                Parameter = installedStringToAdd
-            };
-            var addedInstalledString = await commandExecutor.Execute(command);
-            var mappedAddedInstalledString = mapper.Map<Core.Models.InstalledString>(addedInstalledString);
-            return new AddInstalledStringResponse()
-            {
-                Data = mappedAddedInstalledString
-            };
+                return new AddInstalledStringResponse()
+                {
+                    Error = new ErrorModel(ErrorType.InternalServerError)
+                };
+            }
         }
     }
 }

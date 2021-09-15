@@ -3,8 +3,10 @@ using MediatR;
 using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
+using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.API.Domain.Responses;
+using StringManager.Services.API.ErrorHandling;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,14 +26,24 @@ namespace StringManager.Services.API.Handlers
 
         public async Task<GetTonesResponse> Handle(GetTonesRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetTonesQuery();
-            var tonesFromDb = await queryExecutor.Execute(query);
-            var mappedTones = mapper.Map<List<Tone>>(tonesFromDb);
-            var response = new GetTonesResponse()
+            try
             {
-                Data = mappedTones
-            };
-            return response;
+                var query = new GetTonesQuery();
+                var tonesFromDb = await queryExecutor.Execute(query);
+                var mappedTones = mapper.Map<List<Tone>>(tonesFromDb);
+                var response = new GetTonesResponse()
+                {
+                    Data = mappedTones
+                };
+                return response;
+            }
+            catch (System.Exception)
+            {
+                return new GetTonesResponse()
+                {
+                    Error = new ErrorModel(ErrorType.InternalServerError)
+                };
+            }
         }
     }
 }

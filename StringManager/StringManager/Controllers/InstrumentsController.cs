@@ -1,33 +1,28 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using StringManager.Services.API.Domain.Requests;
+using StringManager.Services.API.Domain.Responses;
 using System.Threading.Tasks;
 
 namespace StringManager.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class InstrumentsController : ControllerBase
+    public class InstrumentsController : ApiControllerBase
     {
-        private readonly IMediator mediator;
 
-        public InstrumentsController(IMediator mediator)
-        {
-            this.mediator = mediator;
-        }
+        public InstrumentsController(IMediator mediator) : base(mediator) { }
 
         [HttpGet]
-        public async Task<ActionResult> GetInstrumentsAsync([FromQuery] GetInstrumentsRequest request)
+        public Task<IActionResult> GetInstrumentsAsync([FromQuery] GetInstrumentsRequest request)
         {
-            var response = await mediator.Send(request);
-            return Ok(response.Data);
+            return HandleResult<GetInstrumentsRequest, GetInstrumentsResponse>(request);
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddInstrumentAsync([FromBody] AddInstrumentRequest request)
+        public Task<IActionResult> AddInstrumentAsync([FromBody] AddInstrumentRequest request)
         {
-            var response = await mediator.Send(request);
-            return Ok(response.Data);
+            return HandleResult<AddInstrumentRequest, AddInstrumentResponse>(request);
         }
     }
 }

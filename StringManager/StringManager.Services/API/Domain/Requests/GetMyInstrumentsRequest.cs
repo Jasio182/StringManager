@@ -5,5 +5,6 @@ namespace StringManager.Services.API.Domain.Requests
 {
     public class GetMyInstrumentsRequest : IRequest<GetMyInstrumentsResponse>
     {
+        public int? UserId { get; set; }
     }
 }
