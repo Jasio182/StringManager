@@ -8,6 +8,8 @@ namespace StringManager.Core.Models
 
         public string Manufacturer { get; set; }
 
+        public int NumberOfDaysGood { get; set; }
+
         public StringType StringType { get; set; }
 
         public int Size { get; set; }

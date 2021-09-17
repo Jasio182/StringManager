@@ -11,6 +11,8 @@ namespace StringManager.DataAccess.Entities
 
         public double SpecificWeight { get; set; }
 
+        public int NumberOfDaysGood { get; set; }
+
         public IEnumerable<InstalledString> InstalledStrings { get; set; }
 
         public IEnumerable<StringInSet> StringSets { get; set; }
