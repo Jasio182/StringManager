@@ -75,13 +75,9 @@ namespace StringManager.Services.API.Handlers
                         Error = new ErrorModel(ErrorType.BadRequest)
                     };
                 }
-                var installedStringToAdd = new InstalledString()
-                {
-                    MyInstrument = myInstrumentFromDb,
-                    String = stringFromDb,
-                    Tone = toneFromDb,
-                    Position = request.Position
-                };
+                var installedStringToAdd = mapper.Map<InstalledString>(
+                    new System.Tuple<AddInstalledStringRequest, MyInstrument, String, Tone>(
+                        request, myInstrumentFromDb, stringFromDb, toneFromDb));
                 var command = new AddInstalledStringCommand()
                 {
                     Parameter = installedStringToAdd

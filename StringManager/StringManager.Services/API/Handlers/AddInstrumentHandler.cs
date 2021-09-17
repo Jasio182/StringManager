@@ -49,14 +49,8 @@ namespace StringManager.Services.API.Handlers
                         Error = new ErrorModel(ErrorType.BadRequest)
                     };
                 }
-                var instrumentToAdd = new Instrument()
-                {
-                    Model = request.Model,
-                    NumberOfStrings = request.NumberOfStrings,
-                    ScaleLenghtBass = request.ScaleLenghtBass,
-                    ScaleLenghtTreble = request.ScaleLenghtTreble,
-                    Manufacturer = manufacturerFromDb
-                };
+                var instrumentToAdd = mapper.Map<Instrument>(
+                    new System.Tuple<AddInstrumentRequest, Manufacturer>(request, manufacturerFromDb));
                 var command = new AddInstrumentCommand()
                 {
                     Parameter = instrumentToAdd

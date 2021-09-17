@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using StringManager.DataAccess.Entities;
+using StringManager.Services.API.Domain.Requests;
 
 namespace StringManager.Services.Mappings
 {
@@ -14,6 +15,13 @@ namespace StringManager.Services.Mappings
                 .ForMember(x => x.ScaleLenghtBass, y => y.MapFrom(z => z.ScaleLenghtBass))
                 .ForMember(x => x.ScaleLenghtTreble, y => y.MapFrom(z => z.ScaleLenghtTreble))
                 .ForMember(x => x.Manufacturer, y => y.MapFrom(z => z.Manufacturer.Name));
+
+            CreateMap<System.Tuple<AddInstrumentRequest, Manufacturer>, Instrument>()
+                .ForMember(x => x.Model, y => y.MapFrom(z => z.Item1.Model))
+                .ForMember(x => x.NumberOfStrings, y => y.MapFrom(z => z.Item1.NumberOfStrings))
+                .ForMember(x => x.ScaleLenghtBass, y => y.MapFrom(z => z.Item1.ScaleLenghtBass))
+                .ForMember(x => x.ScaleLenghtTreble, y => y.MapFrom(z => z.Item1.ScaleLenghtTreble))
+                .ForMember(x => x.Manufacturer, y => y.MapFrom(z => z.Item2));
         }
     }
 }

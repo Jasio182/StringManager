@@ -32,10 +32,7 @@ namespace StringManager.Services.API.Handlers
         {
             try
             {
-                var manufacturerToAdd = new Manufacturer()
-                {
-                    Name = request.Name
-                };
+                var manufacturerToAdd = mapper.Map<Manufacturer>(request);
                 var command = new AddManufacturerCommand()
                 {
                     Parameter = manufacturerToAdd

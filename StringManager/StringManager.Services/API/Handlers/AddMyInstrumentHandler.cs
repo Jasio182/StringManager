@@ -63,17 +63,8 @@ namespace StringManager.Services.API.Handlers
                         Error = new ErrorModel(ErrorType.BadRequest)
                     };
                 }
-                var myInstrumentToAdd = new MyInstrument()
-                {
-                    OwnName = request.OwnName,
-                    GuitarPlace = request.GuitarPlace,
-                    HoursPlayedWeekly = request.HoursPlayedWeekly,
-                    LastDeepCleaning = request.LastDeepCleaning,
-                    LastStringChange = request.LastStringChange,
-                    //NextStringChange = request.NextStringChange,  // todo
-                    Instrument = instrumentFromDb,
-                    User = userFromDb
-                };
+                var myInstrumentToAdd = mapper.Map<MyInstrument>(
+                    new System.Tuple<AddMyInstrumentRequest, Instrument, User>(request, instrumentFromDb, userFromDb));
                 var command = new AddMyInstrumentCommand()
                 {
                     Parameter = myInstrumentToAdd
