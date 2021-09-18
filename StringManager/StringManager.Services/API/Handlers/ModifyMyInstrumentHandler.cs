@@ -8,6 +8,8 @@ using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.API.Domain.Responses;
 using StringManager.Services.API.ErrorHandling;
+using StringManager.Services.DataAnalize;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -55,14 +57,23 @@ namespace StringManager.Services.API.Handlers
                     myInstrumentToUpdate.HoursPlayedWeekly = (int)request.HoursPlayedWeekly;
                 if (request.OwnName != null)
                     myInstrumentToUpdate.OwnName = request.OwnName;
-                if (request.LastDeepCleaning != null)
-                    myInstrumentToUpdate.LastDeepCleaning = (System.DateTime)request.LastDeepCleaning;
-                if (request.LastStringChange != null)
-                    myInstrumentToUpdate.LastStringChange = (System.DateTime)request.LastStringChange;
-                if (request.LastDeepCleaning != null)
-                    myInstrumentToUpdate.LastDeepCleaning = (System.DateTime)request.NextDeepCleaning;
-                if (request.LastStringChange != null)
-                    myInstrumentToUpdate.LastStringChange = (System.DateTime)request.NextStringChange;
+                if (request.LastDeepCleaning != null || request.LastStringChange != null)
+                {
+                    var dateCalculator = new DateCalculator(myInstrumentFromDb);
+                    if (request.LastDeepCleaning != null)
+                    {
+                        myInstrumentToUpdate.LastDeepCleaning = (System.DateTime)request.LastDeepCleaning;                       
+                        myInstrumentToUpdate.NextDeepCleaning = dateCalculator.NumberOfDaysForCleaning((System.DateTime)request.LastDeepCleaning);
+                    }
+                    if (request.LastStringChange != null)
+                    {
+                        myInstrumentToUpdate.LastStringChange = (System.DateTime)request.LastStringChange;
+                        var currentStrings = myInstrumentFromDb.InstalledStrings.Select(InstalledString => InstalledString.String).ToArray();
+                        myInstrumentToUpdate.NextStringChange = dateCalculator.NumberOfDaysForStrings((System.DateTime)request.LastStringChange, currentStrings);
+                        if (myInstrumentToUpdate.NextDeepCleaning < myInstrumentToUpdate.NextStringChange)
+                            myInstrumentToUpdate.NextDeepCleaning = myInstrumentToUpdate.NextStringChange;
+                    }
+                }
                 var command = new ModifyMyInstrumentCommand()
                 {
                     Parameter = myInstrumentToUpdate

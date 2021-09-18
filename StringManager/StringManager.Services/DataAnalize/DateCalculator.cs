@@ -9,10 +9,10 @@ namespace StringManager.Services.DataAnalize
         private readonly MyInstrument myInstrument;
         private readonly User user;
 
-        public DateCalculator(MyInstrument myInstrument, User user)
+        public DateCalculator(MyInstrument myInstrument)
         {
             this.myInstrument = myInstrument;
-            this.user = user;
+            user = myInstrument.User;
         }
 
         public System.DateTime NumberOfDaysForStrings(System.DateTime dateOfChange, String[] strings)

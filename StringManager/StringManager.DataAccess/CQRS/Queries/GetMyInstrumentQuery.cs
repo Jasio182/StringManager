@@ -11,6 +11,7 @@ namespace StringManager.DataAccess.CQRS.Queries
         public override async Task<MyInstrument> Execute(StringManagerStorageContext context)
         {
             var myInstrument = await context.MyInstruments
+                .Include(myInstrument => myInstrument.User)
                 .Include(myInstrument => myInstrument.Instrument)
                 .ThenInclude(instrument => instrument.Manufacturer)
                 .Include(myInstrument => myInstrument.InstalledStrings)
