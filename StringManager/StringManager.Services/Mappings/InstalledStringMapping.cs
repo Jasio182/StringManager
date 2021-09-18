@@ -25,7 +25,7 @@ namespace StringManager.Services.Mappings
                 .ForMember(x => x.Position, y => y.MapFrom(z => z.Item1.Position))
                 .ForMember(x => x.MyInstrument, y => y.MapFrom(z => z.Item2))
                 .ForMember(x => x.String, y => y.MapFrom(z => z.Item3))
-                .ForMember(x => x.Tone, y => y.MapFrom(z => z.Item4))
+                .ForMember(x => x.Tone, y => y.MapFrom(z => z.Item4));
         }
     }
 }

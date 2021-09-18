@@ -59,7 +59,10 @@ namespace StringManager.Services.API.Handlers
                     myInstrumentToUpdate.LastDeepCleaning = (System.DateTime)request.LastDeepCleaning;
                 if (request.LastStringChange != null)
                     myInstrumentToUpdate.LastStringChange = (System.DateTime)request.LastStringChange;
-                //myInstrumentToUpdate.NextStringChange = request.NextStringChange; //todo
+                if (request.LastDeepCleaning != null)
+                    myInstrumentToUpdate.LastDeepCleaning = (System.DateTime)request.NextDeepCleaning;
+                if (request.LastStringChange != null)
+                    myInstrumentToUpdate.LastStringChange = (System.DateTime)request.NextStringChange;
                 var command = new ModifyMyInstrumentCommand()
                 {
                     Parameter = myInstrumentToUpdate

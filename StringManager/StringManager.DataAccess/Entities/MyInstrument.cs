@@ -18,10 +18,12 @@ namespace StringManager.DataAccess.Entities
 
         public WhereGuitarKept GuitarPlace { get; set; }
 
-        public DateTime LastDeepCleaning { get; set; }
+        public DateTime? LastDeepCleaning { get; set; }
 
-        public DateTime LastStringChange { get; set; }
+        public DateTime? NextDeepCleaning { get; set; }
 
-        public DateTime NextStringChange { get; set; }
+        public DateTime? LastStringChange { get; set; }
+
+        public DateTime? NextStringChange { get; set; }
     }
 }

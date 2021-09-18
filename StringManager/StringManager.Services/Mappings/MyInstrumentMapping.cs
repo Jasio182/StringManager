@@ -24,7 +24,11 @@ namespace StringManager.Services.Mappings
                 .ForMember(x => x.NumberOfStrings, y => y.MapFrom(z => z.Instrument.NumberOfStrings))
                 .ForMember(x => x.ScaleLenghtBass, y => y.MapFrom(z => z.Instrument.ScaleLenghtBass))
                 .ForMember(x => x.ScaleLenghtTreble, y => y.MapFrom(z => z.Instrument.ScaleLenghtTreble))
-                .ForMember(x => x.Manufacturer, y => y.MapFrom(z => z.Instrument.Manufacturer.Name));
+                .ForMember(x => x.Manufacturer, y => y.MapFrom(z => z.Instrument.Manufacturer.Name))
+                .ForMember(x => x.LastDeepCleaning, y => y.MapFrom(z => z.LastDeepCleaning))
+                .ForMember(x => x.NextDeepCleaning, y => y.MapFrom(z => z.NextDeepCleaning))
+                .ForMember(x => x.LastStringChange, y => y.MapFrom(z => z.LastStringChange))
+                .ForMember(x => x.NextStringChange, y => y.MapFrom(z => z.NextStringChange));
 
             CreateMap<System.Tuple<AddMyInstrumentRequest, Instrument, User>, MyInstrument>()
                 .ForMember(x => x.OwnName, y => y.MapFrom(z => z.Item1.OwnName))

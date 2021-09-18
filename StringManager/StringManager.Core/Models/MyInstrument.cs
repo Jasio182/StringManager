@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace StringManager.Core.Models
 {
@@ -19,5 +20,13 @@ namespace StringManager.Core.Models
         public int ScaleLenghtTreble { get; set; }
 
         public List<InstalledString> InstalledStrings { get; set; }
+
+        public DateTime? LastDeepCleaning { get; set; }
+
+        public DateTime? NextDeepCleaning { get; set; }
+
+        public DateTime? LastStringChange { get; set; }
+
+        public DateTime? NextStringChange { get; set; }
     }
 }
