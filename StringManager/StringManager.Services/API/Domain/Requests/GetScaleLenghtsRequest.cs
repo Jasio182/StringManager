@@ -4,9 +4,8 @@ using StringManager.Services.API.Domain.Responses;
 
 namespace StringManager.Services.API.Domain.Requests
 {
-    public class GetStringsSetRequest : IRequest<GetStringsSetResponse>
+    public class GetScaleLenghtsRequest : IRequest<GetScaleLenghtsResponse>
     {
-        [FromRoute]
-        public int Id { get; set; }
+        public int? InstrumentId { get; set; }
     }
 }
