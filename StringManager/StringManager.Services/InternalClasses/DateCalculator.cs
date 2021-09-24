@@ -2,7 +2,7 @@
 using StringManager.DataAccess.Entities;
 using System.Linq;
 
-namespace StringManager.Services.DataAnalize
+namespace StringManager.Services.InternalClasses
 {
     public class DateCalculator
     {
@@ -18,8 +18,8 @@ namespace StringManager.Services.DataAnalize
         public System.DateTime NumberOfDaysForStrings(System.DateTime dateOfChange, String[] strings)
         {
             int leastNumberOfDays = strings.Select(thisString => thisString.NumberOfDaysGood).Min();
-            int numberOfDays = (int)(leastNumberOfDays 
-                * GetValueFromWhereGuitarKept(myInstrument.GuitarPlace) 
+            int numberOfDays = (int)(leastNumberOfDays
+                * GetValueFromWhereGuitarKept(myInstrument.GuitarPlace)
                 * GetValueFromGuitarDailyMaintanance(user.DailyMaintanance)
                 * GetValueFromPlayStyle(user.PlayStyle));
             return dateOfChange.AddDays(numberOfDays);
@@ -32,7 +32,7 @@ namespace StringManager.Services.DataAnalize
                 * GetValueFromGuitarDailyMaintanance(user.DailyMaintanance)
                 * GetValueFromPlayStyle(user.PlayStyle));
             var dateOfNextCleaning = dateOfCleaning.AddDays(numberOfDays);
-            return (System.DateTime)(dateOfNextCleaning < myInstrument.NextStringChange 
+            return (System.DateTime)(dateOfNextCleaning < myInstrument.NextStringChange
                 ? myInstrument.NextStringChange : dateOfNextCleaning);
         }
 

@@ -33,8 +33,8 @@ namespace StringManager.Controllers
                     .Where(entry => entry.Value.Errors.Any())
                     .Select(entry => new { property = entry.Key, entry.Value.Errors }));
             }
-            request.SetUserId(int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var tempUserId) ? tempUserId : null);
-            request.SetAccountType(System.Enum.TryParse<Core.Enums.AccountType>(User.FindFirstValue(ClaimTypes.Role), out var tempAccountType) ? tempAccountType : null);
+            request.UserId = int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var tempUserId) ? tempUserId : null;
+            request.AccountType = System.Enum.TryParse<Core.Enums.AccountType>(User.FindFirstValue(ClaimTypes.Role), out var tempAccountType) ? tempAccountType : null;
             var response = await mediator.Send(request);
             if(response.Error != null)
             {
@@ -58,6 +58,8 @@ namespace StringManager.Controllers
                     return HttpStatusCode.NotFound;
                 case ErrorType.InternalServerError:
                     return HttpStatusCode.InternalServerError;
+                case ErrorType.Unauthorized:
+                    return HttpStatusCode.Unauthorized;
                 case ErrorType.BadRequest:
                 default:
                     return HttpStatusCode.BadRequest;

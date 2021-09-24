@@ -64,7 +64,9 @@ namespace StringManager.Services.API.Handlers
                 }
                 var queryMyInstrument = new GetMyInstrumentQuery()
                 {
-                    Id = request.MyInstrumentId
+                    Id = request.MyInstrumentId,
+                    UserId = (int)request.UserId,
+                    AccountType = (Core.Enums.AccountType)request.AccountType
                 };
                 var myInstrumentFromDb = await queryExecutor.Execute(queryMyInstrument);
                 if (myInstrumentFromDb == null)

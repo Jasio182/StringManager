@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.Services.API.Domain.Requests;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class InstrumentsController : ApiControllerBase<InstrumentsController>
@@ -18,8 +20,9 @@ namespace StringManager.Controllers
         }
 
         [HttpGet]
-        public Task<IActionResult> GetInstrumentsAsync([FromQuery] GetInstrumentsRequest request)
+        public Task<IActionResult> GetInstrumentsAsync()
         {
+            var request = new GetInstrumentsRequest();
             return HandleResult<GetInstrumentsRequest, GetInstrumentsResponse>(request);
         }
 

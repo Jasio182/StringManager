@@ -37,7 +37,9 @@ namespace StringManager.Services.API.Handlers
             {
                 var installedStringQuery = new GetInstalledStringQuery()
                 {
-                    Id = request.Id
+                    Id = request.Id,
+                    UserId = (int)request.UserId,
+                    AccountType = (Core.Enums.AccountType)request.AccountType
                 };
                 var installedStringFromDb = await queryExecutor.Execute(installedStringQuery);
                 if (installedStringFromDb == null)

@@ -18,7 +18,6 @@ namespace StringManager.Controllers
             logger.LogInformation("MyInstrumentsController started");
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public Task<IActionResult> GetMyInstrumentsAsync([FromQuery] GetMyInstrumentsRequest request)
         {

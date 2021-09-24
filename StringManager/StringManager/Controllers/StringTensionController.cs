@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.Services.API.Domain.Requests;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class StringTensionController : ApiControllerBase<StringTensionController>
@@ -16,6 +18,7 @@ namespace StringManager.Controllers
             logger.LogInformation("StringSetsController started");
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("ScaleLenght")]
         public Task<IActionResult> GetScaleLenghtAsync([FromQuery] GetScaleLenghtsRequest request)
@@ -23,6 +26,7 @@ namespace StringManager.Controllers
             return HandleResult<GetScaleLenghtsRequest, GetScaleLenghtsResponse>(request);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("StringsInSize")]
         public Task<IActionResult> GetStringSizeWithCorrepondingTensionAsync([FromQuery] GetStringSizeWithCorrepondingTensionRequest request)
@@ -37,6 +41,7 @@ namespace StringManager.Controllers
             return HandleResult <GetStringsSetsWithCorrepondingTensionRequest, GetStringsSetsWithCorrepondingTensionResponse>(request);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("StringTension")]
         public Task<IActionResult> GetStringTensionAsync([FromQuery] GetStringTensionRequest request)

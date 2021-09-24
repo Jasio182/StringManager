@@ -7,7 +7,7 @@ using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.API.Domain.Responses;
 using StringManager.Services.API.ErrorHandling;
-using StringManager.Services.DataAnalize;
+using StringManager.Services.InternalClasses;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;

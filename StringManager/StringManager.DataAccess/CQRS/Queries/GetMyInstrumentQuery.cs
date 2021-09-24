@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StringManager.Core.Enums;
 using StringManager.DataAccess.Entities;
 using System.Threading.Tasks;
 
@@ -7,6 +8,10 @@ namespace StringManager.DataAccess.CQRS.Queries
     public class GetMyInstrumentQuery : QueryBase<MyInstrument>
     {
         public int Id { get; set; }
+
+        public int UserId { get; set; }
+
+        public AccountType AccountType { get; set; }
 
         public override async Task<MyInstrument> Execute(StringManagerStorageContext context)
         {
@@ -18,7 +23,8 @@ namespace StringManager.DataAccess.CQRS.Queries
                 .ThenInclude(installedString => installedString.String)
                 .Include(myInstrument => myInstrument.InstalledStrings)
                 .ThenInclude(installedString => installedString.Tone)
-                .FirstOrDefaultAsync(myInstrument => myInstrument.Id == Id);
+                .FirstOrDefaultAsync(myInstrument => myInstrument.Id == Id 
+                    && (myInstrument.User.Id == UserId || AccountType == AccountType.Admin));
             return myInstrument;
         }
     }

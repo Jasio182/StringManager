@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StringManager.Services.DataAnalize
+namespace StringManager.Services.InternalClasses
 {
     public static class StringCalculator
     {
@@ -56,13 +56,13 @@ namespace StringManager.Services.DataAnalize
             foreach (var stringsSet in correctStringSets)
             {
                 var tempTensionDifference = System.Math.Abs(currentAverageTension - GetAverageStringTension(GetStringsFromStringSet(stringsSet), scaleLenghts, resultTuning));
-                if(tempTensionDifference < tensionDifference)
+                if (tempTensionDifference < tensionDifference)
                 {
                     result.Clear();
                     result.Add(stringsSet);
                     tensionDifference = tempTensionDifference;
                 }
-                else if(tempTensionDifference == tensionDifference)
+                else if (tempTensionDifference == tensionDifference)
                 {
                     result.Add(stringsSet);
                 }

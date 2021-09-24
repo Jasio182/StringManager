@@ -7,7 +7,7 @@ using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.API.Domain.Responses;
 using StringManager.Services.API.ErrorHandling;
-using StringManager.Services.DataAnalize;
+using StringManager.Services.InternalClasses;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -36,7 +36,9 @@ namespace StringManager.Services.API.Handlers
             {
                 var myInstrumentQuery = new GetMyInstrumentQuery()
                 {
-                    Id = (int)request.MyInstrumentId
+                    Id = (int)request.MyInstrumentId,
+                    UserId = (int)request.UserId,
+                    AccountType = (Core.Enums.AccountType)request.AccountType
                 };
                 var myInstrumentFromDb = await queryExecutor.Execute(myInstrumentQuery);
                 if (myInstrumentFromDb == null)
