@@ -3,7 +3,7 @@ using StringManager.Services.API.Domain.Responses;
 
 namespace StringManager.Services.API.Domain.Requests
 {
-    public class GetStringsRequest : IRequest<GetStringsResponse>
+    public class GetStringsRequest : RequestBase<GetStringsResponse>
     {
     }
 }

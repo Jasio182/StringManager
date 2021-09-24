@@ -6,7 +6,7 @@ using System;
 
 namespace StringManager.Services.API.Domain.Requests
 {
-    public class ModifyMyInstrumentRequest : IRequest<ModifyMyInstrumentResponse>
+    public class ModifyMyInstrumentRequest : RequestBase<ModifyMyInstrumentResponse>
     {
         public int Id { get; set; }
 

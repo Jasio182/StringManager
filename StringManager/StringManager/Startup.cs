@@ -1,5 +1,6 @@
 using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using StringManager.Authentication;
 using StringManager.DataAccess;
 using StringManager.DataAccess.CQRS;
 using StringManager.Services.API.Domain.Responses;
@@ -28,6 +30,8 @@ namespace StringManager
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
             services.AddMvcCore().AddFluentValidation(fv 
                 => fv.RegisterValidatorsFromAssemblyContaining<AddInstalledStringRequestValidator>());
             services.Configure<ApiBehaviorOptions>(options =>

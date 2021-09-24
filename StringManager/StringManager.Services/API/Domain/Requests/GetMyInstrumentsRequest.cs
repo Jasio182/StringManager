@@ -3,8 +3,8 @@ using StringManager.Services.API.Domain.Responses;
 
 namespace StringManager.Services.API.Domain.Requests
 {
-    public class GetMyInstrumentsRequest : IRequest<GetMyInstrumentsResponse>
+    public class GetMyInstrumentsRequest : RequestBase<GetMyInstrumentsResponse>
     {
-        public int? UserId { get; set; }
+        public int? RequestUserId { get; set; }
     }
 }

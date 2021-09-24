@@ -3,7 +3,7 @@ using StringManager.Services.API.Domain.Responses;
 
 namespace StringManager.Services.API.Domain.Requests
 {
-    public class AddInstrumentRequest : IRequest<AddInstrumentResponse>
+    public class AddInstrumentRequest : RequestBase<AddInstrumentResponse>
     {
         public int ManufacturerId { get; set; }
 

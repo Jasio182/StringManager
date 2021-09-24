@@ -1,10 +1,9 @@
 ﻿using MediatR;
-using StringManager.DataAccess.Entities;
 using StringManager.Services.API.Domain.Responses;
 
 namespace StringManager.Services.API.Domain.Requests
 {
-    public class AddInstalledStringRequest : IRequest<AddInstalledStringResponse>
+    public class AddInstalledStringRequest : RequestBase<AddInstalledStringResponse>
     {
         public int Position { get; set; }
 

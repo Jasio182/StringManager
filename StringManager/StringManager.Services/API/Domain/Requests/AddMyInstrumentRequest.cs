@@ -5,10 +5,8 @@ using System;
 
 namespace StringManager.Services.API.Domain.Requests
 {
-    public class AddMyInstrumentRequest : IRequest<AddMyInstrumentResponse>
+    public class AddMyInstrumentRequest : RequestBase<AddMyInstrumentResponse>
     {
-        public int UserId { get; set; }
-
         public int InstrumentId { get; set; }
 
         public string OwnName { get; set; }

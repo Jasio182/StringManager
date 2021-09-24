@@ -4,7 +4,7 @@ using StringManager.Services.API.Domain.Responses;
 
 namespace StringManager.Services.API.Domain.Requests
 {
-    public class GetStringsSetRequest : IRequest<GetStringsSetResponse>
+    public class GetStringsSetRequest : RequestBase<GetStringsSetResponse>
     {
         [FromRoute]
         public int Id { get; set; }

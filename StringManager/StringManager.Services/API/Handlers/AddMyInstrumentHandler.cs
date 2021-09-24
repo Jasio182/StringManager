@@ -37,14 +37,14 @@ namespace StringManager.Services.API.Handlers
         {
             try
             {
-                var queryUser = new GetUserQuery()
+                var queryUser = new GetUserByIdQuery()
                 {
-                    Id = request.UserId
+                    Id = (int)request.GetUserId()
                 };
                 var userFromDb = await queryExecutor.Execute(queryUser);
                 if (userFromDb == null)
                 {
-                    logger.LogError("User of given Id of " + request.UserId + " has not been found");
+                    logger.LogError("User of given Id of " + request.GetUserId() + " has not been found");
                     return new AddMyInstrumentResponse()
                     {
                         Error = new ErrorModel(ErrorType.BadRequest)

@@ -3,7 +3,7 @@ using StringManager.Services.API.Domain.Responses;
 
 namespace StringManager.Services.API.Domain.Requests
 {
-    public class GetStringTensionRequest : IRequest<GetStringTensionResponse>
+    public class GetStringTensionRequest : RequestBase<GetStringTensionResponse>
     {
         public int? StringId { get; set; }
 

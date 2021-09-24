@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.Services.API.Domain;
+using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.API.ErrorHandling;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace StringManager.Controllers
@@ -21,7 +23,7 @@ namespace StringManager.Controllers
         }
 
         protected async Task<IActionResult> HandleResult<TRequest, TResponse>(TRequest request)
-            where TRequest : IRequest<TResponse>
+            where TRequest : RequestBase<TResponse>
             where TResponse : ErrorResponseBase
         {
             if(!ModelState.IsValid)
@@ -31,6 +33,8 @@ namespace StringManager.Controllers
                     .Where(entry => entry.Value.Errors.Any())
                     .Select(entry => new { property = entry.Key, entry.Value.Errors }));
             }
+            request.SetUserId(int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var tempUserId) ? tempUserId : null);
+            request.SetAccountType(System.Enum.TryParse<Core.Enums.AccountType>(User.FindFirstValue(ClaimTypes.Role), out var tempAccountType) ? tempAccountType : null);
             var response = await mediator.Send(request);
             if(response.Error != null)
             {

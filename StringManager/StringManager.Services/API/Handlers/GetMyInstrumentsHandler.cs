@@ -35,7 +35,7 @@ namespace StringManager.Services.API.Handlers
             {
                 var query = new GetMyInstrumentsQuery()
                 {
-                    UserId = request.UserId
+                    UserId = request.RequestUserId
                 };
                 var myInstrumentsFromDb = await queryExecutor.Execute(query);
                 var mappedMyInstruments = mapper.Map<List<MyInstrumentList>>(myInstrumentsFromDb);

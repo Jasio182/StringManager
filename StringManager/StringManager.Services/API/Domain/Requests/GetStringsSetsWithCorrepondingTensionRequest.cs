@@ -4,7 +4,7 @@ using StringManager.Services.API.Domain.Responses;
 
 namespace StringManager.Services.API.Domain.Requests
 {
-    public class GetStringsSetsWithCorrepondingTensionRequest : IRequest<GetStringsSetsWithCorrepondingTensionResponse>
+    public class GetStringsSetsWithCorrepondingTensionRequest : RequestBase<GetStringsSetsWithCorrepondingTensionResponse>
     {
         public int? MyInstrumentId { get; set; }
 

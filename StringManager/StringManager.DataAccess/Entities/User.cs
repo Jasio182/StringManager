@@ -9,10 +9,14 @@ namespace StringManager.DataAccess.Entities
 
         public string Password { get; set; }
 
+        public string Email { get; set; }
+
         public GuitarDailyMaintanance DailyMaintanance { get; set; }
 
         public PlayStyle PlayStyle { get; set; }
 
         public IEnumerable<MyInstrument> MyInstruments { get; set; }
+
+        public AccountType AccountType { get; set; }
     }
 }

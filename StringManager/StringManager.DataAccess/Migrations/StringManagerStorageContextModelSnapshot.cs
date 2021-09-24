@@ -16,7 +16,7 @@ namespace StringManager.DataAccess.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.9")
+                .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("StringManager.DataAccess.Entities.InstalledString", b =>
@@ -109,13 +109,16 @@ namespace StringManager.DataAccess.Migrations
                     b.Property<int?>("InstrumentId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("LastDeepCleaning")
+                    b.Property<DateTime?>("LastDeepCleaning")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastStringChange")
+                    b.Property<DateTime?>("LastStringChange")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("NextStringChange")
+                    b.Property<DateTime?>("NextDeepCleaning")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("NextStringChange")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OwnName")
@@ -141,6 +144,9 @@ namespace StringManager.DataAccess.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("ManufacturerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfDaysGood")
                         .HasColumnType("int");
 
                     b.Property<int>("Size")
@@ -278,8 +284,14 @@ namespace StringManager.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AccountType")
+                        .HasColumnType("int");
+
                     b.Property<int>("DailyMaintanance")
                         .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
