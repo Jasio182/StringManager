@@ -33,6 +33,16 @@ namespace StringManager.Services.API.Handlers
         {
             try
             {
+                if (request.RequestUserId == null && request.AccountType != Core.Enums.AccountType.Admin)
+                    request.RequestUserId = request.UserId;
+                else if(request.RequestUserId != null && request.AccountType != Core.Enums.AccountType.Admin)
+                {
+                    logger.LogError("Non admin user with Id: " + request.UserId ?? "_unregistered_" + " tried to get myinstruments for user of ID " + request.RequestUserId);
+                    return new GetMyInstrumentsResponse()
+                    {
+                        Error = new ErrorModel(ErrorType.Unauthorized)
+                    };
+                }
                 var query = new GetMyInstrumentsQuery()
                 {
                     UserId = request.RequestUserId
