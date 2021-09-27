@@ -3,7 +3,7 @@ using StringManager.DataAccess.Entities;
 
 namespace StringManager.Services.Mappings
 {
-    class StringInSetMapping : Profile
+    public class StringInSetMapping : Profile
     {
         public StringInSetMapping()
         {

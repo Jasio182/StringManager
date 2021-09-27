@@ -4,7 +4,7 @@ using StringManager.Services.API.Domain.Requests;
 
 namespace StringManager.Services.Mappings
 {
-    class InstrumentMapping : Profile
+    public class InstrumentMapping : Profile
     {
         public InstrumentMapping()
         {

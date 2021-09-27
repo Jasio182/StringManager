@@ -4,7 +4,7 @@ using StringManager.Services.API.Domain.Requests;
 
 namespace StringManager.Services.Mappings
 {
-    class InstalledStringMapping : Profile
+    public class InstalledStringMapping : Profile
     {
         public InstalledStringMapping()
         {

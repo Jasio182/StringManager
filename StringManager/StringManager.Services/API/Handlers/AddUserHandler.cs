@@ -32,7 +32,7 @@ namespace StringManager.Services.API.Handlers
         {
             try
             {
-                if (request.AccountTypeToAdd != null && request.AccountType != Core.Enums.AccountType.Admin)
+                if (request.AccountTypeToAdd == Core.Enums.AccountType.Admin && request.AccountType != Core.Enums.AccountType.Admin)
                 {
                     logger.LogError("Non admin user with Id: " + request.UserId ?? "_unregistered_" + " tried to add admin user");
                     return new AddUserResponse()

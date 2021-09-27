@@ -1,5 +1,4 @@
-﻿using MediatR;
-using StringManager.Core.Enums;
+﻿using StringManager.Core.Enums;
 using StringManager.Services.API.Domain.Responses;
 
 namespace StringManager.Services.API.Domain.Requests

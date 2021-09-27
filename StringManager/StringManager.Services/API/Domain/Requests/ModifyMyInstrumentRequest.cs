@@ -1,6 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using StringManager.Core.Enums;
+﻿using StringManager.Core.Enums;
 using StringManager.Services.API.Domain.Responses;
 using System;
 
