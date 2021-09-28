@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using StringManager.DataAccess.Entities;
+using StringManager.Services.API.Domain.Requests;
 
 namespace StringManager.Services.Mappings
 {
@@ -15,6 +16,11 @@ namespace StringManager.Services.Mappings
                 .ForMember(x => x.StringId, y => y.MapFrom(z => z.String.Id))
                 .ForMember(x => x.StringType, y => y.MapFrom(z => z.String.StringType))
                 .ForMember(x => x.Manufacturer, y => y.MapFrom(z => z.String.Manufacturer.Name));
+
+            CreateMap<System.Tuple<AddStringInSetRequest, StringsSet, String>, StringInSet>()
+                .ForMember(x => x.Position, y => y.MapFrom(z => z.Item1.Position))
+                .ForMember(x => x.StringsSet, y => y.MapFrom(z => z.Item2))
+                .ForMember(x => x.String, y => y.MapFrom(z => z.Item3));
         }
     }
 }
