@@ -50,7 +50,7 @@ namespace StringManager.Services.API.Handlers
                 var toneFromDb = await queryExecutor.Execute(query);
                 if (toneFromDb == null)
                 {
-                    logger.LogError("User of given Id of " + query.Id + " has not been found");
+                    logger.LogError("Tone of given Id of " + query.Id + " has not been found");
                     return new ModifyToneResponse()
                     {
                         Error = new ErrorModel(ErrorType.NotFound)
