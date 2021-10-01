@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using StringManager.DataAccess.Entities;
+using StringManager.Services.API.Domain.Requests;
 
 namespace StringManager.Services.Mappings
 {
@@ -13,6 +14,11 @@ namespace StringManager.Services.Mappings
                 .ForMember(x => x.ToneName, y => y.MapFrom(z => z.Tone.Name))
                 .ForMember(x => x.Frequency, y => y.MapFrom(z => z.Tone.Frequency))
                 .ForMember(x => x.WaveLenght, y => y.MapFrom(z => z.Tone.WaveLenght));
+
+            CreateMap<System.Tuple<AddToneInTuningRequest, Tone, Tuning>, ToneInTuning>()
+                .ForMember(x => x.Position, y => y.MapFrom(z => z.Item1.Position))
+                .ForMember(x => x.Tone, y => y.MapFrom(z => z.Item2))
+                .ForMember(x => x.Tuning, y => y.MapFrom(z => z.Item3));
         }
     }
 }
