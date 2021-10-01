@@ -24,6 +24,8 @@ namespace StringManager.DataAccess
 
         public DbSet<Tone> Tones { get; set; }
 
+        public DbSet<ToneInTuning> TonesInTunings { get; set; }
+
         public DbSet<User> Users { get; set; }
 
         public DbSet<Tuning> Tunings { get; set; }
