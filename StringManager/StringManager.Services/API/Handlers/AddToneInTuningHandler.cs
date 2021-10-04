@@ -1,20 +1,20 @@
 ﻿using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
 using MediatR;
 using System.Threading.Tasks;
 using System.Threading;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using AutoMapper;
-using StringManager.Services.API.ErrorHandling;
 using StringManager.Services.API.Domain;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.Entities;
+using System.Net;
+using Microsoft.AspNetCore.Mvc;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class AddToneInTuningHandler : IRequestHandler<AddToneInTuningRequest, AddToneInTuningResponse>
+    public class AddToneInTuningHandler : IRequestHandler<AddToneInTuningRequest, StatusCodeResponse>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -32,16 +32,16 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<AddToneInTuningResponse> Handle(AddToneInTuningRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(AddToneInTuningRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if (request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError("Non admin user with Id: " + request.UserId ?? "_unregistered_" + " tried to add tone in tuning");
-                    return new AddToneInTuningResponse()
+                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to add a new ToneInTuning");
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.Unauthorized)
+                        Result = new UnauthorizedResult()
                     };
                 }
                 var queryTone = new GetToneQuery()
@@ -51,10 +51,11 @@ namespace StringManager.Services.API.Handlers
                 var toneFromDb = await queryExecutor.Execute(queryTone);
                 if (toneFromDb == null)
                 {
-                    logger.LogError("Tone of given Id of " + request.ToneId + " has not been found");
-                    return new AddToneInTuningResponse()
+                    string error = "Tone of given Id: " + request.ToneId + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.BadRequest)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
                 var queryTuning = new GetTuningQuery()
@@ -64,10 +65,11 @@ namespace StringManager.Services.API.Handlers
                 var tuningFromDb = await queryExecutor.Execute(queryTuning);
                 if (tuningFromDb == null)
                 {
-                    logger.LogError("Tuning of given Id of " + request.TuningId + " has not been found");
-                    return new AddToneInTuningResponse()
+                    string error = "Tuning of given Id: " + request.TuningId + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.BadRequest)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
                 var toneInTuningToAdd = mapper.Map<ToneInTuning>(
@@ -78,17 +80,17 @@ namespace StringManager.Services.API.Handlers
                 };
                 var addedToneInTuning = await commandExecutor.Execute(command);
                 var mappedAddedToneInTuning = mapper.Map<Core.Models.ToneInTuning>(addedToneInTuning);
-                return new AddToneInTuningResponse()
+                return new StatusCodeResponse()
                 {
-                    Data = mappedAddedToneInTuning
+                    Result = new OkObjectResult(mappedAddedToneInTuning)
                 };
             }
             catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new AddToneInTuningResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

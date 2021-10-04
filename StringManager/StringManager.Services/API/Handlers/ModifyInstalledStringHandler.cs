@@ -1,37 +1,34 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class ModifyInstalledStringHandler : IRequestHandler<ModifyInstalledStringRequest, ModifyInstalledStringResponse>
+    public class ModifyInstalledStringHandler : IRequestHandler<ModifyInstalledStringRequest, StatusCodeResponse>
     {
         private readonly IQueryExecutor queryExecutor;
-        private readonly IMapper mapper;
         private readonly ICommandExecutor commandExecutor;
         private readonly ILogger<ModifyInstalledStringHandler> logger;
 
         public ModifyInstalledStringHandler(IQueryExecutor queryExecutor,
-                                            IMapper mapper,
                                             ICommandExecutor commandExecutor,
                                             ILogger<ModifyInstalledStringHandler> logger)
         {
             this.queryExecutor = queryExecutor;
-            this.mapper = mapper;
             this.commandExecutor = commandExecutor;
             this.logger = logger;
         }
 
-        public async Task<ModifyInstalledStringResponse> Handle(ModifyInstalledStringRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(ModifyInstalledStringRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -44,10 +41,11 @@ namespace StringManager.Services.API.Handlers
                 var installedStringFromDb = await queryExecutor.Execute(installedStringQuery);
                 if (installedStringFromDb == null)
                 {
-                    logger.LogError("InstalledString of given Id of " + request.Id + " has not been found");
-                    return new ModifyInstalledStringResponse()
+                    string error = "InstalledString of given Id: " + request.Id + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.NotFound)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
                 var installedStringToUpdate = installedStringFromDb;
@@ -60,10 +58,11 @@ namespace StringManager.Services.API.Handlers
                     var stringFromDb = await queryExecutor.Execute(stringQuery);
                     if (stringFromDb == null)
                     {
-                        logger.LogError("String of given Id of " + request.StringId + " has not been found");
-                        return new ModifyInstalledStringResponse()
+                        string error = "String of given Id: " + request.StringId + " has not been found";
+                        logger.LogError(error);
+                        return new StatusCodeResponse()
                         {
-                            Error = new ErrorModel(ErrorType.BadRequest)
+                            Result = new BadRequestObjectResult(error)
                         };
                     }
                     installedStringToUpdate.String = stringFromDb;
@@ -77,10 +76,11 @@ namespace StringManager.Services.API.Handlers
                     var toneFromDb = await queryExecutor.Execute(toneQuery);
                     if (toneFromDb == null)
                     {
-                        logger.LogError("Tone of given Id of " + request.ToneId + " has not been found");
-                        return new ModifyInstalledStringResponse()
+                        string error = "Tone of given Id: " + request.ToneId + " has not been found";
+                        logger.LogError(error);
+                        return new StatusCodeResponse()
                         {
-                            Error = new ErrorModel(ErrorType.BadRequest)
+                            Result = new BadRequestObjectResult(error)
                         };
                     }
                     installedStringToUpdate.Tone = toneFromDb;
@@ -89,19 +89,18 @@ namespace StringManager.Services.API.Handlers
                 {
                     Parameter = installedStringToUpdate
                 };
-                var modifiedInstalledString = await commandExecutor.Execute(command);
-                var mappedModifiedInstalledString = mapper.Map<Core.Models.InstalledString>(modifiedInstalledString);
-                return new ModifyInstalledStringResponse()
+                await commandExecutor.Execute(command);
+                return new StatusCodeResponse()
                 {
-                    Data = mappedModifiedInstalledString
+                    Result = new NoContentResult()
                 };
             }
             catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new ModifyInstalledStringResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

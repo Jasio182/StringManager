@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
 using System.Threading.Tasks;
 
 namespace StringManager.Controllers
@@ -21,7 +21,7 @@ namespace StringManager.Controllers
         [HttpGet]
         public Task<IActionResult> GetUsersAsync([FromQuery] GetUsersRequest request)
         {
-            return HandleResult<GetUsersRequest, GetUsersResponse>(request);
+            return HandleResult<GetUsersRequest, StatusCodeResponse>(request);
         }
 
         [HttpGet]
@@ -29,20 +29,20 @@ namespace StringManager.Controllers
         public Task<IActionResult> GetUserAsync()
         {
             var request = new GetUserRequest();
-            return HandleResult<GetUserRequest, GetUserResponse>(request);
+            return HandleResult<GetUserRequest, StatusCodeResponse>(request);
         }
 
         [AllowAnonymous]
         [HttpPost]
         public Task<IActionResult> AddUserAsync([FromBody] AddUserRequest request)
         {
-            return HandleResult<AddUserRequest, AddUserResponse>(request);
+            return HandleResult<AddUserRequest, StatusCodeResponse>(request);
         }
 
         [HttpPut]
         public Task<IActionResult> ModifyUserAsync([FromBody] ModifyUserRequest request)
         {
-            return HandleResult<ModifyUserRequest, ModifyUserResponse>(request);
+            return HandleResult<ModifyUserRequest, StatusCodeResponse>(request);
         }
     }
 }

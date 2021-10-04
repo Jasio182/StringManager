@@ -1,46 +1,42 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class ModifyUserHandler : IRequestHandler<ModifyUserRequest, ModifyUserResponse>
+    public class ModifyUserHandler : IRequestHandler<ModifyUserRequest, StatusCodeResponse>
     {
         private readonly IQueryExecutor queryExecutor;
-        private readonly IMapper mapper;
         private readonly ICommandExecutor commandExecutor;
         private readonly ILogger<ModifyUserHandler> logger;
 
         public ModifyUserHandler(IQueryExecutor queryExecutor,
-                                 IMapper mapper,
                                  ICommandExecutor commandExecutor,
                                  ILogger<ModifyUserHandler> logger)
         {
             this.queryExecutor = queryExecutor;
-            this.mapper = mapper;
             this.commandExecutor = commandExecutor;
             this.logger = logger;
         }
 
-        public async Task<ModifyUserResponse> Handle(ModifyUserRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(ModifyUserRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if ((request.AccountTypeToUpdate != null || request.Id != null) && request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError("Non admin user with Id: " + request.UserId + " tried to modify wrong data");
-                    return new ModifyUserResponse()
+                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to modify an User");
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.Unauthorized)
+                        Result = new UnauthorizedResult()
                     };
                 }
                 var query = new GetUserByIdQuery();
@@ -55,10 +51,11 @@ namespace StringManager.Services.API.Handlers
                 var userFromDb = await queryExecutor.Execute(query);
                 if (userFromDb == null)
                 {
-                    logger.LogError("User of given Id of " + query.Id + " has not been found");
-                    return new ModifyUserResponse()
+                    string error = "User of given Id: " + request.Id + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.NotFound)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
                 var userToUpdate = userFromDb;
@@ -78,19 +75,18 @@ namespace StringManager.Services.API.Handlers
                 {
                     Parameter = userToUpdate
                 };
-                var modifiedUser = await commandExecutor.Execute(command);
-                var mappedModifiedUser = mapper.Map<Core.Models.User>(modifiedUser);
-                return new ModifyUserResponse()
+                await commandExecutor.Execute(command);
+                return new StatusCodeResponse()
                 {
-                    Data = mappedModifiedUser
+                    Result = new NoContentResult()
                 };
             }
             catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new ModifyUserResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

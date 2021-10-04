@@ -1,46 +1,43 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class ModifyStringInSetHandler : IRequestHandler<ModifyStringInSetRequest, ModifyStringInSetResponse>
+    public class ModifyStringInSetHandler : IRequestHandler<ModifyStringInSetRequest, StatusCodeResponse>
     {
         private readonly IQueryExecutor queryExecutor;
-        private readonly IMapper mapper;
         private readonly ICommandExecutor commandExecutor;
         private readonly ILogger<ModifyStringInSetHandler> logger;
 
         public ModifyStringInSetHandler(IQueryExecutor queryExecutor,
-                                        IMapper mapper,
                                         ICommandExecutor commandExecutor,
                                         ILogger<ModifyStringInSetHandler> logger)
         {
             this.queryExecutor = queryExecutor;
-            this.mapper = mapper;
             this.commandExecutor = commandExecutor;
             this.logger = logger;
         }
 
-        public async Task<ModifyStringInSetResponse> Handle(ModifyStringInSetRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(ModifyStringInSetRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if (request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError("Non admin user with Id: " + request.UserId ?? "_unregistered_" + " tried to modify string");
-                    return new ModifyStringInSetResponse()
+                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to modify a StringInSet");
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.Unauthorized)
+                        Result = new UnauthorizedResult()
                     };
                 }
                 var stringInSetQuery = new GetStringInSetQuery()
@@ -50,10 +47,11 @@ namespace StringManager.Services.API.Handlers
                 var stringInSetFromDb = await queryExecutor.Execute(stringInSetQuery);
                 if (stringInSetFromDb == null)
                 {
-                    logger.LogError("StringInSet of given Id of " + request.Id + " has not been found");
-                    return new ModifyStringInSetResponse()
+                    string error = "StringInSet of given Id: " + request.Id + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.NotFound)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
                 var stringInSetToUpdate = stringInSetFromDb;
@@ -66,10 +64,11 @@ namespace StringManager.Services.API.Handlers
                     var stringFromDb = await queryExecutor.Execute(queryString);
                     if (stringFromDb == null)
                     {
-                        logger.LogError("String of given Id of " + request.StringId + " has not been found");
-                        return new ModifyStringInSetResponse()
+                        string error = "String of given Id: " + request.StringId + " has not been found";
+                        logger.LogError(error);
+                        return new StatusCodeResponse()
                         {
-                            Error = new ErrorModel(ErrorType.BadRequest)
+                            Result = new BadRequestObjectResult(error)
                         };
                     }
                     stringInSetToUpdate.String = stringFromDb;
@@ -83,10 +82,11 @@ namespace StringManager.Services.API.Handlers
                     var stringsSetFromDb = await queryExecutor.Execute(queryStringsSet);
                     if (stringsSetFromDb == null)
                     {
-                        logger.LogError("StringsSetId of given Id of " + request.StringsSetId + " has not been found");
-                        return new ModifyStringInSetResponse()
+                        string error = "StringsSet of given Id: " + request.StringsSetId + " has not been found";
+                        logger.LogError(error);
+                        return new StatusCodeResponse()
                         {
-                            Error = new ErrorModel(ErrorType.BadRequest)
+                            Result = new BadRequestObjectResult(error)
                         };
                     }
                     stringInSetToUpdate.StringsSet = stringsSetFromDb;
@@ -97,19 +97,18 @@ namespace StringManager.Services.API.Handlers
                 {
                     Parameter = stringInSetToUpdate
                 };
-                var modifiedStringInSet = await commandExecutor.Execute(command);
-                var mappedModifiedStringInSet = mapper.Map<Core.Models.StringInSet>(modifiedStringInSet);
-                return new ModifyStringInSetResponse()
+                await commandExecutor.Execute(command);
+                return new StatusCodeResponse()
                 {
-                    Data = mappedModifiedStringInSet
+                    Result = new NoContentResult()
                 };
             }
             catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new ModifyStringInSetResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

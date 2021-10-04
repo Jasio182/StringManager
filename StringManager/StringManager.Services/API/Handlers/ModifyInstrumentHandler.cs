@@ -1,46 +1,43 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class ModifyInstrumentHandler : IRequestHandler<ModifyInstrumentRequest, ModifyInstrumentResponse>
+    public class ModifyInstrumentHandler : IRequestHandler<ModifyInstrumentRequest, StatusCodeResponse>
     {
         private readonly IQueryExecutor queryExecutor;
-        private readonly IMapper mapper;
         private readonly ICommandExecutor commandExecutor;
         private readonly ILogger<ModifyInstrumentHandler> logger;
 
         public ModifyInstrumentHandler(IQueryExecutor queryExecutor,
-                                       IMapper mapper,
                                        ICommandExecutor commandExecutor,
                                        ILogger<ModifyInstrumentHandler> logger)
         {
             this.queryExecutor = queryExecutor;
-            this.mapper = mapper;
             this.commandExecutor = commandExecutor;
             this.logger = logger;
         }
 
-        public async Task<ModifyInstrumentResponse> Handle(ModifyInstrumentRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(ModifyInstrumentRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if(request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError("Non admin user with Id: " + request.UserId ?? "_unregistered_" + " tried to modify an instrument");
-                    return new ModifyInstrumentResponse()
+                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to modify an Instrument");
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.Unauthorized)
+                        Result = new UnauthorizedResult()
                     };
                 }
                 var instrumentQuery = new GetInstrumentQuery()
@@ -50,10 +47,11 @@ namespace StringManager.Services.API.Handlers
                 var instrumentFromDb = await queryExecutor.Execute(instrumentQuery);
                 if (instrumentFromDb == null)
                 {
-                    logger.LogError("Instrument of given Id of " + request.Id + " has not been found");
-                    return new ModifyInstrumentResponse()
+                    string error = "instrument of given Id: " + request.Id + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.NotFound)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
                 var instrumentToUpdate = instrumentFromDb;
@@ -66,10 +64,11 @@ namespace StringManager.Services.API.Handlers
                     var manufacturerFromDb = await queryExecutor.Execute(manufacturerQuery);
                     if (manufacturerFromDb == null)
                     {
-                        logger.LogError("Manufacturer of given Id of " + request.ManufacturerId + " has not been found");
-                        return new ModifyInstrumentResponse()
+                        string error = "Manufacturer of given Id: " + request.ManufacturerId + " has not been found";
+                        logger.LogError(error);
+                        return new StatusCodeResponse()
                         {
-                            Error = new ErrorModel(ErrorType.BadRequest)
+                            Result = new BadRequestObjectResult(error)
                         };
                     }
                     instrumentToUpdate.Manufacturer = manufacturerFromDb;
@@ -86,19 +85,18 @@ namespace StringManager.Services.API.Handlers
                 {
                     Parameter = instrumentToUpdate
                 };
-                var modifiedInstrument = commandExecutor.Execute(command);
-                var mappedModifiedInstrument = mapper.Map<Core.Models.Instrument>(modifiedInstrument);
-                return new ModifyInstrumentResponse()
+                await commandExecutor.Execute(command);
+                return new StatusCodeResponse()
                 {
-                    Data = mappedModifiedInstrument
+                    Result = new NoContentResult()
                 };
             }
-            catch(System.Exception e)
+            catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new ModifyInstrumentResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

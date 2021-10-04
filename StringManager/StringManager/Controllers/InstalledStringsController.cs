@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
 using System.Threading.Tasks;
 
 namespace StringManager.Controllers
@@ -21,13 +21,13 @@ namespace StringManager.Controllers
         [HttpPost]
         public Task<IActionResult> AddInstalledStringAsync([FromBody] AddInstalledStringRequest request)
         {
-            return HandleResult<AddInstalledStringRequest, AddInstalledStringResponse>(request);
+            return HandleResult<AddInstalledStringRequest, StatusCodeResponse>(request);
         }
 
         [HttpPut]
         public Task<IActionResult> ModifyInstalledStringAsync([FromBody] ModifyInstalledStringRequest request)
         {
-            return HandleResult<ModifyInstalledStringRequest, ModifyInstalledStringResponse>(request);
+            return HandleResult<ModifyInstalledStringRequest, StatusCodeResponse>(request);
         }
     }
 }

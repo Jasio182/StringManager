@@ -1,8 +1,6 @@
-﻿using StringManager.Services.API.Domain.Responses;
-
-namespace StringManager.Services.API.Domain.Requests
+﻿namespace StringManager.Services.API.Domain.Requests
 {
-    public class AddStringInSetRequest : RequestBase<AddStringInSetResponse>
+    public class AddStringInSetRequest : RequestBase
     {
         public int Position { get; set; }
 

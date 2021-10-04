@@ -1,46 +1,43 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class ModifyStringHandler : IRequestHandler<ModifyStringRequest, ModifyStringResponse>
+    public class ModifyStringHandler : IRequestHandler<ModifyStringRequest, StatusCodeResponse>
     {
         private readonly IQueryExecutor queryExecutor;
-        private readonly IMapper mapper;
         private readonly ICommandExecutor commandExecutor;
         private readonly ILogger<ModifyStringHandler> logger;
 
         public ModifyStringHandler(IQueryExecutor queryExecutor,
-                                   IMapper mapper,
                                    ICommandExecutor commandExecutor,
                                    ILogger<ModifyStringHandler> logger)
         {
             this.queryExecutor = queryExecutor;
-            this.mapper = mapper;
             this.commandExecutor = commandExecutor;
             this.logger = logger;
         }
 
-        public async Task<ModifyStringResponse> Handle(ModifyStringRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(ModifyStringRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if (request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError("Non admin user with Id: " + request.UserId ?? "_unregistered_" + " tried to modify string");
-                    return new ModifyStringResponse()
+                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to modify a String");
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.Unauthorized)
+                        Result = new UnauthorizedResult()
                     };
                 }
                 var stringQuery = new GetStringQuery()
@@ -50,10 +47,11 @@ namespace StringManager.Services.API.Handlers
                 var stringFromDb = await queryExecutor.Execute(stringQuery);
                 if (stringFromDb == null)
                 {
-                    logger.LogError("String of given Id of " + request.Id + " has not been found");
-                    return new ModifyStringResponse()
+                    string error = "String of given Id: " + request.Id + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.NotFound)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
                 var stringToUpdate = stringFromDb;
@@ -66,10 +64,11 @@ namespace StringManager.Services.API.Handlers
                     var manufacturerFromDb = await queryExecutor.Execute(queryManufacturer);
                     if (manufacturerFromDb == null)
                     {
-                        logger.LogError("Manufacturer of given Id of " + request.ManufacturerId + " has not been found");
-                        return new ModifyStringResponse()
+                        string error = "Manufacturer of given Id: " + request.ManufacturerId + " has not been found";
+                        logger.LogError(error);
+                        return new StatusCodeResponse()
                         {
-                            Error = new ErrorModel(ErrorType.BadRequest)
+                            Result = new BadRequestObjectResult(error)
                         };
                     }
                     stringToUpdate.Manufacturer = manufacturerFromDb;
@@ -86,21 +85,20 @@ namespace StringManager.Services.API.Handlers
                 {
                     Parameter = stringToUpdate
                 };
-                var modifiedString = await commandExecutor.Execute(command);
-                var mappedModifiedString = mapper.Map<Core.Models.String>(modifiedString);
-                return new ModifyStringResponse()
+                await commandExecutor.Execute(command);
+                return new StatusCodeResponse()
                 {
-                    Data = mappedModifiedString
+                    Result = new NoContentResult()
                 };
             }
             catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new ModifyStringResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
-            }
+            } 
         }
     }
 }

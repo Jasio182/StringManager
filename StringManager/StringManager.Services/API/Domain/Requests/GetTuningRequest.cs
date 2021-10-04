@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using StringManager.Services.API.Domain.Responses;
 
 namespace StringManager.Services.API.Domain.Requests
 {
-    public class GetTuningRequest : RequestBase<GetTuningResponse>
+    public class GetTuningRequest : RequestBase
     {
         [FromRoute]
         public int Id { get; set; }

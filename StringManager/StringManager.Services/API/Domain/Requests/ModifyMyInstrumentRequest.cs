@@ -1,10 +1,9 @@
 ﻿using StringManager.Core.Enums;
-using StringManager.Services.API.Domain.Responses;
 using System;
 
 namespace StringManager.Services.API.Domain.Requests
 {
-    public class ModifyMyInstrumentRequest : RequestBase<ModifyMyInstrumentResponse>
+    public class ModifyMyInstrumentRequest : RequestBase
     {
         public int Id { get; set; }
 

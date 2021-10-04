@@ -1,8 +1,6 @@
-﻿using StringManager.Services.API.Domain.Responses;
-
-namespace StringManager.Services.API.Domain.Requests
+﻿namespace StringManager.Services.API.Domain.Requests
 {
-    public class GetTuningsRequest : RequestBase<GetTuningsResponse>
+    public class GetTuningsRequest : RequestBase
     {
         public int NumberOfStrings { get; set; }
     }

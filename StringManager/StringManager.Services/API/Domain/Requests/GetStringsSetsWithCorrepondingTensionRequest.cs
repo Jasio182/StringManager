@@ -1,9 +1,8 @@
 ﻿using StringManager.Core.Enums;
-using StringManager.Services.API.Domain.Responses;
 
 namespace StringManager.Services.API.Domain.Requests
 {
-    public class GetStringsSetsWithCorrepondingTensionRequest : RequestBase<GetStringsSetsWithCorrepondingTensionResponse>
+    public class GetStringsSetsWithCorrepondingTensionRequest : RequestBase
     {
         public int? MyInstrumentId { get; set; }
 

@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
 using System.Threading.Tasks;
 
 namespace StringManager.Controllers
@@ -23,7 +23,7 @@ namespace StringManager.Controllers
         [Route("ScaleLenght")]
         public Task<IActionResult> GetScaleLenghtAsync([FromQuery] GetScaleLenghtsRequest request)
         {
-            return HandleResult<GetScaleLenghtsRequest, GetScaleLenghtsResponse>(request);
+            return HandleResult<GetScaleLenghtsRequest, StatusCodeResponse>(request);
         }
 
         [AllowAnonymous]
@@ -31,14 +31,14 @@ namespace StringManager.Controllers
         [Route("StringsInSize")]
         public Task<IActionResult> GetStringSizeWithCorrepondingTensionAsync([FromQuery] GetStringSizeWithCorrepondingTensionRequest request)
         {
-            return HandleResult<GetStringSizeWithCorrepondingTensionRequest, GetStringSizeWithCorrepondingTensionResponse>(request);
+            return HandleResult<GetStringSizeWithCorrepondingTensionRequest, StatusCodeResponse>(request);
         }
 
         [HttpGet]
         [Route("StringsSets")]
         public Task<IActionResult> GetStringsSetsWithCorrepondingTensionAsync([FromQuery] GetStringsSetsWithCorrepondingTensionRequest request)
         {
-            return HandleResult <GetStringsSetsWithCorrepondingTensionRequest, GetStringsSetsWithCorrepondingTensionResponse>(request);
+            return HandleResult <GetStringsSetsWithCorrepondingTensionRequest, StatusCodeResponse>(request);
         }
 
         [AllowAnonymous]
@@ -46,7 +46,7 @@ namespace StringManager.Controllers
         [Route("StringTension")]
         public Task<IActionResult> GetStringTensionAsync([FromQuery] GetStringTensionRequest request)
         {
-            return HandleResult<GetStringTensionRequest, GetStringTensionResponse>(request);
+            return HandleResult<GetStringTensionRequest, StatusCodeResponse>(request);
         }
     }
 }

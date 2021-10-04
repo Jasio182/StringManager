@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class GetUsersHandler : IRequestHandler<GetUsersRequest, GetUsersResponse>
+    public class GetUsersHandler : IRequestHandler<GetUsersRequest, StatusCodeResponse>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -28,16 +28,16 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<GetUsersResponse> Handle(GetUsersRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(GetUsersRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if(request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError("Non admin user with Id: " +request.UserId + " tried to get list of users");
-                    return new GetUsersResponse()
+                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to get list of Users");
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.Unauthorized)
+                        Result = new UnauthorizedResult()
                     };
                 }
                 var query = new GetUsersQuery()
@@ -46,17 +46,17 @@ namespace StringManager.Services.API.Handlers
                 };
                 var usersFromDb = await queryExecutor.Execute(query);
                 var mappedUsersFromDb = mapper.Map<List<Core.Models.User>>(usersFromDb);
-                return new GetUsersResponse()
+                return new StatusCodeResponse()
                 {
-                    Data = mappedUsersFromDb
+                    Result = new OkObjectResult(mappedUsersFromDb)
                 };
             }
-            catch(System.Exception e)
+            catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new GetUsersResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

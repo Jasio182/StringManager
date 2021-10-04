@@ -1,20 +1,20 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class GetStringsSetsHandler : IRequestHandler<GetStringsSetsRequest, GetStringsSetsResponse>
+    public class GetStringsSetsHandler : IRequestHandler<GetStringsSetsRequest, StatusCodeResponse>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -29,7 +29,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<GetStringsSetsResponse> Handle(GetStringsSetsRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(GetStringsSetsRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -37,23 +37,23 @@ namespace StringManager.Services.API.Handlers
                 {
                     StringType = request.StringType
                 };
-                var stringSetsFromDb = await queryExecutor.Execute(query);
-                var mappedStringSets = mapper.Map<List<StringsSet>>(stringSetsFromDb);
-                for (int i = 0; i < stringSetsFromDb.Count; i++)
+                var stringsSetsFromDb = await queryExecutor.Execute(query);
+                var mappedStringsSets = mapper.Map<List<StringsSet>>(stringsSetsFromDb);
+                for (int i = 0; i < stringsSetsFromDb.Count; i++)
                 {
-                    mappedStringSets[i].StringsInSet = mapper.Map<List<StringInSet>>(stringSetsFromDb[i].StringsInSet);
+                    mappedStringsSets[i].StringsInSet = mapper.Map<List<StringInSet>>(stringsSetsFromDb[i].StringsInSet);
                 }
-                return new GetStringsSetsResponse()
+                return new StatusCodeResponse()
                 {
-                    Data = mappedStringSets
+                    Result = new OkObjectResult(mappedStringsSets)
                 };
             }
             catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new GetStringsSetsResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

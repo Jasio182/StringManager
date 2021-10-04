@@ -17,10 +17,6 @@ namespace StringManager.Authentication
 {
     public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
-        private readonly IOptionsMonitor<AuthenticationSchemeOptions> options;
-        private readonly ILoggerFactory logger;
-        private readonly UrlEncoder encoder;
-        private readonly ISystemClock clock;
         private readonly IQueryExecutor queryExecutor;
 
         public BasicAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options,
@@ -32,10 +28,6 @@ namespace StringManager.Authentication
                                                                                encoder,
                                                                                clock)
         {
-            this.options = options;
-            this.logger = logger;
-            this.encoder = encoder;
-            this.clock = clock;
             this.queryExecutor = queryExecutor;
         }
 

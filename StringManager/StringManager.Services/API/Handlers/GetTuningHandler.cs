@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class GetTuningHandler : IRequestHandler<GetTuningRequest, GetTuningResponse>
+    public class GetTuningHandler : IRequestHandler<GetTuningRequest, StatusCodeResponse>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -28,7 +28,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<GetTuningResponse> Handle(GetTuningRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(GetTuningRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -40,17 +40,17 @@ namespace StringManager.Services.API.Handlers
                 var mappedTuningFromDb = mapper.Map<Core.Models.Tuning>(tuningFromDb);
                 var mappedTonesInTuning = mapper.Map<List<Core.Models.ToneInTuning>>(tuningFromDb.TonesInTuning);
                 mappedTuningFromDb.TonesInTuning = mappedTonesInTuning;
-                return new GetTuningResponse()
+                return new StatusCodeResponse()
                 {
-                    Data = mappedTuningFromDb
+                    Result = new OkObjectResult(mappedTuningFromDb)
                 };
             }
             catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new GetTuningResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

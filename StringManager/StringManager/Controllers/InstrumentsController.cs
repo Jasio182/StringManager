@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
 using System.Threading.Tasks;
 
 namespace StringManager.Controllers
@@ -23,13 +23,13 @@ namespace StringManager.Controllers
         public Task<IActionResult> GetInstrumentsAsync()
         {
             var request = new GetInstrumentsRequest();
-            return HandleResult<GetInstrumentsRequest, GetInstrumentsResponse>(request);
+            return HandleResult<GetInstrumentsRequest, StatusCodeResponse>(request);
         }
 
         [HttpPost]
         public Task<IActionResult> AddInstrumentAsync([FromBody] AddInstrumentRequest request)
         {
-            return HandleResult<AddInstrumentRequest, AddInstrumentResponse>(request);
+            return HandleResult<AddInstrumentRequest, StatusCodeResponse>(request);
         }
     }
 }

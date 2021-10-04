@@ -1,33 +1,29 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class RemoveMyInstrumentHandler : IRequestHandler<RemoveMyInstrumentRequest, RemoveMyInstrumentResponse>
+    public class RemoveMyInstrumentHandler : IRequestHandler<RemoveMyInstrumentRequest, StatusCodeResponse>
     {
-        private readonly IMapper mapper;
         private readonly ICommandExecutor commandExecutor;
         private readonly ILogger<RemoveMyInstrumentHandler> logger;
 
-        public RemoveMyInstrumentHandler(IMapper mapper,
-                                         ICommandExecutor commandExecutor,
+        public RemoveMyInstrumentHandler(ICommandExecutor commandExecutor,
                                          ILogger<RemoveMyInstrumentHandler> logger)
         {
-            this.mapper = mapper;
             this.commandExecutor = commandExecutor;
             this.logger = logger;
         }
 
-        public async Task<RemoveMyInstrumentResponse> Handle(RemoveMyInstrumentRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(RemoveMyInstrumentRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -38,24 +34,24 @@ namespace StringManager.Services.API.Handlers
                 var removedMyInstrumentFromDb = await commandExecutor.Execute(command);
                 if (removedMyInstrumentFromDb == null)
                 {
-                    logger.LogError("MyInstrument of given Id of " + request.Id + " has not been found");
-                    return new RemoveMyInstrumentResponse()
+                    string error = "MyInstrument of given Id: " + request.Id + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.NotFound)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
-                var mappedRemovedMyInstrument = mapper.Map<Core.Models.MyInstrument>(removedMyInstrumentFromDb);
-                return new RemoveMyInstrumentResponse()
+                return new StatusCodeResponse()
                 {
-                    Data = mappedRemovedMyInstrument
+                    Result = new NoContentResult()
                 };
             }
             catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new RemoveMyInstrumentResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

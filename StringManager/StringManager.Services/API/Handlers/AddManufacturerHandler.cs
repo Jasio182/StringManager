@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.Entities;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class AddManufacturerHandler : IRequestHandler<AddManufacturerRequest, AddManufacturerResponse>
+    public class AddManufacturerHandler : IRequestHandler<AddManufacturerRequest, StatusCodeResponse>
     {
         private readonly IMapper mapper;
         private readonly ICommandExecutor commandExecutor;
@@ -28,7 +28,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<AddManufacturerResponse> Handle(AddManufacturerRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(AddManufacturerRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -39,17 +39,17 @@ namespace StringManager.Services.API.Handlers
                 };
                 var addedManufacturer = await commandExecutor.Execute(command);
                 var mappedAddedManufacturer = mapper.Map<Core.Models.Manufacturer>(addedManufacturer);
-                return new AddManufacturerResponse()
+                return new StatusCodeResponse()
                 {
-                    Data = mappedAddedManufacturer
+                    Result = new OkObjectResult(mappedAddedManufacturer)
                 };
             }
             catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new AddManufacturerResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

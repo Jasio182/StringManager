@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.ErrorHandling;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
@@ -23,8 +22,8 @@ namespace StringManager.Controllers
         }
 
         protected async Task<IActionResult> HandleResult<TRequest, TResponse>(TRequest request)
-            where TRequest : RequestBase<TResponse>
-            where TResponse : ErrorResponseBase
+            where TRequest : RequestBase
+            where TResponse : StatusCodeResponse
         {
             if(!ModelState.IsValid)
             {
@@ -36,35 +35,12 @@ namespace StringManager.Controllers
             request.UserId = int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var tempUserId) ? tempUserId : null;
             request.AccountType = System.Enum.TryParse<Core.Enums.AccountType>(User.FindFirstValue(ClaimTypes.Role), out var tempAccountType) ? tempAccountType : null;
             var response = await mediator.Send(request);
-            if(response.Error != null)
+            if(response.Result == null)
             {
                 logger.LogInformation("An error encountered during handling a request");
-                return ErrorResponse(response.Error);
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
-            return Ok(response);
-        }
-
-        private IActionResult ErrorResponse(ErrorModel errorModel)
-        {
-            var statusCode = GetStatusCode(errorModel.Error);
-            return StatusCode((int)statusCode, errorModel);
-        }
-
-        private static HttpStatusCode GetStatusCode(string errorType)
-        {
-            switch(errorType)
-            {
-                case ErrorType.NotFound:
-                    return HttpStatusCode.NotFound;
-                case ErrorType.InternalServerError:
-                    return HttpStatusCode.InternalServerError;
-                case ErrorType.Unauthorized:
-                    return HttpStatusCode.Unauthorized;
-                case ErrorType.BadRequest:
-                default:
-                    return HttpStatusCode.BadRequest;
-            };
-              
+            return response.Result;
         }
     }
 }

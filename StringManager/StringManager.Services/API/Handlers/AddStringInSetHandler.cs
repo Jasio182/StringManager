@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
@@ -7,14 +8,13 @@ using StringManager.DataAccess.CQRS.Queries;
 using StringManager.DataAccess.Entities;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class AddStringInSetHandler : IRequestHandler<AddStringInSetRequest, AddStringInSetResponse>
+    public class AddStringInSetHandler : IRequestHandler<AddStringInSetRequest, StatusCodeResponse>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -32,16 +32,16 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<AddStringInSetResponse> Handle(AddStringInSetRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(AddStringInSetRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if (request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError("Non admin user with Id: " + request.UserId ?? "_unregistered_" + " tried to add string in set");
-                    return new AddStringInSetResponse()
+                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to add a new StringInSet");
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.Unauthorized)
+                        Result = new UnauthorizedResult()
                     };
                 }
                 var queryStringsSet = new GetStringsSetQuery()
@@ -51,10 +51,11 @@ namespace StringManager.Services.API.Handlers
                 var stringsSetFromDb = await queryExecutor.Execute(queryStringsSet);
                 if (stringsSetFromDb == null)
                 {
-                    logger.LogError("String of given Id of " + request.StringsSetId + " has not been found");
-                    return new AddStringInSetResponse()
+                    string error = "StringsSet of given Id: " + request.StringsSetId + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.BadRequest)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
                 var queryString = new GetStringQuery()
@@ -64,10 +65,11 @@ namespace StringManager.Services.API.Handlers
                 var stringFromDb = await queryExecutor.Execute(queryString);
                 if (stringFromDb == null)
                 {
-                    logger.LogError("String of given Id of " + request.StringId + " has not been found");
-                    return new AddStringInSetResponse()
+                    string error = "String of given Id: " + request.StringId + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.BadRequest)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
                 var stringInSetToAdd = mapper.Map<StringInSet>(
@@ -78,17 +80,17 @@ namespace StringManager.Services.API.Handlers
                 };
                 var addedStringInSet = await commandExecutor.Execute(command);
                 var mappedAddedStringInSet = mapper.Map<Core.Models.StringInSet>(addedStringInSet);
-                return new AddStringInSetResponse()
+                return new StatusCodeResponse()
                 {
-                    Data = mappedAddedStringInSet
+                    Result = new OkObjectResult(mappedAddedStringInSet)
                 };
             }
             catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new AddStringInSetResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

@@ -1,20 +1,20 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class GetMyInstrumentsHandler : IRequestHandler<GetMyInstrumentsRequest, GetMyInstrumentsResponse>
+    public class GetMyInstrumentsHandler : IRequestHandler<GetMyInstrumentsRequest, StatusCodeResponse>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -29,7 +29,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<GetMyInstrumentsResponse> Handle(GetMyInstrumentsRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(GetMyInstrumentsRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -37,10 +37,10 @@ namespace StringManager.Services.API.Handlers
                     request.RequestUserId = request.UserId;
                 else if(request.RequestUserId != null && request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError("Non admin user with Id: " + request.UserId ?? "_unregistered_" + " tried to get myinstruments for user of ID " + request.RequestUserId);
-                    return new GetMyInstrumentsResponse()
+                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to get all MyInstruments of a user: " + request.RequestUserId);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.Unauthorized)
+                        Result = new UnauthorizedResult()
                     };
                 }
                 var query = new GetMyInstrumentsQuery()
@@ -49,17 +49,17 @@ namespace StringManager.Services.API.Handlers
                 };
                 var myInstrumentsFromDb = await queryExecutor.Execute(query);
                 var mappedMyInstruments = mapper.Map<List<MyInstrumentList>>(myInstrumentsFromDb);
-                return new GetMyInstrumentsResponse()
+                return new StatusCodeResponse()
                 {
-                    Data = mappedMyInstruments
+                    Result = new OkObjectResult(mappedMyInstruments)
                 };
             }
             catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new GetMyInstrumentsResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

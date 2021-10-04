@@ -1,42 +1,38 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class RemoveManufacturerHandler : IRequestHandler<RemoveManufacturerRequest, RemoveManufacturerResponse>
+    public class RemoveManufacturerHandler : IRequestHandler<RemoveManufacturerRequest, StatusCodeResponse>
     {
-        private readonly IMapper mapper;
         private readonly ICommandExecutor commandExecutor;
         private readonly ILogger<RemoveManufacturerHandler> logger;
 
-        public RemoveManufacturerHandler(IMapper mapper,
-                                         ICommandExecutor commandExecutor,
+        public RemoveManufacturerHandler(ICommandExecutor commandExecutor,
                                          ILogger<RemoveManufacturerHandler> logger)
         {
-            this.mapper = mapper;
             this.commandExecutor = commandExecutor;
             this.logger = logger;
         }
 
-        public async Task<RemoveManufacturerResponse> Handle(RemoveManufacturerRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(RemoveManufacturerRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if (request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError("Non admin user with Id: " + request.UserId ?? "_unregistered_" + " tried to remove a manufacturer");
-                    return new RemoveManufacturerResponse()
+                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to remove a Manufacturer");
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.Unauthorized)
+                        Result = new UnauthorizedResult()
                     };
                 }
                 var command = new RemoveManufacturerCommand()
@@ -46,24 +42,24 @@ namespace StringManager.Services.API.Handlers
                 var removedManufacturerFromDb = await commandExecutor.Execute(command);
                 if (removedManufacturerFromDb == null)
                 {
-                    logger.LogError("Manufacturer of given Id of " + request.Id + " has not been found");
-                    return new RemoveManufacturerResponse()
+                    string error = "Manufacturer of given Id: " + request.Id + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.NotFound)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
-                var mappedRemovedManufacturer = mapper.Map<Core.Models.Manufacturer>(removedManufacturerFromDb);
-                return new RemoveManufacturerResponse()
+                return new StatusCodeResponse()
                 {
-                    Data = mappedRemovedManufacturer
+                    Result = new NoContentResult()
                 };
             }
             catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new RemoveManufacturerResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

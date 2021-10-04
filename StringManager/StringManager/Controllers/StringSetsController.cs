@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
 using System.Threading.Tasks;
 
 namespace StringManager.Controllers
@@ -21,14 +21,14 @@ namespace StringManager.Controllers
         [HttpGet]
         public Task<IActionResult> GetStringsSetsAsync([FromQuery] GetStringsSetsRequest request)
         {
-            return HandleResult<GetStringsSetsRequest, GetStringsSetsResponse>(request);
+            return HandleResult<GetStringsSetsRequest, StatusCodeResponse>(request);
         }
 
         [HttpGet]
         [Route("{Id}")]
         public Task<IActionResult> GetStringsSetAsync([FromQuery] GetStringsSetRequest request)
         {
-            return HandleResult<GetStringsSetRequest, GetStringsSetResponse>(request);
+            return HandleResult<GetStringsSetRequest, StatusCodeResponse>(request);
         }
     }
 }

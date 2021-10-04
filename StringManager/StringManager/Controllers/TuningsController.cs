@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
 using System.Threading.Tasks;
 
 namespace StringManager.Controllers
@@ -23,7 +23,7 @@ namespace StringManager.Controllers
         public Task<IActionResult> GetTuningsAsync()
         {
             var request = new GetTuningsRequest();
-            return HandleResult<GetTuningsRequest, GetTuningsResponse>(request);
+            return HandleResult<GetTuningsRequest, StatusCodeResponse>(request);
         }
 
         [AllowAnonymous]
@@ -31,7 +31,7 @@ namespace StringManager.Controllers
         [Route("{Id}")]
         public Task<IActionResult> GetTuningAsync([FromQuery] GetTuningRequest request)
         {
-            return HandleResult<GetTuningRequest, GetTuningResponse>(request);
+            return HandleResult<GetTuningRequest, StatusCodeResponse>(request);
         }
     }
 }

@@ -1,39 +1,36 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
 using StringManager.Services.InternalClasses;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class ModifyMyInstrumentHandler : IRequestHandler<ModifyMyInstrumentRequest, ModifyMyInstrumentResponse>
+    public class ModifyMyInstrumentHandler : IRequestHandler<ModifyMyInstrumentRequest, StatusCodeResponse>
     {
         private readonly IQueryExecutor queryExecutor;
-        private readonly IMapper mapper;
         private readonly ICommandExecutor commandExecutor;
         private readonly ILogger<ModifyMyInstrumentHandler> logger;
 
         public ModifyMyInstrumentHandler(IQueryExecutor queryExecutor,
-                                         IMapper mapper,
                                          ICommandExecutor commandExecutor,
                                          ILogger<ModifyMyInstrumentHandler> logger)
         {
             this.queryExecutor = queryExecutor;
-            this.mapper = mapper;
             this.commandExecutor = commandExecutor;
             this.logger = logger;
         }
 
-        public async Task<ModifyMyInstrumentResponse> Handle(ModifyMyInstrumentRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(ModifyMyInstrumentRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -46,10 +43,11 @@ namespace StringManager.Services.API.Handlers
                 var myInstrumentFromDb = await queryExecutor.Execute(myInstrumentQuery);
                 if (myInstrumentFromDb == null)
                 {
-                    logger.LogError("MyInstrument of given Id of " + request.Id + " has not been found");
-                    return new ModifyMyInstrumentResponse()
+                    string error = "MyInstrument of given Id: " + request.Id + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.NotFound)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
                 var myInstrumentToUpdate = myInstrumentFromDb;
@@ -80,19 +78,18 @@ namespace StringManager.Services.API.Handlers
                 {
                     Parameter = myInstrumentToUpdate
                 };
-                var modifiedMyInstrument = await commandExecutor.Execute(command);
-                var mappedModifiedMyInstrument = mapper.Map<Core.Models.MyInstrument>(modifiedMyInstrument);
-                return new ModifyMyInstrumentResponse()
+                await commandExecutor.Execute(command);
+                return new StatusCodeResponse()
                 {
-                    Data = mappedModifiedMyInstrument
+                    Result = new NoContentResult()
                 };
             }
             catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new ModifyMyInstrumentResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

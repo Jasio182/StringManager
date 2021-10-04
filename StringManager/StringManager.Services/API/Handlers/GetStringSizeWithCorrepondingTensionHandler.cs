@@ -1,21 +1,21 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
 using StringManager.Services.InternalClasses;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class GetStringSizeWithCorrepondingTensionHandler : IRequestHandler<GetStringSizeWithCorrepondingTensionRequest, GetStringSizeWithCorrepondingTensionResponse>
+    public class GetStringSizeWithCorrepondingTensionHandler : IRequestHandler<GetStringSizeWithCorrepondingTensionRequest, StatusCodeResponse>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -30,7 +30,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<GetStringSizeWithCorrepondingTensionResponse> Handle(GetStringSizeWithCorrepondingTensionRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(GetStringSizeWithCorrepondingTensionRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -41,10 +41,11 @@ namespace StringManager.Services.API.Handlers
                 var stringFromDb = await queryExecutor.Execute(stringQuery);
                 if (stringFromDb == null)
                 {
-                    logger.LogError("String of given Id of " + request.StringId + " has not been found");
-                    return new GetStringSizeWithCorrepondingTensionResponse()
+                    string error = "String of given Id: " + request.StringId + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.BadRequest)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
                 var stringsQuery = new GetStringsQuery();
@@ -56,20 +57,22 @@ namespace StringManager.Services.API.Handlers
                 var primaryToneFromDb = await queryExecutor.Execute(toneQuery);
                 if (primaryToneFromDb == null)
                 {
-                    logger.LogError("Tone of given Id of " + request.PrimaryToneId + " has not been found");
-                    return new GetStringSizeWithCorrepondingTensionResponse()
+                    string error = "Tone of given Id: " + request.PrimaryToneId + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.BadRequest)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
                 toneQuery.Id = (int)request.ResultToneId;
                 var resultToneFromDb = await queryExecutor.Execute(toneQuery);
                 if (resultToneFromDb == null)
                 {
-                    logger.LogError("Tone of given Id of " + request.ResultToneId + " has not been found");
-                    return new GetStringSizeWithCorrepondingTensionResponse()
+                    string error = "Tone of given Id: " + request.ResultToneId + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.BadRequest)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
                 var stringSize = StringCalculator.GetStringSizeWithCorrepondingTension((int)request.ScaleLength, stringFromDb,
@@ -77,17 +80,17 @@ namespace StringManager.Services.API.Handlers
                                                                                  resultToneFromDb);
                 var stringsOfSize = stringsFromDb.Where(thisString => thisString.Size == stringSize);
                 var mappedStringsOfSize = mapper.Map<List<Core.Models.String>>(stringsOfSize);
-                return new GetStringSizeWithCorrepondingTensionResponse()
+                return new StatusCodeResponse()
                 {
-                    Data = mappedStringsOfSize
+                    Result = new OkObjectResult(mappedStringsOfSize)
                 };
             }
             catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new GetStringSizeWithCorrepondingTensionResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

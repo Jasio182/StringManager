@@ -1,20 +1,20 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    class GetTonesHandler : IRequestHandler<GetTonesRequest, GetTonesResponse>
+    class GetTonesHandler : IRequestHandler<GetTonesRequest, StatusCodeResponse>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -29,25 +29,24 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<GetTonesResponse> Handle(GetTonesRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(GetTonesRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 var query = new GetTonesQuery();
                 var tonesFromDb = await queryExecutor.Execute(query);
                 var mappedTones = mapper.Map<List<Tone>>(tonesFromDb);
-                var response = new GetTonesResponse()
+                return new StatusCodeResponse()
                 {
-                    Data = mappedTones
+                    Result = new OkObjectResult(mappedTones)
                 };
-                return response;
             }
             catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new GetTonesResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

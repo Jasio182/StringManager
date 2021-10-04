@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.Entities;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class AddToneHandler : IRequestHandler<AddToneRequest, AddToneResponse>
+    public class AddToneHandler : IRequestHandler<AddToneRequest, StatusCodeResponse>
     {
         private readonly IMapper mapper;
         private readonly ICommandExecutor commandExecutor;
@@ -28,16 +28,16 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<AddToneResponse> Handle(AddToneRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(AddToneRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if (request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError("Non admin user with Id: " + request.UserId ?? "_unregistered_" + " tried to add tone");
-                    return new AddToneResponse()
+                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to add a new Tone");
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.Unauthorized)
+                        Result = new UnauthorizedResult()
                     };
                 }
                 var toneToAdd = mapper.Map<Tone>(request);
@@ -47,17 +47,17 @@ namespace StringManager.Services.API.Handlers
                 };
                 var addedTone = await commandExecutor.Execute(command);
                 var mappedAddedTone = mapper.Map<Core.Models.Tone>(addedTone);
-                return new AddToneResponse()
+                return new StatusCodeResponse()
                 {
-                    Data = mappedAddedTone
+                    Result = new OkObjectResult(mappedAddedTone)
                 };
             }
             catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new AddToneResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

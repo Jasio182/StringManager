@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
 using System.Threading.Tasks;
 
 namespace StringManager.Controllers
@@ -23,7 +23,7 @@ namespace StringManager.Controllers
         public Task<IActionResult> GetTonesAsync()
         {
             var request = new GetTonesRequest();
-            return HandleResult<GetTonesRequest, GetTonesResponse>(request);
+            return HandleResult<GetTonesRequest, StatusCodeResponse>(request);
         }
     }
 }

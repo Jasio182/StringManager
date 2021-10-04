@@ -1,8 +1,6 @@
-﻿using StringManager.Services.API.Domain.Responses;
-
-namespace StringManager.Services.API.Domain.Requests
+﻿namespace StringManager.Services.API.Domain.Requests
 {
-    public class GetStringSizeWithCorrepondingTensionRequest : RequestBase<GetStringSizeWithCorrepondingTensionResponse>
+    public class GetStringSizeWithCorrepondingTensionRequest : RequestBase
     {
         public int? ScaleLength { get; set; }
 

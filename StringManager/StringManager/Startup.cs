@@ -12,7 +12,7 @@ using Microsoft.OpenApi.Models;
 using StringManager.Authentication;
 using StringManager.DataAccess;
 using StringManager.DataAccess.CQRS;
-using StringManager.Services.API.Domain.Responses;
+using StringManager.Services.API.Domain;
 using StringManager.Services.API.Validators;
 using StringManager.Services.Mappings;
 
@@ -41,7 +41,7 @@ namespace StringManager
             services.AddTransient<IQueryExecutor, QueryExecutor>();
             services.AddTransient<ICommandExecutor, CommandExecutor>();
             services.AddAutoMapper(typeof(ToneMapping).Assembly);
-            services.AddMediatR(typeof(ResponseBase<>));
+            services.AddMediatR(typeof(StatusCodeResponse));
             services.AddDbContext<StringManagerStorageContext>(
                 opt => opt.UseSqlServer(Configuration.GetConnectionString("StringManagerConnectionString")));
             services.AddControllers();

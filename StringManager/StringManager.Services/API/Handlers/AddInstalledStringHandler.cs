@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
@@ -7,14 +8,13 @@ using StringManager.DataAccess.CQRS.Queries;
 using StringManager.DataAccess.Entities;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    class AddInstalledStringHandler : IRequestHandler<AddInstalledStringRequest, AddInstalledStringResponse>
+    class AddInstalledStringHandler : IRequestHandler<AddInstalledStringRequest, StatusCodeResponse>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -32,7 +32,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<AddInstalledStringResponse> Handle(AddInstalledStringRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(AddInstalledStringRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -43,10 +43,11 @@ namespace StringManager.Services.API.Handlers
                 var stringFromDb = await queryExecutor.Execute(queryString);
                 if (stringFromDb == null)
                 {
-                    logger.LogError("String of given Id of " + request.StringId + " has not been found");
-                    return new AddInstalledStringResponse()
+                    string error = "String of given Id: " + request.StringId + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.BadRequest)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
                 var queryTone = new GetToneQuery()
@@ -56,10 +57,11 @@ namespace StringManager.Services.API.Handlers
                 var toneFromDb = await queryExecutor.Execute(queryTone);
                 if (toneFromDb == null)
                 {
-                    logger.LogError("Tone of given Id of " + request.ToneId + " has not been found");
-                    return new AddInstalledStringResponse()
+                    string error = "Tone of given Id: " + request.ToneId + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.BadRequest)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
                 var queryMyInstrument = new GetMyInstrumentQuery()
@@ -71,10 +73,11 @@ namespace StringManager.Services.API.Handlers
                 var myInstrumentFromDb = await queryExecutor.Execute(queryMyInstrument);
                 if (myInstrumentFromDb == null)
                 {
-                    logger.LogError("MyInstrument of given Id of " + request.MyInstrumentId + " has not been found");
-                    return new AddInstalledStringResponse()
+                    string error = "MyInstrument of given Id: " + request.MyInstrumentId + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.BadRequest)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
                 var installedStringToAdd = mapper.Map<InstalledString>(
@@ -86,17 +89,17 @@ namespace StringManager.Services.API.Handlers
                 };
                 var addedInstalledString = await commandExecutor.Execute(command);
                 var mappedAddedInstalledString = mapper.Map<Core.Models.InstalledString>(addedInstalledString);
-                return new AddInstalledStringResponse()
+                return new StatusCodeResponse()
                 {
-                    Data = mappedAddedInstalledString
+                    Result = new OkObjectResult(mappedAddedInstalledString)
                 };
             }
             catch(System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new AddInstalledStringResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

@@ -1,20 +1,20 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class GetStringsSetHandler : IRequestHandler<GetStringsSetRequest, GetStringsSetResponse>
+    public class GetStringsSetHandler : IRequestHandler<GetStringsSetRequest, StatusCodeResponse>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -29,7 +29,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<GetStringsSetResponse> Handle(GetStringsSetRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(GetStringsSetRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -40,17 +40,17 @@ namespace StringManager.Services.API.Handlers
                 var stringsSetFromDb = await queryExecutor.Execute(query);
                 var mappedStringsSet = mapper.Map<StringsSet>(stringsSetFromDb);
                 mappedStringsSet.StringsInSet = mapper.Map<List<StringInSet>>(stringsSetFromDb.StringsInSet);
-                return new GetStringsSetResponse()
+                return new StatusCodeResponse()
                 {
-                    Data = mappedStringsSet
+                    Result = new OkObjectResult(mappedStringsSet)
                 };
             }
             catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new GetStringsSetResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

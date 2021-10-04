@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.Entities;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class AddUserHandler : IRequestHandler<AddUserRequest, AddUserResponse>
+    public class AddUserHandler : IRequestHandler<AddUserRequest, StatusCodeResponse>
     {
         private readonly IMapper mapper;
         private readonly ICommandExecutor commandExecutor;
@@ -28,16 +28,16 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<AddUserResponse> Handle(AddUserRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(AddUserRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if (request.AccountTypeToAdd == Core.Enums.AccountType.Admin && request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError("Non admin user with Id: " + request.UserId ?? "_unregistered_" + " tried to add admin user");
-                    return new AddUserResponse()
+                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to add a new Admin User");
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.Unauthorized)
+                        Result = new UnauthorizedResult()
                     };
                 }
                 else
@@ -49,17 +49,17 @@ namespace StringManager.Services.API.Handlers
                 };
                 var addedUser = await commandExecutor.Execute(command);
                 var mappedAddedUser = mapper.Map<Core.Models.User>(addedUser);
-                return new AddUserResponse()
+                return new StatusCodeResponse()
                 {
-                    Data = mappedAddedUser
+                    Result = new OkObjectResult(mappedAddedUser)
                 };
             }
             catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new AddUserResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

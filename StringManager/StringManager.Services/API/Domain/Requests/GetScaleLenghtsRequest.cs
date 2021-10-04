@@ -1,8 +1,6 @@
-﻿using StringManager.Services.API.Domain.Responses;
-
-namespace StringManager.Services.API.Domain.Requests
+﻿namespace StringManager.Services.API.Domain.Requests
 {
-    public class GetScaleLenghtsRequest : RequestBase<GetScaleLenghtsResponse>
+    public class GetScaleLenghtsRequest : RequestBase
     {
         public int? InstrumentId { get; set; }
     }

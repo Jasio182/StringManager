@@ -1,8 +1,6 @@
-﻿using StringManager.Services.API.Domain.Responses;
-
-namespace StringManager.Services.API.Domain.Requests
+﻿namespace StringManager.Services.API.Domain.Requests
 {
-    public class RemoveStringsSetRequest : RequestBase<RemoveStringsSetResponse>
+    public class RemoveStringsSetRequest : RequestBase
     {
         public int Id { get; set; }
     }

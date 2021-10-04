@@ -1,42 +1,38 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class RemoveStringsSetHandler : IRequestHandler<RemoveStringsSetRequest, RemoveStringsSetResponse>
+    public class RemoveStringsSetHandler : IRequestHandler<RemoveStringsSetRequest, StatusCodeResponse>
     {
-        private readonly IMapper mapper;
         private readonly ICommandExecutor commandExecutor;
         private readonly ILogger<RemoveStringsSetHandler> logger;
 
-        public RemoveStringsSetHandler(IMapper mapper,
-                                       ICommandExecutor commandExecutor,
+        public RemoveStringsSetHandler(ICommandExecutor commandExecutor,
                                        ILogger<RemoveStringsSetHandler> logger)
         {
-            this.mapper = mapper;
             this.commandExecutor = commandExecutor;
             this.logger = logger;
         }
 
-        public async Task<RemoveStringsSetResponse> Handle(RemoveStringsSetRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(RemoveStringsSetRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if (request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError("Non admin user with Id: " + request.UserId ?? "_unregistered_" + " tried to remove string");
-                    return new RemoveStringsSetResponse()
+                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to remove a StringsSet");
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.Unauthorized)
+                        Result = new UnauthorizedResult()
                     };
                 }
                 var command = new RemoveStringsSetCommand()
@@ -46,24 +42,24 @@ namespace StringManager.Services.API.Handlers
                 var removedStringsSetFromDb = await commandExecutor.Execute(command);
                 if (removedStringsSetFromDb == null)
                 {
-                    logger.LogError("String of given Id of " + request.Id + " has not been found");
-                    return new RemoveStringsSetResponse()
+                    string error = "StringsSet of given Id: " + request.Id + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.NotFound)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
-                var mappedRemovedStringsSet = mapper.Map<Core.Models.StringsSet>(removedStringsSetFromDb);
-                return new RemoveStringsSetResponse()
+                return new StatusCodeResponse()
                 {
-                    Data = mappedRemovedStringsSet
+                    Result = new NoContentResult()
                 };
             }
             catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new RemoveStringsSetResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

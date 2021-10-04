@@ -1,8 +1,6 @@
-﻿using StringManager.Services.API.Domain.Responses;
-
-namespace StringManager.Services.API.Domain.Requests
+﻿namespace StringManager.Services.API.Domain.Requests
 {
-    public class AddInstrumentRequest : RequestBase<AddInstrumentResponse>
+    public class AddInstrumentRequest : RequestBase
     {
         public int ManufacturerId { get; set; }
 

@@ -1,8 +1,6 @@
-﻿using StringManager.Services.API.Domain.Responses;
-
-namespace StringManager.Services.API.Domain.Requests
+﻿namespace StringManager.Services.API.Domain.Requests
 {
-    public class AddManufacturerRequest : RequestBase<AddManufacturerResponse>
+    public class AddManufacturerRequest : RequestBase
     {
         public string Name { get; set; }
     }

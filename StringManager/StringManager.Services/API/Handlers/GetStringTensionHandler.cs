@@ -1,18 +1,18 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
 using StringManager.Services.InternalClasses;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class GetStringTensionHandler : IRequestHandler<GetStringTensionRequest, GetStringTensionResponse>
+    public class GetStringTensionHandler : IRequestHandler<GetStringTensionRequest, StatusCodeResponse>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly ILogger<GetStringTensionHandler> logger;
@@ -24,7 +24,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<GetStringTensionResponse> Handle(GetStringTensionRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(GetStringTensionRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -35,10 +35,11 @@ namespace StringManager.Services.API.Handlers
                 var stringFromDb = await queryExecutor.Execute(stringQuery);
                 if (stringFromDb == null)
                 {
-                    logger.LogError("String of given Id of " + request.StringId + " has not been found");
-                    return new GetStringTensionResponse()
+                    string error = "String of given Id: " + request.StringId + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.BadRequest)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
                 var toneQuery = new GetToneQuery()
@@ -48,23 +49,24 @@ namespace StringManager.Services.API.Handlers
                 var toneFromDb = await queryExecutor.Execute(toneQuery);
                 if (toneFromDb == null)
                 {
-                    logger.LogError("String of given Id of " + request.ToneId + " has not been found");
-                    return new GetStringTensionResponse()
+                    string error = "Tone of given Id: " + request.ToneId + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.BadRequest)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
-                return new GetStringTensionResponse()
+                return new StatusCodeResponse()
                 {
-                    Data = StringCalculator.GetStringTension(stringFromDb.SpecificWeight, request.ScaleLenght, toneFromDb.Frequency)
+                    Result = new OkObjectResult(StringCalculator.GetStringTension(stringFromDb.SpecificWeight, request.ScaleLenght, toneFromDb.Frequency))
                 };
             }
             catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new GetStringTensionResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

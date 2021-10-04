@@ -1,6 +1,7 @@
 ﻿
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
@@ -8,14 +9,13 @@ using StringManager.DataAccess.CQRS.Queries;
 using StringManager.DataAccess.Entities;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class AddMyInstrumentHandler : IRequestHandler<AddMyInstrumentRequest, AddMyInstrumentResponse>
+    public class AddMyInstrumentHandler : IRequestHandler<AddMyInstrumentRequest, StatusCodeResponse>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -33,7 +33,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<AddMyInstrumentResponse> Handle(AddMyInstrumentRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(AddMyInstrumentRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -44,10 +44,11 @@ namespace StringManager.Services.API.Handlers
                 var userFromDb = await queryExecutor.Execute(queryUser);
                 if (userFromDb == null)
                 {
-                    logger.LogError("User of given Id of " + request.UserId + " has not been found");
-                    return new AddMyInstrumentResponse()
+                    string error = "User of given Id: " + request.UserId + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.BadRequest)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
                 var queryInstrument = new GetInstrumentQuery()
@@ -57,10 +58,11 @@ namespace StringManager.Services.API.Handlers
                 var instrumentFromDb = await queryExecutor.Execute(queryInstrument);
                 if (instrumentFromDb == null)
                 {
-                    logger.LogError("Instrument of given Id of " + request.InstrumentId + " has not been found");
-                    return new AddMyInstrumentResponse()
+                    string error = "Instrument of given Id: " + request.InstrumentId + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.BadRequest)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
                 var myInstrumentToAdd = mapper.Map<MyInstrument>(
@@ -71,17 +73,17 @@ namespace StringManager.Services.API.Handlers
                 };
                 var addedMyInstrument = await commandExecutor.Execute(command);
                 var mappedAddedMyInstrument = mapper.Map<Core.Models.MyInstrument>(addedMyInstrument);
-                return new AddMyInstrumentResponse()
+                return new StatusCodeResponse()
                 {
-                    Data = mappedAddedMyInstrument
+                    Result = new OkObjectResult(mappedAddedMyInstrument)
                 };
             }
             catch(System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new AddMyInstrumentResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }

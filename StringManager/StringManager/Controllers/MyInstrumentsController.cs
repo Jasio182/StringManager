@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
 using System.Threading.Tasks;
 
 namespace StringManager.Controllers
@@ -21,32 +21,32 @@ namespace StringManager.Controllers
         [HttpGet]
         public Task<IActionResult> GetMyInstrumentsAsync([FromQuery] GetMyInstrumentsRequest request)
         {
-            return HandleResult<GetMyInstrumentsRequest, GetMyInstrumentsResponse>(request);
+            return HandleResult<GetMyInstrumentsRequest, StatusCodeResponse>(request);
         }
 
         [HttpGet]
         [Route("{Id}")]
         public Task<IActionResult> GetMyInstrumentAsync([FromQuery] GetMyInstrumentRequest request)
         {
-            return HandleResult<GetMyInstrumentRequest, GetMyInstrumentResponse>(request);
+            return HandleResult<GetMyInstrumentRequest, StatusCodeResponse>(request);
         }
 
         [HttpPost]
         public Task<IActionResult> AddMyInstrumentAsync([FromBody] AddMyInstrumentRequest request)
         {
-            return HandleResult<AddMyInstrumentRequest, AddMyInstrumentResponse>(request);
+            return HandleResult<AddMyInstrumentRequest, StatusCodeResponse>(request);
         }
 
         [HttpPut]
         public Task<IActionResult> ModifyMyInstrumentAsync([FromBody] ModifyMyInstrumentRequest request)
         {
-            return HandleResult<ModifyMyInstrumentRequest, ModifyMyInstrumentResponse>(request);
+            return HandleResult<ModifyMyInstrumentRequest, StatusCodeResponse>(request);
         }
 
         [HttpDelete]
         public Task<IActionResult> RemoveMyInstrumentAsync([FromBody] RemoveMyInstrumentRequest request)
         {
-            return HandleResult<RemoveMyInstrumentRequest, RemoveMyInstrumentResponse>(request);
+            return HandleResult<RemoveMyInstrumentRequest, StatusCodeResponse>(request);
         }
     }
 }

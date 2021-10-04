@@ -1,8 +1,6 @@
-﻿using StringManager.Services.API.Domain.Responses;
-
-namespace StringManager.Services.API.Domain.Requests
+﻿namespace StringManager.Services.API.Domain.Requests
 {
-    public class RemoveToneInTuningRequest : RequestBase<RemoveToneInTuningResponse>
+    public class RemoveToneInTuningRequest : RequestBase
     {
         public int Id { get; set; }
     }

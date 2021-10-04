@@ -1,21 +1,21 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
-using StringManager.Services.API.Domain.Responses;
-using StringManager.Services.API.ErrorHandling;
 using StringManager.Services.InternalClasses;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    class GetStringsSetsWithCorrepondingTensionHandler : IRequestHandler<GetStringsSetsWithCorrepondingTensionRequest, GetStringsSetsWithCorrepondingTensionResponse>
+    class GetStringsSetsWithCorrepondingTensionHandler : IRequestHandler<GetStringsSetsWithCorrepondingTensionRequest, StatusCodeResponse>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -30,7 +30,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<GetStringsSetsWithCorrepondingTensionResponse> Handle(GetStringsSetsWithCorrepondingTensionRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse> Handle(GetStringsSetsWithCorrepondingTensionRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -43,10 +43,11 @@ namespace StringManager.Services.API.Handlers
                 var myInstrumentFromDb = await queryExecutor.Execute(myInstrumentQuery);
                 if (myInstrumentFromDb == null)
                 {
-                    logger.LogError("MyInstrument of given Id of " + request.MyInstrumentId + " has not been found");
-                    return new GetStringsSetsWithCorrepondingTensionResponse()
+                    string error = "MyInstrument of given Id: " + request.MyInstrumentId + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.BadRequest)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
                 var tuningQuery = new GetTuningQuery()
@@ -56,10 +57,11 @@ namespace StringManager.Services.API.Handlers
                 var resultTuningFromDb = await queryExecutor.Execute(tuningQuery);
                 if (resultTuningFromDb == null)
                 {
-                    logger.LogError("Tuning of given Id of " + request.ResultTuningId + " has not been found");
-                    return new GetStringsSetsWithCorrepondingTensionResponse()
+                    string error = "Tuning of given Id: " + request.ResultTuningId + " has not been found";
+                    logger.LogError(error);
+                    return new StatusCodeResponse()
                     {
-                        Error = new ErrorModel(ErrorType.BadRequest)
+                        Result = new BadRequestObjectResult(error)
                     };
                 }
                 var stringSetsQuery = new GetStringsSetsQuery()
@@ -72,17 +74,17 @@ namespace StringManager.Services.API.Handlers
                 var tonesFromTuning = StringCalculator.GetTonesFromTuning(resultTuningFromDb);
                 var listOfStringSets = StringCalculator.GetStringsSetsWithCorrepondingTension(myInstrumentFromDb.Instrument, currentStrings, stringSetsFromDb, currentTuning, tonesFromTuning);
                 var mappedListOfStringSets = mapper.Map<List<Core.Models.StringsSet>>(listOfStringSets);
-                return new GetStringsSetsWithCorrepondingTensionResponse()
+                return new StatusCodeResponse()
                 {
-                    Data = mappedListOfStringSets
+                    Result = new OkObjectResult(mappedListOfStringSets)
                 };
             }
             catch (System.Exception e)
             {
                 logger.LogError(e, "Exception has occured");
-                return new GetStringsSetsWithCorrepondingTensionResponse()
+                return new StatusCodeResponse()
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
                 };
             }
         }
