@@ -31,5 +31,17 @@ namespace StringManager.Controllers
         {
             return HandleResult<AddInstrumentRequest, StatusCodeResponse>(request);
         }
+
+        [HttpPut]
+        public Task<IActionResult> ModifyInstrumentAsync([FromBody] ModifyInstrumentRequest request)
+        {
+            return HandleResult<ModifyInstrumentRequest, StatusCodeResponse>(request);
+        }
+
+        [HttpDelete]
+        public Task<IActionResult> RemoveInstrumentAsync([FromQuery] RemoveInstrumentRequest request)
+        {
+            return HandleResult<RemoveInstrumentRequest, StatusCodeResponse>(request);
+        }
     }
 }

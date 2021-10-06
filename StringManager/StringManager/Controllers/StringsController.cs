@@ -25,5 +25,23 @@ namespace StringManager.Controllers
             var request = new GetStringsRequest();
             return HandleResult<GetStringsRequest, StatusCodeResponse>(request);
         }
+
+        [HttpPost]
+        public Task<IActionResult> AddStringAsync([FromBody] AddStringRequest request)
+        {
+            return HandleResult<AddStringRequest, StatusCodeResponse>(request);
+        }
+
+        [HttpPut]
+        public Task<IActionResult> ModifyStringAsync([FromBody] ModifyStringRequest request)
+        {
+            return HandleResult<ModifyStringRequest, StatusCodeResponse>(request);
+        }
+
+        [HttpDelete]
+        public Task<IActionResult> RemoveStringAsync([FromQuery] RemoveStringRequest request)
+        {
+            return HandleResult<RemoveStringRequest, StatusCodeResponse>(request);
+        }
     }
 }

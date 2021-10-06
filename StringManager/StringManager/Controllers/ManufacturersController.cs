@@ -39,5 +39,17 @@ namespace StringManager.Controllers
         {
             return HandleResult<AddManufacturerRequest, StatusCodeResponse>(request);
         }
+
+        [HttpPut]
+        public Task<IActionResult> ModifyManufacturerAsync([FromBody] ModifyManufacturerRequest request)
+        {
+            return HandleResult<ModifyManufacturerRequest, StatusCodeResponse>(request);
+        }
+
+        [HttpDelete]
+        public Task<IActionResult> RemoveManufacturerAsync([FromQuery] RemoveManufacturerRequest request)
+        {
+            return HandleResult<RemoveManufacturerRequest, StatusCodeResponse>(request);
+        }
     }
 }

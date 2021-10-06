@@ -33,5 +33,23 @@ namespace StringManager.Controllers
         {
             return HandleResult<GetTuningRequest, StatusCodeResponse>(request);
         }
+
+        [HttpPost]
+        public Task<IActionResult> AddTuningAsync([FromBody] AddTuningRequest request)
+        {
+            return HandleResult<AddTuningRequest, StatusCodeResponse>(request);
+        }
+
+        [HttpPut]
+        public Task<IActionResult> ModifyTuningAsync([FromBody] ModifyTuningRequest request)
+        {
+            return HandleResult<ModifyTuningRequest, StatusCodeResponse>(request);
+        }
+
+        [HttpDelete]
+        public Task<IActionResult> RemoveTuningAsync([FromQuery] RemoveTuningRequest request)
+        {
+            return HandleResult<RemoveTuningRequest, StatusCodeResponse>(request);
+        }
     }
 }

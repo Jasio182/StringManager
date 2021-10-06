@@ -25,5 +25,23 @@ namespace StringManager.Controllers
             var request = new GetTonesRequest();
             return HandleResult<GetTonesRequest, StatusCodeResponse>(request);
         }
+
+        [HttpPost]
+        public Task<IActionResult> AddToneAsync([FromBody] AddToneRequest request)
+        {
+            return HandleResult<AddToneRequest, StatusCodeResponse>(request);
+        }
+
+        [HttpPut]
+        public Task<IActionResult> ModifyToneAsync([FromBody] ModifyToneRequest request)
+        {
+            return HandleResult<ModifyToneRequest, StatusCodeResponse>(request);
+        }
+
+        [HttpDelete]
+        public Task<IActionResult> RemoveToneAsync([FromQuery] RemoveToneRequest request)
+        {
+            return HandleResult<RemoveToneRequest, StatusCodeResponse>(request);
+        }
     }
 }

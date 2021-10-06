@@ -30,5 +30,23 @@ namespace StringManager.Controllers
         {
             return HandleResult<GetStringsSetRequest, StatusCodeResponse>(request);
         }
+
+        [HttpPost]
+        public Task<IActionResult> AddStringsSetAsync([FromBody] AddStringsSetRequest request)
+        {
+            return HandleResult<AddStringsSetRequest, StatusCodeResponse>(request);
+        }
+
+        [HttpPut]
+        public Task<IActionResult> ModifyStringsSetAsync([FromBody] ModifyStringsSetRequest request)
+        {
+            return HandleResult<ModifyStringsSetRequest, StatusCodeResponse>(request);
+        }
+
+        [HttpDelete]
+        public Task<IActionResult> RemoveStringsSetAsync([FromQuery] RemoveStringsSetRequest request)
+        {
+            return HandleResult<RemoveStringsSetRequest, StatusCodeResponse>(request);
+        }
     }
 }

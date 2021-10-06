@@ -29,5 +29,11 @@ namespace StringManager.Controllers
         {
             return HandleResult<ModifyInstalledStringRequest, StatusCodeResponse>(request);
         }
+
+        [HttpDelete]
+        public Task<IActionResult> RemoveInstalledStringAsync([FromQuery] RemoveInstalledStringRequest request)
+        {
+            return HandleResult<RemoveInstalledStringRequest, StatusCodeResponse>(request);
+        }
     }
 }
