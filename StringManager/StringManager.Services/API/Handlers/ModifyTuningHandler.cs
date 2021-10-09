@@ -50,7 +50,7 @@ namespace StringManager.Services.API.Handlers
                     logger.LogError(error);
                     return new StatusCodeResponse()
                     {
-                        Result = new BadRequestObjectResult(error)
+                        Result = new NotFoundObjectResult(error)
                     };
                 }
                 var tuningToUpdate = tuningFromDb;

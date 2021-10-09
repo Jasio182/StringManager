@@ -12,74 +12,74 @@ namespace StringManager.Controllers
     [Authorize]
     [Route("[controller]")]
     [ApiController]
-    public class ManufacturersController : ApiControllerBase<ManufacturersController>
+    public class StringsSetsController : ApiControllerBase<StringsSetsController>
     {
-        public ManufacturersController(IMediator mediator, ILogger<ManufacturersController> logger) : base(mediator, logger)
+        public StringsSetsController(IMediator mediator, ILogger<StringsSetsController> logger) : base(mediator, logger)
         {
-            logger.LogInformation("ManufacturersController started");
+            logger.LogInformation("StringSetsController started");
         }
 
         /// <summary>
-        /// Gets list of Manufacturer items that have relation with Instrument item 
+        /// Gets list of StringsSet items
         /// </summary>
-        /// <returns>A list of Manufacturer items</returns>
-        /// <response code="200">Gets a list of Manufacturer items</response>
+        /// <returns>A list of StringsSet items</returns>
+        /// <response code="200">Gets a list of StringsSet items</response>
         /// <response code="401">User is not authorized to add InstalledString item</response> 
         /// <response code="500">An exception has been thrown during modification of specific InstalledString item</response> 
         [HttpGet]
-        [Route("instruments")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public Task<IActionResult> GetInstrumentsManufacturersAsync()
+        public Task<IActionResult> GetStringsSetsAsync([FromQuery] GetStringsSetsRequest request)
         {
-            var request = new GetInstrumentsManufacturersRequest();
-            return HandleResult<GetInstrumentsManufacturersRequest, StatusCodeResponse>(request);
+            return HandleResult<GetStringsSetsRequest, StatusCodeResponse>(request);
         }
 
         /// <summary>
-        /// Gets list of Manufacturer items that have relation with String item
+        /// Gets StringsSet item
         /// </summary>
-        /// <returns>A list of Manufacturer items</returns>
-        /// <response code="200">Gets a list of Manufacturer items</response>
-        /// <response code="401">User is not authorized to add InstalledString item</response> 
-        /// <response code="500">An exception has been thrown during modification of specific InstalledString item</response> 
-        [HttpGet]
-        [Route("strings")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public Task<IActionResult> GetStringsManufacturersAsync()
-        {
-            var request = new GetStringsManufacturersRequest();
-            return HandleResult<GetStringsManufacturersRequest, StatusCodeResponse>(request);
-        }
-
-        /// <summary>
-        /// Adds Manufacturer item
-        /// </summary>
-        /// <returns>A newly created Manufacturer item</returns>
-        /// <response code="200">Successfuly added Manufacturer item</response>
+        /// <param name="request">Id of StringsSet item to get</param>
+        /// <returns>A StringsSet item</returns>
+        /// <response code="200">Gets a list of StringsSet items</response>
         /// <response code="400">Data in request is not valid</response>
-        /// <response code="401">User is not authorized to add Manufacturer item</response> 
-        /// <response code="500">An exception has been thrown during modification of specific Manufacturer item</response> 
+        /// <response code="401">User is not authorized to add InstalledString item</response> 
+        /// <response code="500">An exception has been thrown during modification of specific InstalledString item</response> 
+        [HttpGet]
+        [Route("{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public Task<IActionResult> GetStringsSetAsync([FromQuery] GetStringsSetRequest request)
+        {
+            return HandleResult<GetStringsSetRequest, StatusCodeResponse>(request);
+        }
+
+        /// <summary>
+        /// Adds StringsSet item
+        /// </summary>
+        /// <returns>A newly created StringsSet item</returns>
+        /// <response code="200">Successfuly added StringsSet item</response>
+        /// <response code="400">Data in request is not valid</response>
+        /// <response code="401">User is not authorized to add StringsSet item</response> 
+        /// <response code="500">An exception has been thrown during modification of specific StringsSet item</response> 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public Task<IActionResult> AddManufacturerAsync([FromBody] AddManufacturerRequest request)
+        public Task<IActionResult> AddStringsSetAsync([FromBody] AddStringsSetRequest request)
         {
-            return HandleResult<AddManufacturerRequest, StatusCodeResponse>(request);
+            return HandleResult<AddStringsSetRequest, StatusCodeResponse>(request);
         }
 
         /// <summary>
-        /// Updates specific Manufacturer item
+        /// Updates specific StringsSet item
         /// </summary>
-        /// <response code="204">Successfuly modified Manufacturer item</response>
+        /// <response code="204">Successfuly modified StringsSet item</response>
         /// <response code="400">Data in request is not valid</response>
-        /// <response code="401">User is not authorized to modify Manufacturer item</response> 
-        /// <response code="404">The specific Manufacturer item has not been found</response>
+        /// <response code="401">User is not authorized to modify StringsSet item</response> 
+        /// <response code="404">The specific StringsSet item has not been found</response>
         /// <response code="500">An exception has been thrown during modification of specific InstalledString item</response> 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -87,29 +87,29 @@ namespace StringManager.Controllers
         [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public Task<IActionResult> ModifyManufacturerAsync([FromBody] ModifyManufacturerRequest request)
+        public Task<IActionResult> ModifyStringsSetAsync([FromBody] ModifyStringsSetRequest request)
         {
-            return HandleResult<ModifyManufacturerRequest, StatusCodeResponse>(request);
+            return HandleResult<ModifyStringsSetRequest, StatusCodeResponse>(request);
         }
 
         /// <summary>
-        /// Deletes specific Manufacturer item
+        /// Deletes specific StringsSet item
         /// </summary>
-        /// <param name="request">Id of Manufacturer item to delete</param>
-        /// <response code="204">Successfuly deleted Manufacturer item</response>
+        /// <param name="request">Id of StringsSet item to delete</param>
+        /// <response code="204">Successfuly deleted StringsSet item</response>
         /// <response code="400">Data in request is not valid</response>
-        /// <response code="401">User is not authorized to delete Manufacturer item</response> 
-        /// <response code="404">The specific Manufacturer item has not been found</response>
-        /// <response code="500">An exception has been thrown during deletion of specific Manufacturer item</response> 
+        /// <response code="401">User is not authorized to delete StringsSet item</response> 
+        /// <response code="404">The specific StringsSet item has not been found</response>
+        /// <response code="500">An exception has been thrown during deletion of specific StringsSet item</response> 
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public Task<IActionResult> RemoveManufacturerAsync([FromQuery] RemoveManufacturerRequest request)
+        public Task<IActionResult> RemoveStringsSetAsync([FromQuery] RemoveStringsSetRequest request)
         {
-            return HandleResult<RemoveManufacturerRequest, StatusCodeResponse>(request);
+            return HandleResult<RemoveStringsSetRequest, StatusCodeResponse>(request);
         }
     }
 }

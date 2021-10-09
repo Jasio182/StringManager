@@ -15,6 +15,9 @@ using StringManager.DataAccess.CQRS;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Validators;
 using StringManager.Services.Mappings;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace StringManager
 {
@@ -48,6 +51,9 @@ namespace StringManager
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "StringManager", Version = "v1" });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
         }
 
@@ -58,7 +64,7 @@ namespace StringManager
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "StringManager v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.yaml", "StringManager v1"));
             }
 
             app.UseHttpsRedirection();

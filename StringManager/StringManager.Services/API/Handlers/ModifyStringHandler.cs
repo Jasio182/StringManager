@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
@@ -51,7 +50,7 @@ namespace StringManager.Services.API.Handlers
                     logger.LogError(error);
                     return new StatusCodeResponse()
                     {
-                        Result = new BadRequestObjectResult(error)
+                        Result = new NotFoundObjectResult(error)
                     };
                 }
                 var stringToUpdate = stringFromDb;
