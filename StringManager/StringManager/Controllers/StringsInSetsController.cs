@@ -26,7 +26,7 @@ namespace StringManager.Controllers
         /// <response code="200">Successfuly added StringInSet item</response>
         /// <response code="400">Data in request is not valid</response>
         /// <response code="401">User is not authorized to add StringInSet item</response> 
-        /// <response code="500">An exception has been thrown during modification of specific StringInSet item</response> 
+        /// <response code="500">An exception has been thrown during adding of specific StringInSet item</response> 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
@@ -44,7 +44,7 @@ namespace StringManager.Controllers
         /// <response code="400">Data in request is not valid</response>
         /// <response code="401">User is not authorized to modify StringInSet item</response> 
         /// <response code="404">The specific StringInSet item has not been found</response>
-        /// <response code="500">An exception has been thrown during modification of specific InstalledString item</response> 
+        /// <response code="500">An exception has been thrown during modification of specific StringInSet item</response> 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]

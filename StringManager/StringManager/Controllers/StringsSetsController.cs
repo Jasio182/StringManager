@@ -24,8 +24,8 @@ namespace StringManager.Controllers
         /// </summary>
         /// <returns>A list of StringsSet items</returns>
         /// <response code="200">Gets a list of StringsSet items</response>
-        /// <response code="401">User is not authorized to add InstalledString item</response> 
-        /// <response code="500">An exception has been thrown during modification of specific InstalledString item</response> 
+        /// <response code="401">User is not authorized to get list of StringsSet items</response> 
+        /// <response code="500">An exception has been thrown during getting a list of StringsSet item</response> 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status401Unauthorized)]
@@ -42,8 +42,8 @@ namespace StringManager.Controllers
         /// <returns>A StringsSet item</returns>
         /// <response code="200">Gets a list of StringsSet items</response>
         /// <response code="400">Data in request is not valid</response>
-        /// <response code="401">User is not authorized to add InstalledString item</response> 
-        /// <response code="500">An exception has been thrown during modification of specific InstalledString item</response> 
+        /// <response code="401">User is not authorized to get StringsSet item</response> 
+        /// <response code="500">An exception has been thrown during getting a specific StringsSet item</response> 
         [HttpGet]
         [Route("{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -62,7 +62,7 @@ namespace StringManager.Controllers
         /// <response code="200">Successfuly added StringsSet item</response>
         /// <response code="400">Data in request is not valid</response>
         /// <response code="401">User is not authorized to add StringsSet item</response> 
-        /// <response code="500">An exception has been thrown during modification of specific StringsSet item</response> 
+        /// <response code="500">An exception has been thrown during adding a specific StringsSet item</response> 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
@@ -80,7 +80,7 @@ namespace StringManager.Controllers
         /// <response code="400">Data in request is not valid</response>
         /// <response code="401">User is not authorized to modify StringsSet item</response> 
         /// <response code="404">The specific StringsSet item has not been found</response>
-        /// <response code="500">An exception has been thrown during modification of specific InstalledString item</response> 
+        /// <response code="500">An exception has been thrown during modification of specific StringsSet item</response> 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]

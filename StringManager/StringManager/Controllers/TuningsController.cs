@@ -19,13 +19,13 @@ namespace StringManager.Controllers
             logger.LogInformation("TuningsController started");
         }
 
-        
+
         /// <summary>
         /// Gets list of Tuning items
         /// </summary>
         /// <returns>A list of Tuning items</returns>
         /// <response code="200">Gets a list of Tuning items</response>
-        /// <response code="500">An exception has been thrown during modification of specific InstalledString item</response> 
+        /// <response code="500">An exception has been thrown during getting a list of specific Tuning item</response> 
         [HttpGet]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -43,7 +43,7 @@ namespace StringManager.Controllers
         /// <returns>A Tuning item</returns>
         /// <response code="200">Gets a list of Tuning items</response>
         /// <response code="400">Data in request is not valid</response>
-        /// <response code="500">An exception has been thrown during modification of specific InstalledString item</response> 
+        /// <response code="500">An exception has been thrown during getting a specific Tuning item</response> 
         [AllowAnonymous]
         [HttpGet]
         [Route("{Id}")]
@@ -80,7 +80,7 @@ namespace StringManager.Controllers
         /// <response code="400">Data in request is not valid</response>
         /// <response code="401">User is not authorized to modify Tuning item</response> 
         /// <response code="404">The specific Tuning item has not been found</response>
-        /// <response code="500">An exception has been thrown during modification of specific InstalledString item</response> 
+        /// <response code="500">An exception has been thrown during modification of specific Tuning item</response> 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]

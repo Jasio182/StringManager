@@ -24,8 +24,8 @@ namespace StringManager.Controllers
         /// </summary>
         /// <returns>A list of Manufacturer items</returns>
         /// <response code="200">Gets a list of Manufacturer items</response>
-        /// <response code="401">User is not authorized to add InstalledString item</response> 
-        /// <response code="500">An exception has been thrown during modification of specific InstalledString item</response> 
+        /// <response code="401">User is not authorized to get Manufacturer item</response> 
+        /// <response code="500">An exception has been thrown during getting a list of Manufacturer item</response> 
         [HttpGet]
         [Route("instruments")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -42,8 +42,8 @@ namespace StringManager.Controllers
         /// </summary>
         /// <returns>A list of Manufacturer items</returns>
         /// <response code="200">Gets a list of Manufacturer items</response>
-        /// <response code="401">User is not authorized to add InstalledString item</response> 
-        /// <response code="500">An exception has been thrown during modification of specific InstalledString item</response> 
+        /// <response code="401">User is not authorized to get Manufacturer item</response> 
+        /// <response code="500">An exception has been thrown during getting a list of Manufacturer items</response> 
         [HttpGet]
         [Route("strings")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -62,7 +62,7 @@ namespace StringManager.Controllers
         /// <response code="200">Successfuly added Manufacturer item</response>
         /// <response code="400">Data in request is not valid</response>
         /// <response code="401">User is not authorized to add Manufacturer item</response> 
-        /// <response code="500">An exception has been thrown during modification of specific Manufacturer item</response> 
+        /// <response code="500">An exception has been thrown during adding a specific Manufacturer item</response> 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
@@ -80,7 +80,7 @@ namespace StringManager.Controllers
         /// <response code="400">Data in request is not valid</response>
         /// <response code="401">User is not authorized to modify Manufacturer item</response> 
         /// <response code="404">The specific Manufacturer item has not been found</response>
-        /// <response code="500">An exception has been thrown during modification of specific InstalledString item</response> 
+        /// <response code="500">An exception has been thrown during modification of specific Manufacturer item</response> 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]

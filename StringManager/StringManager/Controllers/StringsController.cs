@@ -24,7 +24,7 @@ namespace StringManager.Controllers
         /// </summary>
         /// <returns>A list of String items</returns>
         /// <response code="200">Gets a list of String items</response>
-        /// <response code="500">An exception has been thrown during modification of specific InstalledString item</response> 
+        /// <response code="500">An exception has been thrown during getting a list of String item</response> 
         [AllowAnonymous]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -42,7 +42,7 @@ namespace StringManager.Controllers
         /// <response code="200">Successfuly added String item</response>
         /// <response code="400">Data in request is not valid</response>
         /// <response code="401">User is not authorized to add String item</response> 
-        /// <response code="500">An exception has been thrown during modification of specific String item</response> 
+        /// <response code="500">An exception has been thrown during adding a specific String item</response> 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
@@ -60,7 +60,7 @@ namespace StringManager.Controllers
         /// <response code="400">Data in request is not valid</response>
         /// <response code="401">User is not authorized to modify String item</response> 
         /// <response code="404">The specific String item has not been found</response>
-        /// <response code="500">An exception has been thrown during modification of specific InstalledString item</response> 
+        /// <response code="500">An exception has been thrown during modification of specific String item</response> 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
