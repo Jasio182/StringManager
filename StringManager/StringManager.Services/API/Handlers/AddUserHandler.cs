@@ -7,6 +7,7 @@ using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.Entities;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
+using StringManager.Services.InternalClasses;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,6 +43,7 @@ namespace StringManager.Services.API.Handlers
                 }
                 else
                     request.AccountTypeToAdd = Core.Enums.AccountType.User;
+                request.Password = PasswordHashing.HashPassword(request.Password);
                 var userToAdd = mapper.Map<User>(request);
                 var command = new AddUserCommand()
                 {

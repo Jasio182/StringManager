@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.DataAccess.Entities;
+using StringManager.Services.InternalClasses;
 using System;
 using System.Net.Http.Headers;
 using System.Security.Claims;
@@ -52,12 +53,13 @@ namespace StringManager.Authentication
                 var credentials = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
                 var username = credentials[0];
                 var password = credentials[1];
+                var hashedPassword = PasswordHashing.HashPassword(password);
                 var query = new GetUserByUsernameQuery()
                 {
                     Username = username
                 };
                 user = await this.queryExecutor.Execute(query);
-                if (user == null || user.Password != password)
+                if (user == null || user.Password != hashedPassword)
                 {
                     return AuthenticateResult.Fail("Invalid Authorization Header");
                 }
