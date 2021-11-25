@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    class GetStringsSetsWithCorrepondingTensionHandler : IRequestHandler<GetStringsSetsWithCorrepondingTensionRequest, StatusCodeResponse>
+    class GetStringsSetsWithCorrepondingTensionHandler : IRequestHandler<GetStringsSetsWithCorrepondingTensionRequest, StatusCodeResponse<List<Core.Models.StringsSet>>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -30,7 +30,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(GetStringsSetsWithCorrepondingTensionRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<List<Core.Models.StringsSet>>> Handle(GetStringsSetsWithCorrepondingTensionRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -45,9 +45,9 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "MyInstrument of given Id: " + request.MyInstrumentId + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<List<StringsSet>>()
                     {
-                        Result = new BadRequestObjectResult(error)
+                        Result = new ModelActionResult<List<StringsSet>>((int)HttpStatusCode.BadRequest, null, error)
                     };
                 }
                 var tuningQuery = new GetTuningQuery()
@@ -59,9 +59,9 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "Tuning of given Id: " + request.ResultTuningId + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<List<StringsSet>>()
                     {
-                        Result = new BadRequestObjectResult(error)
+                        Result = new ModelActionResult<List<StringsSet>>((int)HttpStatusCode.BadRequest, null, error)
                     };
                 }
                 var stringSetsQuery = new GetStringsSetsQuery()
@@ -73,18 +73,19 @@ namespace StringManager.Services.API.Handlers
                 var currentTuning = myInstrumentFromDb.InstalledStrings.Select(installedString => installedString.Tone).ToArray();
                 var tonesFromTuning = StringCalculator.GetTonesFromTuning(resultTuningFromDb);
                 var listOfStringSets = StringCalculator.GetStringsSetsWithCorrepondingTension(myInstrumentFromDb.Instrument, currentStrings, stringSetsFromDb, currentTuning, tonesFromTuning);
-                var mappedListOfStringSets = mapper.Map<List<Core.Models.StringsSet>>(listOfStringSets);
-                return new StatusCodeResponse()
+                var mappedListOfStringSets = mapper.Map<List<StringsSet>>(listOfStringSets);
+                return new StatusCodeResponse<List<StringsSet>>()
                 {
-                    Result = new OkObjectResult(mappedListOfStringSets)
+                    Result = new ModelActionResult<List<StringsSet>>((int)HttpStatusCode.OK, mappedListOfStringSets)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during calculating List of StringsSets with corresponding Tensions; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<List<StringsSet>>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<List<StringsSet>>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

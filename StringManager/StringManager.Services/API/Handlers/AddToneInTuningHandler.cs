@@ -10,11 +10,10 @@ using StringManager.DataAccess.CQRS.Queries;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.Entities;
 using System.Net;
-using Microsoft.AspNetCore.Mvc;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class AddToneInTuningHandler : IRequestHandler<AddToneInTuningRequest, StatusCodeResponse>
+    public class AddToneInTuningHandler : IRequestHandler<AddToneInTuningRequest, StatusCodeResponse<Core.Models.ToneInTuning>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -32,16 +31,17 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(AddToneInTuningRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<Core.Models.ToneInTuning>> Handle(AddToneInTuningRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if (request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to add a new ToneInTuning");
-                    return new StatusCodeResponse()
+                    var error = request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to add a new ToneInTuning";
+                    logger.LogError(error);
+                    return new StatusCodeResponse<Core.Models.ToneInTuning>()
                     {
-                        Result = new UnauthorizedResult()
+                        Result = new Core.Models.ModelActionResult<Core.Models.ToneInTuning>((int)HttpStatusCode.Unauthorized, null, error)
                     };
                 }
                 var queryTone = new GetToneQuery()
@@ -53,9 +53,9 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "Tone of given Id: " + request.ToneId + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<Core.Models.ToneInTuning>()
                     {
-                        Result = new BadRequestObjectResult(error)
+                        Result = new Core.Models.ModelActionResult<Core.Models.ToneInTuning>((int)HttpStatusCode.BadRequest, null, error)
                     };
                 }
                 var queryTuning = new GetTuningQuery()
@@ -67,9 +67,9 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "Tuning of given Id: " + request.TuningId + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<Core.Models.ToneInTuning>()
                     {
-                        Result = new BadRequestObjectResult(error)
+                        Result = new Core.Models.ModelActionResult<Core.Models.ToneInTuning>((int)HttpStatusCode.BadRequest, null, error)
                     };
                 }
                 var toneInTuningToAdd = mapper.Map<ToneInTuning>(
@@ -80,17 +80,18 @@ namespace StringManager.Services.API.Handlers
                 };
                 var addedToneInTuning = await commandExecutor.Execute(command);
                 var mappedAddedToneInTuning = mapper.Map<Core.Models.ToneInTuning>(addedToneInTuning);
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<Core.Models.ToneInTuning>()
                 {
-                    Result = new OkObjectResult(mappedAddedToneInTuning)
+                    Result = new Core.Models.ModelActionResult<Core.Models.ToneInTuning>((int)HttpStatusCode.OK, mappedAddedToneInTuning)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing adding new ToneInTuning item; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<Core.Models.ToneInTuning>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new Core.Models.ModelActionResult<Core.Models.ToneInTuning>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

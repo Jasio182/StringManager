@@ -1,6 +1,9 @@
-﻿namespace StringManager.Services.API.Domain.Requests
+﻿using StringManager.Core.Models;
+using System.Collections.Generic;
+
+namespace StringManager.Services.API.Domain.Requests
 {
-    public class GetStringSizeWithCorrepondingTensionRequest : RequestBase
+    public class GetStringSizeWithCorrepondingTensionRequest : RequestBase<List<String>>
     {
         public int? ScaleLength { get; set; }
 

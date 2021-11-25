@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
@@ -14,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class AddInstrumentHandler : IRequestHandler<AddInstrumentRequest, StatusCodeResponse>
+    public class AddInstrumentHandler : IRequestHandler<AddInstrumentRequest, StatusCodeResponse<Core.Models.Instrument>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -32,7 +31,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(AddInstrumentRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<Core.Models.Instrument>> Handle(AddInstrumentRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -45,9 +44,9 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "Manufacturer of given Id: " + request.ManufacturerId + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<Core.Models.Instrument>()
                     {
-                        Result = new BadRequestObjectResult(error)
+                        Result = new Core.Models.ModelActionResult<Core.Models.Instrument>((int)HttpStatusCode.BadRequest, null, error)
                     };
                 }
                 var instrumentToAdd = mapper.Map<Instrument>(
@@ -58,17 +57,18 @@ namespace StringManager.Services.API.Handlers
                 };
                 var addedInstrument = await commandExecutor.Execute(command);
                 var mappedAddedInstrument = mapper.Map<Core.Models.Instrument>(addedInstrument);
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<Core.Models.Instrument>()
                 {
-                    Result = new OkObjectResult(mappedAddedInstrument)
+                    Result = new Core.Models.ModelActionResult<Core.Models.Instrument>((int)HttpStatusCode.OK, mappedAddedInstrument)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing adding new Instrument item; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<Core.Models.Instrument>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new Core.Models.ModelActionResult<Core.Models.Instrument>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
 

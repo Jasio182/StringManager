@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class GetTuningHandler : IRequestHandler<GetTuningRequest, StatusCodeResponse>
+    public class GetTuningHandler : IRequestHandler<GetTuningRequest, StatusCodeResponse<Tuning>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -28,7 +29,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(GetTuningRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<Tuning>> Handle(GetTuningRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -37,20 +38,21 @@ namespace StringManager.Services.API.Handlers
                     Id = request.Id
                 };
                 var tuningFromDb = await queryExecutor.Execute(query);
-                var mappedTuningFromDb = mapper.Map<Core.Models.Tuning>(tuningFromDb);
-                var mappedTonesInTuning = mapper.Map<List<Core.Models.ToneInTuning>>(tuningFromDb.TonesInTuning);
+                var mappedTuningFromDb = mapper.Map<Tuning>(tuningFromDb);
+                var mappedTonesInTuning = mapper.Map<List<ToneInTuning>>(tuningFromDb.TonesInTuning);
                 mappedTuningFromDb.TonesInTuning = mappedTonesInTuning;
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<Tuning>()
                 {
-                    Result = new OkObjectResult(mappedTuningFromDb)
+                    Result = new ModelActionResult<Tuning>((int)HttpStatusCode.OK, mappedTuningFromDb)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing getting a Tuning item; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<Tuning>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<Tuning>((int)HttpStatusCode.OK, null, error)
                 };
             }
         }

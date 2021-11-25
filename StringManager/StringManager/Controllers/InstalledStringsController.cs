@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.Models;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
 using System.Threading.Tasks;
@@ -28,13 +29,13 @@ namespace StringManager.Controllers
         /// <response code="401">User is not authorized to add InstalledString item</response> 
         /// <response code="500">An exception has been thrown during modification of specific InstalledString item</response> 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> AddInstalledStringAsync([FromBody] AddInstalledStringRequest request)
         {
-            return HandleResult<AddInstalledStringRequest, StatusCodeResponse>(request);
+            return HandleResult<AddInstalledStringRequest, StatusCodeResponse<InstalledString>, InstalledString>(request);
         }
 
         /// <summary>
@@ -47,13 +48,13 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during modification of specific InstalledString item</response> 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> ModifyInstalledStringAsync([FromBody] ModifyInstalledStringRequest request)
         {
-            return HandleResult<ModifyInstalledStringRequest, StatusCodeResponse>(request);
+            return HandleResult<ModifyInstalledStringRequest, StatusCodeResponse<InstalledString>, InstalledString>(request);
         }
 
         /// <summary>
@@ -67,13 +68,13 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during deletion of specific InstalledString item</response> 
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> RemoveInstalledStringAsync([FromQuery] RemoveInstalledStringRequest request)
         {
-            return HandleResult<RemoveInstalledStringRequest, StatusCodeResponse>(request);
+            return HandleResult<RemoveInstalledStringRequest, StatusCodeResponse<InstalledString>, InstalledString>(request);
         }
     }
 }

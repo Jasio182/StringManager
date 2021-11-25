@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    class GetTonesHandler : IRequestHandler<GetTonesRequest, StatusCodeResponse>
+    class GetTonesHandler : IRequestHandler<GetTonesRequest, StatusCodeResponse<List<Tone>>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -29,24 +29,25 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(GetTonesRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<List<Tone>>> Handle(GetTonesRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 var query = new GetTonesQuery();
                 var tonesFromDb = await queryExecutor.Execute(query);
                 var mappedTones = mapper.Map<List<Tone>>(tonesFromDb);
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<List<Tone>>()
                 {
-                    Result = new OkObjectResult(mappedTones)
+                    Result = new ModelActionResult<List<Tone>>((int)HttpStatusCode.OK, mappedTones)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing getting list of Tone items; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<List<Tone>>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<List<Tone>>((int)HttpStatusCode.OK, null, error)
                 };
             }
         }

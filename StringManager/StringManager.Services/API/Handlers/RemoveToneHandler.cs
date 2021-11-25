@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.Services.API.Domain;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class RemoveToneHandler : IRequestHandler<RemoveToneRequest, StatusCodeResponse>
+    public class RemoveToneHandler : IRequestHandler<RemoveToneRequest, StatusCodeResponse<Tone>>
     {
         private readonly ICommandExecutor commandExecutor;
         private readonly ILogger<RemoveToneHandler> logger;
@@ -23,16 +24,17 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(RemoveToneRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<Tone>> Handle(RemoveToneRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if (request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to remove a Tone");
-                    return new StatusCodeResponse()
+                    var error = request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to remove a Tone";
+                    logger.LogError(error);
+                    return new StatusCodeResponse<Tone>()
                     {
-                        Result = new UnauthorizedResult()
+                        Result = new ModelActionResult<Tone>((int)HttpStatusCode.Unauthorized, null, error)
                     };
                 }
                 var command = new RemoveToneCommand()
@@ -44,22 +46,23 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "Tone of given Id: " + request.Id + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<Tone>()
                     {
-                        Result = new NotFoundObjectResult(error)
+                        Result = new ModelActionResult<Tone>((int)HttpStatusCode.NotFound, null, error)
                     };
                 }
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<Tone>()
                 {
-                    Result = new NoContentResult()
+                    Result = new ModelActionResult<Tone>((int)HttpStatusCode.NoContent, null)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing deletion of a Tone; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<Tone>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<Tone>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

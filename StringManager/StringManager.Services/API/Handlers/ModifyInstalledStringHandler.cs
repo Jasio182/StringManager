@@ -1,7 +1,6 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.CQRS.Queries;
@@ -13,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class ModifyInstalledStringHandler : IRequestHandler<ModifyInstalledStringRequest, StatusCodeResponse>
+    public class ModifyInstalledStringHandler : IRequestHandler<ModifyInstalledStringRequest, StatusCodeResponse<InstalledString>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly ICommandExecutor commandExecutor;
@@ -28,7 +27,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(ModifyInstalledStringRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<InstalledString>> Handle(ModifyInstalledStringRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -43,9 +42,9 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "InstalledString of given Id: " + request.Id + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<InstalledString>()
                     {
-                        Result = new NotFoundObjectResult(error)
+                        Result = new ModelActionResult<InstalledString>((int)HttpStatusCode.NotFound, null, error)
                     };
                 }
                 var installedStringToUpdate = installedStringFromDb;
@@ -60,9 +59,9 @@ namespace StringManager.Services.API.Handlers
                     {
                         string error = "String of given Id: " + request.StringId + " has not been found";
                         logger.LogError(error);
-                        return new StatusCodeResponse()
+                        return new StatusCodeResponse<InstalledString>()
                         {
-                            Result = new BadRequestObjectResult(error)
+                            Result = new ModelActionResult<InstalledString>((int)HttpStatusCode.BadRequest, null, error)
                         };
                     }
                     installedStringToUpdate.String = stringFromDb;
@@ -78,9 +77,9 @@ namespace StringManager.Services.API.Handlers
                     {
                         string error = "Tone of given Id: " + request.ToneId + " has not been found";
                         logger.LogError(error);
-                        return new StatusCodeResponse()
+                        return new StatusCodeResponse<InstalledString>()
                         {
-                            Result = new BadRequestObjectResult(error)
+                            Result = new ModelActionResult<InstalledString>((int)HttpStatusCode.BadRequest, null, error)
                         };
                     }
                     installedStringToUpdate.Tone = toneFromDb;
@@ -90,17 +89,18 @@ namespace StringManager.Services.API.Handlers
                     Parameter = installedStringToUpdate
                 };
                 await commandExecutor.Execute(command);
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<InstalledString>()
                 {
-                    Result = new NoContentResult()
+                    Result = new ModelActionResult<InstalledString>((int)HttpStatusCode.NoContent, null)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing modyfication of a InstalledString; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<InstalledString>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<InstalledString>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

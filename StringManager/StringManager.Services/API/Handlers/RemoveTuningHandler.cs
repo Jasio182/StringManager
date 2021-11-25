@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.Services.API.Domain;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class RemoveTuningHandler : IRequestHandler<RemoveTuningRequest, StatusCodeResponse>
+    public class RemoveTuningHandler : IRequestHandler<RemoveTuningRequest, StatusCodeResponse<Tuning>>
     {
         private readonly ICommandExecutor commandExecutor;
         private readonly ILogger<RemoveTuningHandler> logger;
@@ -23,16 +24,17 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(RemoveTuningRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<Tuning>> Handle(RemoveTuningRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if (request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to remove a Tuning");
-                    return new StatusCodeResponse()
+                    var error = request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to remove a Tuning";
+                    logger.LogError(error);
+                    return new StatusCodeResponse<Tuning>()
                     {
-                        Result = new UnauthorizedResult()
+                        Result = new ModelActionResult<Tuning>((int)HttpStatusCode.Unauthorized, null, error)
                     };
                 }
                 var command = new RemoveTuningCommand()
@@ -44,22 +46,23 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "Tuning of given Id: " + request.Id + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<Tuning>()
                     {
-                        Result = new NotFoundObjectResult(error)
+                        Result = new ModelActionResult<Tuning>((int)HttpStatusCode.NotFound, null, error)
                     };
                 }
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<Tuning>()
                 {
-                    Result = new NoContentResult()
+                    Result = new ModelActionResult<Tuning>((int)HttpStatusCode.NoContent, null)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing deletion of a Tuning; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<Tuning>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<Tuning>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.Services.API.Domain;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class RemoveStringInSetHandler : IRequestHandler<RemoveStringInSetRequest, StatusCodeResponse>
+    public class RemoveStringInSetHandler : IRequestHandler<RemoveStringInSetRequest, StatusCodeResponse<StringInSet>>
     {
         private readonly ICommandExecutor commandExecutor;
         private readonly ILogger<RemoveStringInSetHandler> logger;
@@ -23,16 +24,17 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(RemoveStringInSetRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<StringInSet>> Handle(RemoveStringInSetRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if (request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to remove a StringInSet");
-                    return new StatusCodeResponse()
+                    var error = request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to remove a StringInSet";
+                    logger.LogError(error);
+                    return new StatusCodeResponse<StringInSet>()
                     {
-                        Result = new UnauthorizedResult()
+                        Result = new ModelActionResult<StringInSet>((int)HttpStatusCode.Unauthorized, null, error)
                     };
                 }
                 var command = new RemoveStringInSetCommand()
@@ -44,22 +46,23 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "StringInSet of given Id: " + request.Id + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<StringInSet>()
                     {
-                        Result = new NotFoundObjectResult(error)
+                        Result = new ModelActionResult<StringInSet>((int)HttpStatusCode.NotFound, null, error)
                     };
                 }
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<StringInSet>()
                 {
-                    Result = new NoContentResult()
+                    Result = new ModelActionResult<StringInSet>((int)HttpStatusCode.NoContent, null)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing deletion of a StringInSet; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<StringInSet>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<StringInSet>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

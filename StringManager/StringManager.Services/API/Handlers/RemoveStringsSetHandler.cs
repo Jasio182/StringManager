@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.Services.API.Domain;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class RemoveStringsSetHandler : IRequestHandler<RemoveStringsSetRequest, StatusCodeResponse>
+    public class RemoveStringsSetHandler : IRequestHandler<RemoveStringsSetRequest, StatusCodeResponse<StringsSet>>
     {
         private readonly ICommandExecutor commandExecutor;
         private readonly ILogger<RemoveStringsSetHandler> logger;
@@ -23,16 +24,17 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(RemoveStringsSetRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<StringsSet>> Handle(RemoveStringsSetRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if (request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to remove a StringsSet");
-                    return new StatusCodeResponse()
+                    var error = request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to remove a StringsSet";
+                    logger.LogError(error);
+                    return new StatusCodeResponse<StringsSet>()
                     {
-                        Result = new UnauthorizedResult()
+                        Result = new ModelActionResult<StringsSet>((int)HttpStatusCode.Unauthorized, null, error)
                     };
                 }
                 var command = new RemoveStringsSetCommand()
@@ -44,22 +46,23 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "StringsSet of given Id: " + request.Id + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<StringsSet>()
                     {
-                        Result = new NotFoundObjectResult(error)
+                        Result = new ModelActionResult<StringsSet>((int)HttpStatusCode.NotFound, null, error)
                     };
                 }
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<StringsSet>()
                 {
-                    Result = new NoContentResult()
+                    Result = new ModelActionResult<StringsSet>((int)HttpStatusCode.NoContent, null)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing deletion of a StringsSet; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<StringsSet>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<StringsSet>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

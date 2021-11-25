@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class GetTuningsHandler : IRequestHandler<GetTuningsRequest, StatusCodeResponse>
+    public class GetTuningsHandler : IRequestHandler<GetTuningsRequest, StatusCodeResponse<List<TuningList>>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -28,7 +29,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(GetTuningsRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<List<TuningList>>> Handle(GetTuningsRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -37,18 +38,19 @@ namespace StringManager.Services.API.Handlers
                     NumberOfStrings = request.NumberOfStrings
                 };
                 var tuningsFromDb = await queryExecutor.Execute(query);
-                var mappedTuningsFromDb = mapper.Map<List<Core.Models.TuningList>>(tuningsFromDb);
-                return new StatusCodeResponse()
+                var mappedTuningsFromDb = mapper.Map<List<TuningList>>(tuningsFromDb);
+                return new StatusCodeResponse<List<TuningList>>()
                 {
-                    Result = new OkObjectResult(mappedTuningsFromDb)
+                    Result = new ModelActionResult<List<TuningList>>((int)HttpStatusCode.OK, mappedTuningsFromDb)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing getting list of Tuning items; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<List<TuningList>>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<List<TuningList>>((int)HttpStatusCode.OK, null, error)
                 };
             }
         }

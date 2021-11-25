@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
@@ -14,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class GetStringsSetsHandler : IRequestHandler<GetStringsSetsRequest, StatusCodeResponse>
+    public class GetStringsSetsHandler : IRequestHandler<GetStringsSetsRequest, StatusCodeResponse<List<StringsSet>>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -29,7 +28,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(GetStringsSetsRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<List<StringsSet>>> Handle(GetStringsSetsRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -43,17 +42,18 @@ namespace StringManager.Services.API.Handlers
                 {
                     mappedStringsSets[i].StringsInSet = mapper.Map<List<StringInSet>>(stringsSetsFromDb[i].StringsInSet);
                 }
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<List<StringsSet>>()
                 {
-                    Result = new OkObjectResult(mappedStringsSets)
+                    Result = new ModelActionResult<List<StringsSet>>((int)HttpStatusCode.OK, mappedStringsSets)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing getting list of StringsSet items; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<List<StringsSet>>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<List<StringsSet>>((int)HttpStatusCode.OK, null, error)
                 };
             }
         }

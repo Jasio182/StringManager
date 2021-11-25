@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class GetMyInstrumentsHandler : IRequestHandler<GetMyInstrumentsRequest, StatusCodeResponse>
+    public class GetMyInstrumentsHandler : IRequestHandler<GetMyInstrumentsRequest, StatusCodeResponse<List<MyInstrumentList>>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -29,7 +29,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(GetMyInstrumentsRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<List<MyInstrumentList>>> Handle(GetMyInstrumentsRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -37,10 +37,11 @@ namespace StringManager.Services.API.Handlers
                     request.RequestUserId = request.UserId;
                 else if(request.RequestUserId != null && request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to get all MyInstruments of a user: " + request.RequestUserId);
-                    return new StatusCodeResponse()
+                    var error = request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to get all MyInstruments of a user: " + request.RequestUserId;
+                    logger.LogError(error);
+                    return new StatusCodeResponse<List<MyInstrumentList>>()
                     {
-                        Result = new UnauthorizedResult()
+                        Result = new ModelActionResult<List<MyInstrumentList>>((int)HttpStatusCode.Unauthorized, null, error)
                     };
                 }
                 var query = new GetMyInstrumentsQuery()
@@ -49,17 +50,18 @@ namespace StringManager.Services.API.Handlers
                 };
                 var myInstrumentsFromDb = await queryExecutor.Execute(query);
                 var mappedMyInstruments = mapper.Map<List<MyInstrumentList>>(myInstrumentsFromDb);
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<List<MyInstrumentList>>()
                 {
-                    Result = new OkObjectResult(mappedMyInstruments)
+                    Result = new ModelActionResult<List<MyInstrumentList>>((int)HttpStatusCode.OK, mappedMyInstruments)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing getting list of MyInstrument items; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<List<MyInstrumentList>>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<List<MyInstrumentList>>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

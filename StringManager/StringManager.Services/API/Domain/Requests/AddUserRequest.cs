@@ -1,8 +1,9 @@
 ﻿using StringManager.Core.Enums;
+using StringManager.Core.Models;
 
 namespace StringManager.Services.API.Domain.Requests
 {
-    public class AddUserRequest : RequestBase
+    public class AddUserRequest : RequestBase<User>
     {
         public string Username { get; set; }
 

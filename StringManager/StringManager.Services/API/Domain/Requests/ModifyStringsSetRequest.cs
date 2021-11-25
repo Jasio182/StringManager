@@ -1,6 +1,8 @@
-﻿namespace StringManager.Services.API.Domain.Requests
+﻿using StringManager.Core.Models;
+
+namespace StringManager.Services.API.Domain.Requests
 {
-    public class ModifyStringsSetRequest : RequestBase
+    public class ModifyStringsSetRequest : RequestBase<StringsSet>
     {
         public int Id { get; set; }
 

@@ -6,7 +6,7 @@ namespace StringManager.Services.InternalClasses
 {
     public static class PasswordHashing
     {
-        private static byte[] salt = Encoding.ASCII.GetBytes("Y204eGZFekFaY3RTODdNN1Y0TE5SQT09");
+        private static readonly byte[] salt = Encoding.ASCII.GetBytes("Y204eGZFekFaY3RTODdNN1Y0TE5SQT09");
         
         public static string HashPassword(string password)
         {

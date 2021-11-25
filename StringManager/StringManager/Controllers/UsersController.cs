@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.Models;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace StringManager.Controllers
@@ -27,12 +29,12 @@ namespace StringManager.Controllers
         /// <response code="401">User is not authorized to get User item</response> 
         /// <response code="500">An exception has been thrown during getting a list of User items</response> 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(StatusCodeResponse<List<User>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(StatusCodeResponse<List<User>>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(StatusCodeResponse<List<User>>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> GetUsersAsync([FromQuery] GetUsersRequest request)
         {
-            return HandleResult<GetUsersRequest, StatusCodeResponse>(request);
+            return HandleResult<GetUsersRequest, StatusCodeResponse<List<User>>, List<User>> (request);
         }
 
         /// <summary>
@@ -45,14 +47,14 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during getting a specific User item</response> 
         [HttpGet]
         [Route("single")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(StatusCodeResponse<User>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(StatusCodeResponse<User>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(StatusCodeResponse<User>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(StatusCodeResponse<User>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> GetUserAsync()
         {
             var request = new GetUserRequest();
-            return HandleResult<GetUserRequest, StatusCodeResponse>(request);
+            return HandleResult<GetUserRequest, StatusCodeResponse<User>, User>(request);
         }
 
 
@@ -66,13 +68,13 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during adding a specific User item</response> 
         [AllowAnonymous]
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(StatusCodeResponse<User>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(StatusCodeResponse<User>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(StatusCodeResponse<User>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(StatusCodeResponse<User>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> AddUserAsync([FromBody] AddUserRequest request)
         {
-            return HandleResult<AddUserRequest, StatusCodeResponse>(request);
+            return HandleResult<AddUserRequest, StatusCodeResponse<User>, User>(request);
         }
 
         /// <summary>
@@ -85,13 +87,13 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during modification of specific User item</response> 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(StatusCodeResponse<User>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(StatusCodeResponse<User>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(StatusCodeResponse<User>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(StatusCodeResponse<User>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> ModifyUserAsync([FromBody] ModifyUserRequest request)
         {
-            return HandleResult<ModifyUserRequest, StatusCodeResponse>(request);
+            return HandleResult<ModifyUserRequest, StatusCodeResponse<User>, User>(request);
         }
     }
 }

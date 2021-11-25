@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class GetStringsHandler : IRequestHandler<GetStringsRequest, StatusCodeResponse>
+    public class GetStringsHandler : IRequestHandler<GetStringsRequest, StatusCodeResponse<List<String>>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -29,24 +29,25 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(GetStringsRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<List<String>>> Handle(GetStringsRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 var query = new GetStringsQuery();
                 var stringsFromDb = await queryExecutor.Execute(query);
                 var mappedStrings = mapper.Map<List<String>>(stringsFromDb);
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<List<String>>()
                 {
-                    Result = new OkObjectResult(mappedStrings)
+                    Result = new ModelActionResult<List<String>>((int)HttpStatusCode.OK, mappedStrings)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing getting list of String items; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<List<String>>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<List<String>>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

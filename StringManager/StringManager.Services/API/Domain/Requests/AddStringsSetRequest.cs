@@ -1,6 +1,8 @@
-﻿namespace StringManager.Services.API.Domain.Requests
+﻿using StringManager.Core.Models;
+
+namespace StringManager.Services.API.Domain.Requests
 {
-    public class AddStringsSetRequest : RequestBase
+    public class AddStringsSetRequest : RequestBase<StringsSet>
     {
         public string Name { get; set; }
 

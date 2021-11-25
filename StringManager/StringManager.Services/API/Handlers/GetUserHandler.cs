@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class GetUserHandler : IRequestHandler<GetUserRequest, StatusCodeResponse>
+    public class GetUserHandler : IRequestHandler<GetUserRequest, StatusCodeResponse<User>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -27,7 +28,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(GetUserRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<User>> Handle(GetUserRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -36,18 +37,19 @@ namespace StringManager.Services.API.Handlers
                     Id = (int)request.UserId
                 };
                 var userFromDb = await queryExecutor.Execute(query);
-                var mappedUserFromDb = mapper.Map<Core.Models.User>(userFromDb);
-                return new StatusCodeResponse()
+                var mappedUserFromDb = mapper.Map<User>(userFromDb);
+                return new StatusCodeResponse<User>()
                 {
-                    Result = new OkObjectResult(mappedUserFromDb)
+                    Result = new ModelActionResult<User>((int)HttpStatusCode.OK, mappedUserFromDb)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing getting a User item; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<User>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<User>((int)HttpStatusCode.OK, null, error)
                 };
             }
         }

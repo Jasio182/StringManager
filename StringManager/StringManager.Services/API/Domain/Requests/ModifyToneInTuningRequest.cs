@@ -1,6 +1,8 @@
-﻿namespace StringManager.Services.API.Domain.Requests
+﻿using StringManager.Core.Models;
+
+namespace StringManager.Services.API.Domain.Requests
 {
-    public class ModifyToneInTuningRequest : RequestBase
+    public class ModifyToneInTuningRequest : RequestBase<ToneInTuning>
     {
         public int Id { get; set; }
 

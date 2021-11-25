@@ -1,7 +1,5 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
@@ -15,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class AddMyInstrumentHandler : IRequestHandler<AddMyInstrumentRequest, StatusCodeResponse>
+    public class AddMyInstrumentHandler : IRequestHandler<AddMyInstrumentRequest, StatusCodeResponse<Core.Models.MyInstrument>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -33,7 +31,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(AddMyInstrumentRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<Core.Models.MyInstrument>> Handle(AddMyInstrumentRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -46,9 +44,9 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "User of given Id: " + request.UserId + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<Core.Models.MyInstrument>()
                     {
-                        Result = new BadRequestObjectResult(error)
+                        Result = new Core.Models.ModelActionResult<Core.Models.MyInstrument>((int)HttpStatusCode.BadRequest, null, error)
                     };
                 }
                 var queryInstrument = new GetInstrumentQuery()
@@ -60,9 +58,9 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "Instrument of given Id: " + request.InstrumentId + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<Core.Models.MyInstrument>()
                     {
-                        Result = new BadRequestObjectResult(error)
+                        Result = new Core.Models.ModelActionResult<Core.Models.MyInstrument>((int)HttpStatusCode.BadRequest, null, error)
                     };
                 }
                 var myInstrumentToAdd = mapper.Map<MyInstrument>(
@@ -73,17 +71,18 @@ namespace StringManager.Services.API.Handlers
                 };
                 var addedMyInstrument = await commandExecutor.Execute(command);
                 var mappedAddedMyInstrument = mapper.Map<Core.Models.MyInstrument>(addedMyInstrument);
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<Core.Models.MyInstrument>()
                 {
-                    Result = new OkObjectResult(mappedAddedMyInstrument)
+                    Result = new Core.Models.ModelActionResult<Core.Models.MyInstrument>((int)HttpStatusCode.OK, mappedAddedMyInstrument)
                 };
             }
             catch(System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing adding new MyInstrument item; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<Core.Models.MyInstrument>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new Core.Models.ModelActionResult<Core.Models.MyInstrument>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

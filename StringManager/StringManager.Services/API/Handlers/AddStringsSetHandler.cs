@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
@@ -13,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class AddStringsSetHandler : IRequestHandler<AddStringsSetRequest, StatusCodeResponse>
+    public class AddStringsSetHandler : IRequestHandler<AddStringsSetRequest, StatusCodeResponse<Core.Models.StringsSet>>
     {
         private readonly IMapper mapper;
         private readonly ICommandExecutor commandExecutor;
@@ -28,16 +27,17 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(AddStringsSetRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<Core.Models.StringsSet>> Handle(AddStringsSetRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if (request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to add a new StringsSet");
-                    return new StatusCodeResponse()
+                    var error = request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to add a new StringsSet";
+                    logger.LogError(error);
+                    return new StatusCodeResponse<Core.Models.StringsSet>()
                     {
-                        Result = new UnauthorizedResult()
+                        Result = new Core.Models.ModelActionResult<Core.Models.StringsSet>((int)HttpStatusCode.Unauthorized, null, error)
                     };
                 }
                 var stringsSetToAdd = mapper.Map<StringsSet>(request);
@@ -47,17 +47,18 @@ namespace StringManager.Services.API.Handlers
                 };
                 var addedStringsSet = await commandExecutor.Execute(command);
                 var mappedAddedStringsSet = mapper.Map<Core.Models.StringsSet>(addedStringsSet);
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<Core.Models.StringsSet>()
                 {
-                    Result = new OkObjectResult(mappedAddedStringsSet)
+                    Result = new Core.Models.ModelActionResult<Core.Models.StringsSet>((int)HttpStatusCode.OK, mappedAddedStringsSet)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing adding new StringsSet item; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<Core.Models.StringsSet>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new Core.Models.ModelActionResult<Core.Models.StringsSet>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

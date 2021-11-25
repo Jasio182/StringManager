@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.CQRS.Queries;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class ModifyUserHandler : IRequestHandler<ModifyUserRequest, StatusCodeResponse>
+    public class ModifyUserHandler : IRequestHandler<ModifyUserRequest, StatusCodeResponse<User>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly ICommandExecutor commandExecutor;
@@ -27,16 +27,17 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(ModifyUserRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<User>> Handle(ModifyUserRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if ((request.AccountTypeToUpdate != null || request.Id != null) && request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to modify an User");
-                    return new StatusCodeResponse()
+                    var error = request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to modify an User";
+                    logger.LogError(error);
+                    return new StatusCodeResponse<User>()
                     {
-                        Result = new UnauthorizedResult()
+                        Result = new ModelActionResult<User>((int)HttpStatusCode.Unauthorized, null, error)
                     };
                 }
                 var query = new GetUserByIdQuery();
@@ -53,9 +54,9 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "User of given Id: " + request.Id + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<User>()
                     {
-                        Result = new NotFoundObjectResult(error)
+                        Result = new ModelActionResult<User>((int)HttpStatusCode.NotFound, null, error)
                     };
                 }
                 var userToUpdate = userFromDb;
@@ -76,17 +77,18 @@ namespace StringManager.Services.API.Handlers
                     Parameter = userToUpdate
                 };
                 await commandExecutor.Execute(command);
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<User>()
                 {
-                    Result = new NoContentResult()
+                    Result = new ModelActionResult<User>((int)HttpStatusCode.NoContent, null)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing modyfication of an User; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<User>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<User>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

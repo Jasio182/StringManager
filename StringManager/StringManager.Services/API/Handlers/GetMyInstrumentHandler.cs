@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
@@ -14,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class GetMyInstrumentHandler : IRequestHandler<GetMyInstrumentRequest, StatusCodeResponse>
+    public class GetMyInstrumentHandler : IRequestHandler<GetMyInstrumentRequest, StatusCodeResponse<MyInstrument>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -29,7 +28,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(GetMyInstrumentRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<MyInstrument>> Handle(GetMyInstrumentRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -42,17 +41,18 @@ namespace StringManager.Services.API.Handlers
                 var myInstrumentFromDb = await queryExecutor.Execute(query);
                 var mappedMyInstrument = mapper.Map<MyInstrument>(myInstrumentFromDb);
                 mappedMyInstrument.InstalledStrings = mapper.Map<List<InstalledString>>(myInstrumentFromDb.InstalledStrings);
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<MyInstrument>()
                 {
-                    Result = new OkObjectResult(mappedMyInstrument)
+                    Result = new ModelActionResult<MyInstrument>((int)HttpStatusCode.OK, mappedMyInstrument)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing getting MyInstrument item; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<MyInstrument>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<MyInstrument>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

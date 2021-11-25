@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
@@ -14,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    class AddInstalledStringHandler : IRequestHandler<AddInstalledStringRequest, StatusCodeResponse>
+    class AddInstalledStringHandler : IRequestHandler<AddInstalledStringRequest, StatusCodeResponse<Core.Models.InstalledString>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -32,7 +31,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(AddInstalledStringRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<Core.Models.InstalledString>> Handle(AddInstalledStringRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -45,9 +44,9 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "String of given Id: " + request.StringId + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<Core.Models.InstalledString>()
                     {
-                        Result = new BadRequestObjectResult(error)
+                        Result = new Core.Models.ModelActionResult<Core.Models.InstalledString>((int)HttpStatusCode.BadRequest, null, error)
                     };
                 }
                 var queryTone = new GetToneQuery()
@@ -59,9 +58,9 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "Tone of given Id: " + request.ToneId + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<Core.Models.InstalledString>()
                     {
-                        Result = new BadRequestObjectResult(error)
+                        Result = new Core.Models.ModelActionResult<Core.Models.InstalledString>((int)HttpStatusCode.BadRequest, null, error)
                     };
                 }
                 var queryMyInstrument = new GetMyInstrumentQuery()
@@ -75,9 +74,9 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "MyInstrument of given Id: " + request.MyInstrumentId + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<Core.Models.InstalledString>()
                     {
-                        Result = new BadRequestObjectResult(error)
+                        Result = new Core.Models.ModelActionResult<Core.Models.InstalledString>((int)HttpStatusCode.BadRequest, null, error)
                     };
                 }
                 var installedStringToAdd = mapper.Map<InstalledString>(
@@ -89,17 +88,18 @@ namespace StringManager.Services.API.Handlers
                 };
                 var addedInstalledString = await commandExecutor.Execute(command);
                 var mappedAddedInstalledString = mapper.Map<Core.Models.InstalledString>(addedInstalledString);
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<Core.Models.InstalledString>()
                 {
-                    Result = new OkObjectResult(mappedAddedInstalledString)
+                    Result = new Core.Models.ModelActionResult<Core.Models.InstalledString>((int)HttpStatusCode.OK, mappedAddedInstalledString)
                 };
             }
             catch(System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing adding new InstalledString item; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<Core.Models.InstalledString>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new Core.Models.ModelActionResult<Core.Models.InstalledString>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

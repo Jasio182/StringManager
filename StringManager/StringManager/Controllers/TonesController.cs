@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.Models;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace StringManager.Controllers
@@ -27,12 +29,12 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during getting a list of Tone item</response> 
         [HttpGet]
         [AllowAnonymous]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(StatusCodeResponse<List<Tone>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(StatusCodeResponse<List<Tone>>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> GetTonesAsync()
         {
             var request = new GetTonesRequest();
-            return HandleResult<GetTonesRequest, StatusCodeResponse>(request);
+            return HandleResult<GetTonesRequest, StatusCodeResponse<List<Tone>>, List<Tone>>(request);
         }
 
         /// <summary>
@@ -44,13 +46,13 @@ namespace StringManager.Controllers
         /// <response code="401">User is not authorized to add Tone item</response> 
         /// <response code="500">An exception has been thrown during adding a specific Tone item</response> 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tone>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tone>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tone>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tone>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> AddToneAsync([FromBody] AddToneRequest request)
         {
-            return HandleResult<AddToneRequest, StatusCodeResponse>(request);
+            return HandleResult<AddToneRequest, StatusCodeResponse<Tone>, Tone>(request);
         }
 
         /// <summary>
@@ -63,13 +65,13 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during modification of specific Tone item</response> 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tone>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tone>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tone>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tone>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> ModifyToneAsync([FromBody] ModifyToneRequest request)
         {
-            return HandleResult<ModifyToneRequest, StatusCodeResponse>(request);
+            return HandleResult<ModifyToneRequest, StatusCodeResponse<Tone>, Tone>(request);
         }
 
         /// <summary>
@@ -83,13 +85,13 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during deletion of specific Tone item</response> 
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tone>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tone>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tone>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tone>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> RemoveToneAsync([FromQuery] RemoveToneRequest request)
         {
-            return HandleResult<RemoveToneRequest, StatusCodeResponse>(request);
+            return HandleResult<RemoveToneRequest, StatusCodeResponse<Tone>, Tone>(request);
         }
     }
 }

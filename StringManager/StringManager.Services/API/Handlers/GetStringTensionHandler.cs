@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class GetStringTensionHandler : IRequestHandler<GetStringTensionRequest, StatusCodeResponse>
+    public class GetStringTensionHandler : IRequestHandler<GetStringTensionRequest, StatusCodeResponse<double?>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly ILogger<GetStringTensionHandler> logger;
@@ -24,7 +25,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(GetStringTensionRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<double?>> Handle(GetStringTensionRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -37,9 +38,9 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "String of given Id: " + request.StringId + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<double?>()
                     {
-                        Result = new BadRequestObjectResult(error)
+                        Result = new ModelActionResult<double?>((int)HttpStatusCode.BadRequest, null, error)
                     };
                 }
                 var toneQuery = new GetToneQuery()
@@ -51,22 +52,23 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "Tone of given Id: " + request.ToneId + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<double?>()
                     {
-                        Result = new BadRequestObjectResult(error)
+                        Result = new ModelActionResult<double?>((int)HttpStatusCode.BadRequest, null, error)
                     };
                 }
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<double?>()
                 {
-                    Result = new OkObjectResult(StringCalculator.GetStringTension(stringFromDb.SpecificWeight, request.ScaleLenght, toneFromDb.Frequency))
+                    Result = new ModelActionResult<double?>((int)HttpStatusCode.OK, StringCalculator.GetStringTension(stringFromDb.SpecificWeight, request.ScaleLenght, toneFromDb.Frequency))
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during calculating string tension; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<double?>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<double?>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

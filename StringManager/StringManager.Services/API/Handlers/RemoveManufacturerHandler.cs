@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.Services.API.Domain;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class RemoveManufacturerHandler : IRequestHandler<RemoveManufacturerRequest, StatusCodeResponse>
+    public class RemoveManufacturerHandler : IRequestHandler<RemoveManufacturerRequest, StatusCodeResponse<Manufacturer>>
     {
         private readonly ICommandExecutor commandExecutor;
         private readonly ILogger<RemoveManufacturerHandler> logger;
@@ -23,16 +23,17 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(RemoveManufacturerRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<Manufacturer>> Handle(RemoveManufacturerRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if (request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to remove a Manufacturer");
-                    return new StatusCodeResponse()
+                    var error = request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to remove an Instrument";
+                    logger.LogError(error);
+                    return new StatusCodeResponse<Manufacturer>()
                     {
-                        Result = new UnauthorizedResult()
+                        Result = new ModelActionResult<Manufacturer>((int)HttpStatusCode.Unauthorized, null, error)
                     };
                 }
                 var command = new RemoveManufacturerCommand()
@@ -44,22 +45,23 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "Manufacturer of given Id: " + request.Id + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<Manufacturer>()
                     {
-                        Result = new NotFoundObjectResult(error)
+                        Result = new ModelActionResult<Manufacturer>((int)HttpStatusCode.NotFound, null, error)
                     };
                 }
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<Manufacturer>()
                 {
-                    Result = new NoContentResult()
+                    Result = new ModelActionResult<Manufacturer>((int)HttpStatusCode.NoContent, null)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing deletion of a Manufacturer; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<Manufacturer>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<Manufacturer>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

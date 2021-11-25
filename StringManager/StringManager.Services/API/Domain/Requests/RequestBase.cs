@@ -3,7 +3,7 @@ using StringManager.Core.Enums;
 
 namespace StringManager.Services.API.Domain.Requests
 {
-    public abstract class RequestBase : IRequest<StatusCodeResponse>
+    public abstract class RequestBase<T> : IRequest<StatusCodeResponse<T>>
     {
         public int? UserId;
 

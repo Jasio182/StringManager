@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.CQRS.Queries;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class ModifyTuningHandler : IRequestHandler<ModifyTuningRequest, StatusCodeResponse>
+    public class ModifyTuningHandler : IRequestHandler<ModifyTuningRequest, StatusCodeResponse<Tuning>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly ICommandExecutor commandExecutor;
@@ -27,16 +28,17 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(ModifyTuningRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<Tuning>> Handle(ModifyTuningRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if (request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to modify a Tuning");
-                    return new StatusCodeResponse()
+                    var error = request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to modify a Tuning";
+                    logger.LogError(error);
+                    return new StatusCodeResponse<Tuning>()
                     {
-                        Result = new UnauthorizedResult()
+                        Result = new ModelActionResult<Tuning>((int)HttpStatusCode.Unauthorized, null, error)
                     };
                 }
                 var query = new GetTuningQuery()
@@ -48,9 +50,9 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "Tuning of given Id: " + request.Id + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<Tuning>()
                     {
-                        Result = new NotFoundObjectResult(error)
+                        Result = new ModelActionResult<Tuning>((int)HttpStatusCode.NotFound, null, error)
                     };
                 }
                 var tuningToUpdate = tuningFromDb;
@@ -63,17 +65,18 @@ namespace StringManager.Services.API.Handlers
                     Parameter = tuningToUpdate
                 };
                 await commandExecutor.Execute(command);
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<Tuning>()
                 {
-                    Result = new NoContentResult()
+                    Result = new ModelActionResult<Tuning>((int)HttpStatusCode.NoContent, null)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing modyfication of a Tuning; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<Tuning>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<Tuning>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using StringManager.Core.Models;
 
 namespace StringManager.Services.API.Domain
 {
-    public class StatusCodeResponse
+    public class StatusCodeResponse<T> : ResponseBase
     {
-        public IActionResult Result { get; set; }
+        public ModelActionResult<T> Result { get; set; }
     }
 }

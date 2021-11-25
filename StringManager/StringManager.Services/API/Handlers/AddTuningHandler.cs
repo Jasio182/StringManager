@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
@@ -13,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class AddTuningHandler : IRequestHandler<AddTuningRequest, StatusCodeResponse>
+    public class AddTuningHandler : IRequestHandler<AddTuningRequest, StatusCodeResponse<Core.Models.Tuning>>
     {
         private readonly IMapper mapper;
         private readonly ICommandExecutor commandExecutor;
@@ -28,16 +27,17 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(AddTuningRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<Core.Models.Tuning>> Handle(AddTuningRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if (request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to add a new Tuning");
-                    return new StatusCodeResponse()
+                    var error = request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to add a new Tuning";
+                    logger.LogError(error);
+                    return new StatusCodeResponse<Core.Models.Tuning>()
                     {
-                        Result = new UnauthorizedResult()
+                        Result = new Core.Models.ModelActionResult<Core.Models.Tuning>((int)HttpStatusCode.Unauthorized, null, error)
                     };
                 }
                 var tuningToAdd = mapper.Map<Tuning>(request);
@@ -47,17 +47,18 @@ namespace StringManager.Services.API.Handlers
                 };
                 var addedTuning = await commandExecutor.Execute(command);
                 var mappedAddedTuning = mapper.Map<Core.Models.Tuning>(addedTuning);
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<Core.Models.Tuning>()
                 {
-                    Result = new OkObjectResult(mappedAddedTuning)
+                    Result = new Core.Models.ModelActionResult<Core.Models.Tuning>((int)HttpStatusCode.OK, mappedAddedTuning)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing adding new Tuning item; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<Core.Models.Tuning>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new Core.Models.ModelActionResult<Core.Models.Tuning>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

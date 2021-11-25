@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.Models;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace StringManager.Controllers
@@ -19,7 +21,6 @@ namespace StringManager.Controllers
             logger.LogInformation("TuningsController started");
         }
 
-
         /// <summary>
         /// Gets list of Tuning items
         /// </summary>
@@ -28,12 +29,12 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during getting a list of specific Tuning item</response> 
         [HttpGet]
         [AllowAnonymous]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(StatusCodeResponse<List<TuningList>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(StatusCodeResponse<List<TuningList>>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> GetTuningsAsync()
         {
             var request = new GetTuningsRequest();
-            return HandleResult<GetTuningsRequest, StatusCodeResponse>(request);
+            return HandleResult<GetTuningsRequest, StatusCodeResponse<List<TuningList>>, List<TuningList>>(request);
         }
 
         /// <summary>
@@ -47,12 +48,12 @@ namespace StringManager.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("{Id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tuning>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tuning>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tuning>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> GetTuningAsync([FromQuery] GetTuningRequest request)
         {
-            return HandleResult<GetTuningRequest, StatusCodeResponse>(request);
+            return HandleResult<GetTuningRequest, StatusCodeResponse<Tuning>, Tuning>(request);
         }
 
         /// <summary>
@@ -64,13 +65,13 @@ namespace StringManager.Controllers
         /// <response code="401">User is not authorized to add Tuning item</response> 
         /// <response code="500">An exception has been thrown during modification of specific Tuning item</response> 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tuning>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tuning>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tuning>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tuning>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> AddTuningAsync([FromBody] AddTuningRequest request)
         {
-            return HandleResult<AddTuningRequest, StatusCodeResponse>(request);
+            return HandleResult<AddTuningRequest, StatusCodeResponse<Tuning>, Tuning>(request);
         }
 
         /// <summary>
@@ -83,13 +84,13 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during modification of specific Tuning item</response> 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tuning>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tuning>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tuning>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tuning>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> ModifyTuningAsync([FromBody] ModifyTuningRequest request)
         {
-            return HandleResult<ModifyTuningRequest, StatusCodeResponse>(request);
+            return HandleResult<ModifyTuningRequest, StatusCodeResponse<Tuning>, Tuning>(request);
         }
 
         /// <summary>
@@ -103,13 +104,13 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during deletion of specific Tuning item</response> 
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tuning>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tuning>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tuning>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(StatusCodeResponse<Tuning>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> RemoveTuningAsync([FromQuery] RemoveTuningRequest request)
         {
-            return HandleResult<RemoveTuningRequest, StatusCodeResponse>(request);
+            return HandleResult<RemoveTuningRequest, StatusCodeResponse<Tuning>, Tuning> (request);
         }
     }
 }

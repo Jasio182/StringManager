@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
@@ -14,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class AddStringHandler : IRequestHandler<AddStringRequest, StatusCodeResponse>
+    public class AddStringHandler : IRequestHandler<AddStringRequest, StatusCodeResponse<Core.Models.String>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -32,16 +31,17 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(AddStringRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<Core.Models.String>> Handle(AddStringRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if (request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to add a new String");
-                    return new StatusCodeResponse()
+                    var error = request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to add a new String";
+                    logger.LogError(error);
+                    return new StatusCodeResponse<Core.Models.String>()
                     {
-                        Result = new UnauthorizedResult()
+                        Result = new Core.Models.ModelActionResult<Core.Models.String>((int)HttpStatusCode.Unauthorized, null, error)
                     };
                 }
                 var queryManufacturer = new GetManufacturerQuery()
@@ -53,9 +53,9 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "Manufacturer of given Id: " + request.ManufacturerId + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<Core.Models.String>()
                     {
-                        Result = new BadRequestObjectResult(error)
+                        Result = new Core.Models.ModelActionResult<Core.Models.String>((int)HttpStatusCode.BadRequest, null, error)
                     };
                 }
                 var stringToAdd = mapper.Map<String>(
@@ -66,17 +66,18 @@ namespace StringManager.Services.API.Handlers
                 };
                 var addedString = await commandExecutor.Execute(command);
                 var mappedAddedString = mapper.Map<Core.Models.String>(addedString);
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<Core.Models.String>()
                 {
-                    Result = new OkObjectResult(mappedAddedString)
+                    Result = new Core.Models.ModelActionResult<Core.Models.String>((int)HttpStatusCode.BadRequest, mappedAddedString)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing adding new String item; message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<Core.Models.String>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new Core.Models.ModelActionResult<Core.Models.String>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

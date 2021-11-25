@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class GetStringSizeWithCorrepondingTensionHandler : IRequestHandler<GetStringSizeWithCorrepondingTensionRequest, StatusCodeResponse>
+    public class GetStringSizeWithCorrepondingTensionHandler : IRequestHandler<GetStringSizeWithCorrepondingTensionRequest, StatusCodeResponse<List<String>>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -30,7 +30,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(GetStringSizeWithCorrepondingTensionRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<List<String>>> Handle(GetStringSizeWithCorrepondingTensionRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -43,9 +43,9 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "String of given Id: " + request.StringId + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<List<String>>()
                     {
-                        Result = new BadRequestObjectResult(error)
+                        Result = new ModelActionResult<List<String>>((int)HttpStatusCode.BadRequest, null, error)
                     };
                 }
                 var stringsQuery = new GetStringsQuery();
@@ -59,9 +59,9 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "Tone of given Id: " + request.PrimaryToneId + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<List<String>>()
                     {
-                        Result = new BadRequestObjectResult(error)
+                        Result = new ModelActionResult<List<String>>((int)HttpStatusCode.BadRequest, null, error)
                     };
                 }
                 toneQuery.Id = (int)request.ResultToneId;
@@ -70,9 +70,9 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "Tone of given Id: " + request.ResultToneId + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<List<String>>()
                     {
-                        Result = new BadRequestObjectResult(error)
+                        Result = new ModelActionResult<List<String>>((int)HttpStatusCode.BadRequest, null, error)
                     };
                 }
                 var stringSize = StringCalculator.GetStringSizeWithCorrepondingTension((int)request.ScaleLength, stringFromDb,
@@ -80,17 +80,18 @@ namespace StringManager.Services.API.Handlers
                                                                                  resultToneFromDb);
                 var stringsOfSize = stringsFromDb.Where(thisString => thisString.Size == stringSize);
                 var mappedStringsOfSize = mapper.Map<List<Core.Models.String>>(stringsOfSize);
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<List<String>>()
                 {
-                    Result = new OkObjectResult(mappedStringsOfSize)
+                    Result = new ModelActionResult<List<String>>((int)HttpStatusCode.OK, mappedStringsOfSize)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during calculating List of Strings with corresponding tensions; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<List<String>>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<List<String>>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

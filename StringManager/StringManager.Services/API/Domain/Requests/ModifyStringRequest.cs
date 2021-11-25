@@ -1,8 +1,9 @@
 ﻿using StringManager.Core.Enums;
+using StringManager.Core.Models;
 
 namespace StringManager.Services.API.Domain.Requests
 {
-    public class ModifyStringRequest : RequestBase
+    public class ModifyStringRequest : RequestBase<String>
     {
         public int Id { get; set; }
 

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
@@ -14,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class GetStringsManufacturersHandler : IRequestHandler<GetStringsManufacturersRequest, StatusCodeResponse>
+    public class GetStringsManufacturersHandler : IRequestHandler<GetStringsManufacturersRequest, StatusCodeResponse<List<Manufacturer>>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -29,24 +28,25 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(GetStringsManufacturersRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<List<Manufacturer>>> Handle(GetStringsManufacturersRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 var query = new GetStringsManufacturersQuery();
                 var stringsManufacturersFromDb = await queryExecutor.Execute(query);
                 var mappedStringsManufacturers = mapper.Map<List<Manufacturer>>(stringsManufacturersFromDb);
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<List<Manufacturer>>()
                 {
-                    Result = new OkObjectResult(mappedStringsManufacturers)
+                    Result = new ModelActionResult<List<Manufacturer>>((int)HttpStatusCode.OK, mappedStringsManufacturers)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing getting list of Manufacturer items that have connected String items to it; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<List<Manufacturer>>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<List<Manufacturer>>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

@@ -1,9 +1,10 @@
 ﻿using StringManager.Core.Enums;
+using StringManager.Core.Models;
 using System;
 
 namespace StringManager.Services.API.Domain.Requests
 {
-    public class AddMyInstrumentRequest : RequestBase
+    public class AddMyInstrumentRequest : RequestBase<MyInstrument>
     {
         public int InstrumentId { get; set; }
 

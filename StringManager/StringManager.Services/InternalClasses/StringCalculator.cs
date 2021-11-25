@@ -70,7 +70,7 @@ namespace StringManager.Services.InternalClasses
             return result;
         }
 
-        internal static double GetStringTension(double specificWeight, int? scaleLenght, int frequency)
+        internal static object GetStringTension(double specificWeight, int? scaleLenght, int frequency)
         {
             throw new System.NotImplementedException();
         }

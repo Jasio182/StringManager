@@ -1,6 +1,8 @@
-﻿namespace StringManager.Services.API.Domain.Requests
+﻿using StringManager.Core.Models;
+
+namespace StringManager.Services.API.Domain.Requests
 {
-    public class AddInstrumentRequest : RequestBase
+    public class AddInstrumentRequest : RequestBase<Instrument>
     {
         public int ManufacturerId { get; set; }
 

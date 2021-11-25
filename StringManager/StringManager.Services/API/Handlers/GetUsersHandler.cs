@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.Services.API.Domain;
@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class GetUsersHandler : IRequestHandler<GetUsersRequest, StatusCodeResponse>
+    public class GetUsersHandler : IRequestHandler<GetUsersRequest, StatusCodeResponse<List<User>>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -28,16 +28,17 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(GetUsersRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<List<User>>> Handle(GetUsersRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if(request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to get list of Users");
-                    return new StatusCodeResponse()
+                    var error = request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to get list of all User items";
+                    logger.LogError(error);
+                    return new StatusCodeResponse<List<User>>()
                     {
-                        Result = new UnauthorizedResult()
+                        Result = new ModelActionResult<List<User>>((int)HttpStatusCode.Unauthorized, null, error)
                     };
                 }
                 var query = new GetUsersQuery()
@@ -45,18 +46,19 @@ namespace StringManager.Services.API.Handlers
                     Type = request.Type
                 };
                 var usersFromDb = await queryExecutor.Execute(query);
-                var mappedUsersFromDb = mapper.Map<List<Core.Models.User>>(usersFromDb);
-                return new StatusCodeResponse()
+                var mappedUsersFromDb = mapper.Map<List<User>>(usersFromDb);
+                return new StatusCodeResponse<List<User>>()
                 {
-                    Result = new OkObjectResult(mappedUsersFromDb)
+                    Result = new ModelActionResult<List<User>>((int)HttpStatusCode.OK, mappedUsersFromDb)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing getting list of User items; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<List<User>>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<List<User>>((int)HttpStatusCode.OK, null, error)
                 };
             }
         }

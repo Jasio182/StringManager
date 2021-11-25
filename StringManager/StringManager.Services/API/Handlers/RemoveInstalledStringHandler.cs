@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.Services.API.Domain;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class RemoveInstalledStringHandler : IRequestHandler<RemoveInstalledStringRequest, StatusCodeResponse>
+    public class RemoveInstalledStringHandler : IRequestHandler<RemoveInstalledStringRequest, StatusCodeResponse<InstalledString>>
     {
         private readonly ICommandExecutor commandExecutor;
         private readonly ILogger<RemoveInstalledStringHandler> logger;
@@ -23,16 +24,17 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(RemoveInstalledStringRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<InstalledString>> Handle(RemoveInstalledStringRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if (request.AccountType != Core.Enums.AccountType.Admin)
                 {
-                    logger.LogError(request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to remove an InstalledString");
-                    return new StatusCodeResponse()
+                    var error = request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to remove an InstalledString";
+                    logger.LogError(error);
+                    return new StatusCodeResponse<InstalledString>()
                     {
-                        Result = new UnauthorizedResult()
+                        Result = new ModelActionResult<InstalledString>((int)HttpStatusCode.Unauthorized, null, error)
                     };
                 }
                 var command = new RemoveInstalledStringCommand()
@@ -44,22 +46,23 @@ namespace StringManager.Services.API.Handlers
                 {
                     string error = "Instrument of given Id: " + request.Id + " has not been found";
                     logger.LogError(error);
-                    return new StatusCodeResponse()
+                    return new StatusCodeResponse<InstalledString>()
                     {
-                        Result = new NotFoundObjectResult(error)
+                        Result = new ModelActionResult<InstalledString>((int)HttpStatusCode.NotFound, null, error)
                     };
                 }
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<InstalledString>()
                 {
-                    Result = new NoContentResult()
+                    Result = new ModelActionResult<InstalledString>((int)HttpStatusCode.NoContent, null)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing deletion of an InstalledString; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<InstalledString>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new ModelActionResult<InstalledString>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

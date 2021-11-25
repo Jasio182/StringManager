@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
@@ -13,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    public class AddManufacturerHandler : IRequestHandler<AddManufacturerRequest, StatusCodeResponse>
+    public class AddManufacturerHandler : IRequestHandler<AddManufacturerRequest, StatusCodeResponse<Core.Models.Manufacturer>>
     {
         private readonly IMapper mapper;
         private readonly ICommandExecutor commandExecutor;
@@ -28,7 +27,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse> Handle(AddManufacturerRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<Core.Models.Manufacturer>> Handle(AddManufacturerRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -39,17 +38,18 @@ namespace StringManager.Services.API.Handlers
                 };
                 var addedManufacturer = await commandExecutor.Execute(command);
                 var mappedAddedManufacturer = mapper.Map<Core.Models.Manufacturer>(addedManufacturer);
-                return new StatusCodeResponse()
+                return new StatusCodeResponse<Core.Models.Manufacturer>()
                 {
-                    Result = new OkObjectResult(mappedAddedManufacturer)
+                    Result = new Core.Models.ModelActionResult<Core.Models.Manufacturer>((int)HttpStatusCode.OK, mappedAddedManufacturer)
                 };
             }
             catch (System.Exception e)
             {
-                logger.LogError(e, "Exception has occured");
-                return new StatusCodeResponse()
+                var error = "Exception has occured during proccesing adding new Manufacturer item; exeception:" + e + " message: " + e.Message;
+                logger.LogError(e, error);
+                return new StatusCodeResponse<Core.Models.Manufacturer>()
                 {
-                    Result = new StatusCodeResult((int)HttpStatusCode.InternalServerError)
+                    Result = new Core.Models.ModelActionResult<Core.Models.Manufacturer>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }
