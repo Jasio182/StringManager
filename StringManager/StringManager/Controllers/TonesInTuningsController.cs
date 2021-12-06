@@ -29,10 +29,10 @@ namespace StringManager.Controllers
         /// <response code="401">User is not authorized to add ToneInTuning item</response> 
         /// <response code="500">An exception has been thrown during adding a specific ToneInTuning item</response> 
         [HttpPost]
-        [ProducesResponseType(typeof(StatusCodeResponse<ToneInTuning>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse<ToneInTuning>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<ToneInTuning>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<ToneInTuning>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<ToneInTuning>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ModelResult<ToneInTuning>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<ToneInTuning>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<ToneInTuning>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> AddToneInTuningAsync([FromBody] AddToneInTuningRequest request)
         {
             return HandleResult<AddToneInTuningRequest, StatusCodeResponse<ToneInTuning>, ToneInTuning>(request);
@@ -48,10 +48,10 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during modification of specific ToneInTuning item</response> 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(StatusCodeResponse<ToneInTuning>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<ToneInTuning>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<ToneInTuning>), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(StatusCodeResponse<ToneInTuning>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<ToneInTuning>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<ToneInTuning>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<ToneInTuning>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ModelResult<ToneInTuning>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> ModifyToneInTuningAsync([FromBody] ModifyToneInTuningRequest request)
         {
             return HandleResult<ModifyToneInTuningRequest, StatusCodeResponse<ToneInTuning>, ToneInTuning>(request);
@@ -68,10 +68,10 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during deletion of specific ToneInTuning item</response> 
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(StatusCodeResponse<ToneInTuning>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<ToneInTuning>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<ToneInTuning>), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(StatusCodeResponse<ToneInTuning>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<ToneInTuning>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<ToneInTuning>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<ToneInTuning>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ModelResult<ToneInTuning>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> RemoveToneInTuningAsync([FromQuery] RemoveToneInTuningRequest request)
         {
             return HandleResult<RemoveToneInTuningRequest, StatusCodeResponse<ToneInTuning>, ToneInTuning>(request);

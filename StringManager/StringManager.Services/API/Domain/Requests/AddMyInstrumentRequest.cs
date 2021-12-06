@@ -14,6 +14,8 @@ namespace StringManager.Services.API.Domain.Requests
 
         public WhereGuitarKept GuitarPlace { get; set; }
 
+        public bool NeededLuthierVisit { get; set; }
+
         public DateTime LastDeepCleaning { get; set; }
 
         public DateTime LastStringChange { get; set; }

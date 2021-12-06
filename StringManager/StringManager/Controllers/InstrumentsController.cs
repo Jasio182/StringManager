@@ -29,9 +29,9 @@ namespace StringManager.Controllers
         /// <response code="401">User is not authorized to get Instrument item</response> 
         /// <response code="500">An exception has been thrown during getting a specific Instrument item</response> 
         [HttpGet]
-        [ProducesResponseType(typeof(StatusCodeResponse<List<Instrument>>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse<List<Instrument>>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<List<Instrument>>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<List<Instrument>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ModelResult<List<Instrument>>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<List<Instrument>>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> GetInstrumentsAsync()
         {
             var request = new GetInstrumentsRequest();
@@ -47,10 +47,10 @@ namespace StringManager.Controllers
         /// <response code="401">User is not authorized to add Instrument item</response> 
         /// <response code="500">An exception has been thrown during adding a specific Instrument item</response> 
         [HttpPost]
-        [ProducesResponseType(typeof(StatusCodeResponse<Instrument>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Instrument>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Instrument>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Instrument>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<Instrument>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ModelResult<Instrument>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<Instrument>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<Instrument>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> AddInstrumentAsync([FromBody] AddInstrumentRequest request)
         {
             return HandleResult<AddInstrumentRequest, StatusCodeResponse<Instrument>, Instrument>(request);
@@ -66,10 +66,10 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during modification of specific Instrument item</response> 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Instrument>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Instrument>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Instrument>), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Instrument>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<Instrument>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<Instrument>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<Instrument>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ModelResult<Instrument>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> ModifyInstrumentAsync([FromBody] ModifyInstrumentRequest request)
         {
             return HandleResult<ModifyInstrumentRequest, StatusCodeResponse<Instrument>, Instrument>(request);
@@ -86,10 +86,10 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during deletion of specific Instrument item</response> 
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Instrument>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Instrument>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Instrument>), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Instrument>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<Instrument>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<Instrument>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<Instrument>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ModelResult<Instrument>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> RemoveInstrumentAsync([FromQuery] RemoveInstrumentRequest request)
         {
             return HandleResult<RemoveInstrumentRequest, StatusCodeResponse<Instrument>, Instrument>(request);

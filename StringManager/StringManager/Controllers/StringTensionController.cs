@@ -32,9 +32,9 @@ namespace StringManager.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("ScaleLenght")]
-        [ProducesResponseType(typeof(StatusCodeResponse<int[]>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse<int[]>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<int[]>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<int[]>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ModelResult<int[]>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<int[]>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> GetScaleLenghtAsync([FromQuery] GetScaleLenghtsRequest request)
         {
             return HandleResult<GetScaleLenghtsRequest, StatusCodeResponse<int[]>, int[]>(request);
@@ -50,9 +50,9 @@ namespace StringManager.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("StringsInSize")]
-        [ProducesResponseType(typeof(StatusCodeResponse<List<String>>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse<List<String>>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<List<String>>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<List<String>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ModelResult<List<String>>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<List<String>>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> GetStringSizeWithCorrepondingTensionAsync([FromQuery] GetStringSizeWithCorrepondingTensionRequest request)
         {
             return HandleResult<GetStringSizeWithCorrepondingTensionRequest, StatusCodeResponse<List<String>>, List<String>>(request);
@@ -68,10 +68,10 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during calculating of a StringsSet item with the closest tension</response> 
         [HttpGet]
         [Route("StringsSets")]
-        [ProducesResponseType(typeof(StatusCodeResponse<List<StringsSet>>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse<List<StringsSet>>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<List<StringsSet>>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<List<StringsSet>>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<List<StringsSet>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ModelResult<List<StringsSet>>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<List<StringsSet>>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<List<StringsSet>>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> GetStringsSetsWithCorrepondingTensionAsync([FromQuery] GetStringsSetsWithCorrepondingTensionRequest request)
         {
             return HandleResult <GetStringsSetsWithCorrepondingTensionRequest, StatusCodeResponse<List<StringsSet>>, List<StringsSet>>(request);
@@ -87,9 +87,9 @@ namespace StringManager.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("StringTension")]
-        [ProducesResponseType(typeof(StatusCodeResponse<double?>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse<double?>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<double?>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<double?>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ModelResult<double?>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<double?>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> GetStringTensionAsync([FromQuery] GetStringTensionRequest request)
         {
             return HandleResult<GetStringTensionRequest, StatusCodeResponse<double?>, double?>(request);

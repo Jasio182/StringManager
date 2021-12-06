@@ -13,6 +13,7 @@ namespace StringManager.Services.API.Validators
             RuleFor(myInstrument => myInstrument.InstrumentId).NotNull();
             RuleFor(myInstrument => myInstrument.UserId).NotNull();
             RuleFor(myInstrument => myInstrument.OwnName).NotNull();
+            RuleFor(myInstrument => myInstrument.NeededLuthierVisit).NotNull();
             RuleFor(myInstrument => myInstrument.LastDeepCleaning).NotNull();
             RuleFor(myInstrument => myInstrument.LastDeepCleaning).LessThanOrEqualTo(System.DateTime.Now);
             RuleFor(myInstrument => myInstrument.LastStringChange).NotNull();

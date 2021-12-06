@@ -29,9 +29,9 @@ namespace StringManager.Controllers
         /// <response code="401">User is not authorized to get list of StringsSet items</response> 
         /// <response code="500">An exception has been thrown during getting a list of StringsSet item</response> 
         [HttpGet]
-        [ProducesResponseType(typeof(StatusCodeResponse<List<StringsSet>>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse<List<StringsSet>>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<List<StringsSet>>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<List<StringsSet>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ModelResult<List<StringsSet>>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<List<StringsSet>>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> GetStringsSetsAsync([FromQuery] GetStringsSetsRequest request)
         {
             return HandleResult<GetStringsSetsRequest, StatusCodeResponse<List<StringsSet>>, List<StringsSet>>(request);
@@ -48,10 +48,10 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during getting a specific StringsSet item</response> 
         [HttpGet]
         [Route("{Id}")]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringsSet>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringsSet>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringsSet>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringsSet>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<StringsSet>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ModelResult<StringsSet>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<StringsSet>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<StringsSet>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> GetStringsSetAsync([FromQuery] GetStringsSetRequest request)
         {
             return HandleResult<GetStringsSetRequest, StatusCodeResponse<StringsSet>, StringsSet> (request);
@@ -66,10 +66,10 @@ namespace StringManager.Controllers
         /// <response code="401">User is not authorized to add StringsSet item</response> 
         /// <response code="500">An exception has been thrown during adding a specific StringsSet item</response> 
         [HttpPost]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringsSet>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringsSet>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringsSet>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringsSet>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<StringsSet>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ModelResult<StringsSet>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<StringsSet>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<StringsSet>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> AddStringsSetAsync([FromBody] AddStringsSetRequest request)
         {
             return HandleResult<AddStringsSetRequest, StatusCodeResponse<StringsSet>, StringsSet>(request);
@@ -85,10 +85,10 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during modification of specific StringsSet item</response> 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringsSet>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringsSet>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringsSet>), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringsSet>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<StringsSet>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<StringsSet>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<StringsSet>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ModelResult<StringsSet>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> ModifyStringsSetAsync([FromBody] ModifyStringsSetRequest request)
         {
             return HandleResult<ModifyStringsSetRequest, StatusCodeResponse<StringsSet>, StringsSet>(request);
@@ -105,10 +105,10 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during deletion of specific StringsSet item</response> 
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringsSet>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringsSet>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringsSet>), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringsSet>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<StringsSet>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<StringsSet>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<StringsSet>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ModelResult<StringsSet>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> RemoveStringsSetAsync([FromQuery] RemoveStringsSetRequest request)
         {
             return HandleResult<RemoveStringsSetRequest, StatusCodeResponse<StringsSet>, StringsSet>(request);

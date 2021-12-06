@@ -29,10 +29,10 @@ namespace StringManager.Controllers
         /// <response code="401">User is not authorized to add StringInSet item</response> 
         /// <response code="500">An exception has been thrown during adding of specific StringInSet item</response> 
         [HttpPost]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringInSet>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringInSet>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringInSet>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringInSet>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<StringInSet>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ModelResult<StringInSet>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<StringInSet>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<StringInSet>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> AddStringInSetAsync([FromBody] AddStringInSetRequest request)
         {
             return HandleResult<AddStringInSetRequest, StatusCodeResponse<StringInSet>, StringInSet>(request);
@@ -48,10 +48,10 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during modification of specific StringInSet item</response> 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringInSet>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringInSet>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringInSet>), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringInSet>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<StringInSet>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<StringInSet>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<StringInSet>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ModelResult<StringInSet>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> ModifyStringInSetAsync([FromBody] ModifyStringInSetRequest request)
         {
             return HandleResult<ModifyStringInSetRequest, StatusCodeResponse<StringInSet>, StringInSet>(request);
@@ -68,10 +68,10 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during deletion of specific StringInSet item</response> 
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringInSet>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringInSet>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringInSet>), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(StatusCodeResponse<StringInSet>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<StringInSet>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<StringInSet>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<StringInSet>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ModelResult<StringInSet>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> RemoveStringInSetAsync([FromQuery] RemoveStringInSetRequest request)
         {
             return HandleResult<RemoveStringInSetRequest, StatusCodeResponse<StringInSet>, StringInSet>(request);

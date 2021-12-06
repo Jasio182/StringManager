@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31321.278
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StringManager", "StringManager\StringManager.csproj", "{B0DE5037-3D95-4B74-950D-32A4A2559239}"
 EndProject
@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StringManager.DataAccess", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StringManager.Core", "StringManager.Core\StringManager.Core.csproj", "{342D5177-02F2-4DE5-B887-B885DC128327}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringManager.Services", "StringManager.Services\StringManager.Services.csproj", "{28F9F80D-9502-429D-8971-FC0594543597}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StringManager.Services", "StringManager.Services\StringManager.Services.csproj", "{28F9F80D-9502-429D-8971-FC0594543597}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringManager.Tests", "StringManager.Tests\StringManager.Tests.csproj", "{0853A632-B700-4842-AAF4-077774CD4155}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{28F9F80D-9502-429D-8971-FC0594543597}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28F9F80D-9502-429D-8971-FC0594543597}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28F9F80D-9502-429D-8971-FC0594543597}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0853A632-B700-4842-AAF4-077774CD4155}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0853A632-B700-4842-AAF4-077774CD4155}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0853A632-B700-4842-AAF4-077774CD4155}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0853A632-B700-4842-AAF4-077774CD4155}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

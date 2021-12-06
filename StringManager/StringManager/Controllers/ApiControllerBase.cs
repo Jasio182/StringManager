@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using StringManager.Core.Models;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
+using System;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
@@ -26,24 +27,33 @@ namespace StringManager.Controllers
             where TRequest : RequestBase<TModel>
             where TResponse : StatusCodeResponse<TModel>
         {
-            if(!ModelState.IsValid)
+            try
             {
-                var modelState = ModelState.Where(entry => entry.Value.Errors.Any())
-                            .Select(entry => new { property = entry.Key, entry.Value.Errors });
-                var error = "ModelState is invalid: " + ModelState;
-                logger.LogInformation(error);
-                return new ModelActionResult<object>(400, null, error);
+                if (!ModelState.IsValid)
+                {
+                    var modelState = ModelState.Where(entry => entry.Value.Errors.Any())
+                                .Select(entry => new { property = entry.Key, entry.Value.Errors });
+                    var error = "ModelState is invalid: " + ModelState;
+                    logger.LogInformation(error);
+                    return new ModelActionResult<object>(400, null, error);
+                }
+                request.UserId = int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var tempUserId) ? tempUserId : null;
+                request.AccountType = System.Enum.TryParse<Core.Enums.AccountType>(User.FindFirstValue(ClaimTypes.Role), out var tempAccountType) ? tempAccountType : null;
+                var response = await mediator.Send(request);
+                if (response.Result == null)
+                {
+                    var error = "An error encountered during handling a request";
+                    logger.LogInformation(error);
+                    return new ModelActionResult<object>(500, null, error);
+                }
+                return response.Result;
             }
-            request.UserId = int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var tempUserId) ? tempUserId : null;
-            request.AccountType = System.Enum.TryParse<Core.Enums.AccountType>(User.FindFirstValue(ClaimTypes.Role), out var tempAccountType) ? tempAccountType : null;
-            var response = await mediator.Send(request);
-            if(response.Result == null)
+            catch(Exception e)
             {
-                var error = "An error encountered during handling a request";
+                var error = "An error encountered during preparation to send an request via controller " + typeof(TModel).Name;
                 logger.LogInformation(error);
                 return new ModelActionResult<object>(500, null, error);
             }
-            return response.Result;
         }
     }
 }

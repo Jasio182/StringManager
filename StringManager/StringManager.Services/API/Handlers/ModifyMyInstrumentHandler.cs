@@ -58,6 +58,8 @@ namespace StringManager.Services.API.Handlers
                     myInstrumentToUpdate.HoursPlayedWeekly = (int)request.HoursPlayedWeekly;
                 if (request.OwnName != null)
                     myInstrumentToUpdate.OwnName = request.OwnName;
+                if (request.NeededLuthierVisit != null)
+                    myInstrumentToUpdate.NeededLuthierVisit = (bool)request.NeededLuthierVisit;
                 if (request.LastDeepCleaning != null || request.LastStringChange != null)
                 {
                     var dateCalculator = new DateCalculator(myInstrumentFromDb);

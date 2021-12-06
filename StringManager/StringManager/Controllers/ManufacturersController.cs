@@ -30,9 +30,9 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during getting a list of Manufacturer item</response> 
         [HttpGet]
         [Route("instruments")]
-        [ProducesResponseType(typeof(StatusCodeResponse<List<Manufacturer>>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse<List<Manufacturer>>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<List<Manufacturer>>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<List<Manufacturer>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ModelResult<List<Manufacturer>>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<List<Manufacturer>>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> GetInstrumentsManufacturersAsync()
         {
             var request = new GetInstrumentsManufacturersRequest();
@@ -48,9 +48,9 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during getting a list of Manufacturer items</response> 
         [HttpGet]
         [Route("strings")]
-        [ProducesResponseType(typeof(StatusCodeResponse<List<Manufacturer>>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse<List<Manufacturer>>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<List<Manufacturer>>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<List<Manufacturer>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ModelResult<List<Manufacturer>>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<List<Manufacturer>>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> GetStringsManufacturersAsync()
         {
             var request = new GetStringsManufacturersRequest();
@@ -66,10 +66,10 @@ namespace StringManager.Controllers
         /// <response code="401">User is not authorized to add Manufacturer item</response> 
         /// <response code="500">An exception has been thrown during adding a specific Manufacturer item</response> 
         [HttpPost]
-        [ProducesResponseType(typeof(StatusCodeResponse<Manufacturer>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Manufacturer>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Manufacturer>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Manufacturer>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<Manufacturer>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ModelResult<Manufacturer>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<Manufacturer>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<Manufacturer>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> AddManufacturerAsync([FromBody] AddManufacturerRequest request)
         {
             return HandleResult<AddManufacturerRequest, StatusCodeResponse<Manufacturer>, Manufacturer>(request);
@@ -85,10 +85,10 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during modification of specific Manufacturer item</response> 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Manufacturer>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Manufacturer>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Manufacturer>), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Manufacturer>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<Manufacturer>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<Manufacturer>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<Manufacturer>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ModelResult<Manufacturer>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> ModifyManufacturerAsync([FromBody] ModifyManufacturerRequest request)
         {
             return HandleResult<ModifyManufacturerRequest, StatusCodeResponse<Manufacturer>, Manufacturer>(request);
@@ -105,10 +105,10 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during deletion of specific Manufacturer item</response> 
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Manufacturer>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Manufacturer>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Manufacturer>), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(StatusCodeResponse<Manufacturer>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<Manufacturer>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<Manufacturer>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<Manufacturer>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ModelResult<Manufacturer>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> RemoveManufacturerAsync([FromQuery] RemoveManufacturerRequest request)
         {
             return HandleResult<RemoveManufacturerRequest, StatusCodeResponse<Manufacturer>, Manufacturer>(request);

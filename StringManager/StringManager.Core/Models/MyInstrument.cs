@@ -21,6 +21,8 @@ namespace StringManager.Core.Models
 
         public List<InstalledString> InstalledStrings { get; set; }
 
+        public bool NeededLuthierVisit { get; set; }
+
         public DateTime? LastDeepCleaning { get; set; }
 
         public DateTime? NextDeepCleaning { get; set; }

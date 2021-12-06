@@ -29,10 +29,10 @@ namespace StringManager.Controllers
         /// <response code="401">User is not authorized to add InstalledString item</response> 
         /// <response code="500">An exception has been thrown during modification of specific InstalledString item</response> 
         [HttpPost]
-        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<InstalledString>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ModelResult<InstalledString>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<InstalledString>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<InstalledString>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> AddInstalledStringAsync([FromBody] AddInstalledStringRequest request)
         {
             return HandleResult<AddInstalledStringRequest, StatusCodeResponse<InstalledString>, InstalledString>(request);
@@ -48,10 +48,10 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during modification of specific InstalledString item</response> 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<InstalledString>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<InstalledString>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<InstalledString>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ModelResult<InstalledString>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> ModifyInstalledStringAsync([FromBody] ModifyInstalledStringRequest request)
         {
             return HandleResult<ModifyInstalledStringRequest, StatusCodeResponse<InstalledString>, InstalledString>(request);
@@ -68,10 +68,10 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during deletion of specific InstalledString item</response> 
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(StatusCodeResponse<InstalledString>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<InstalledString>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<InstalledString>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<InstalledString>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ModelResult<InstalledString>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> RemoveInstalledStringAsync([FromQuery] RemoveInstalledStringRequest request)
         {
             return HandleResult<RemoveInstalledStringRequest, StatusCodeResponse<InstalledString>, InstalledString>(request);

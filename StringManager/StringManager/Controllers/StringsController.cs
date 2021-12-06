@@ -29,8 +29,8 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during getting a list of String item</response> 
         [AllowAnonymous]
         [HttpGet]
-        [ProducesResponseType(typeof(StatusCodeResponse<List<String>>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse<List<String>>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<List<String>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ModelResult<List<String>>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> GetStringsAsync()
         {
             var request = new GetStringsRequest();
@@ -46,10 +46,10 @@ namespace StringManager.Controllers
         /// <response code="401">User is not authorized to add String item</response> 
         /// <response code="500">An exception has been thrown during adding a specific String item</response> 
         [HttpPost]
-        [ProducesResponseType(typeof(StatusCodeResponse<String>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(StatusCodeResponse<String>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<String>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<String>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<String>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ModelResult<String>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<String>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<String>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> AddStringAsync([FromBody] AddStringRequest request)
         {
             return HandleResult<AddStringRequest, StatusCodeResponse<String>, String>(request);
@@ -65,10 +65,10 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during modification of specific String item</response> 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(StatusCodeResponse<String>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<String>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<String>), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(StatusCodeResponse<String>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<String>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<String>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<String>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ModelResult<String>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> ModifyStringAsync([FromBody] ModifyStringRequest request)
         {
             return HandleResult<ModifyStringRequest, StatusCodeResponse<String>, String>(request);
@@ -85,10 +85,10 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during deletion of specific String item</response> 
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(StatusCodeResponse<String>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(StatusCodeResponse<String>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(StatusCodeResponse<String>), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(StatusCodeResponse<String>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ModelResult<String>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ModelResult<String>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<String>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ModelResult<String>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> RemoveStringAsync([FromQuery] RemoveStringRequest request)
         {
             return HandleResult<RemoveStringRequest, StatusCodeResponse<String>, String>(request);
