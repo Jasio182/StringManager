@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StringManager.Core.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace StringManager.Core.Models
@@ -20,6 +21,10 @@ namespace StringManager.Core.Models
         public int ScaleLenghtTreble { get; set; }
 
         public List<InstalledString> InstalledStrings { get; set; }
+
+        public int HoursPlayedWeekly { get; set; }
+
+        public WhereGuitarKept GuitarPlace { get; set; }
 
         public bool NeededLuthierVisit { get; set; }
 

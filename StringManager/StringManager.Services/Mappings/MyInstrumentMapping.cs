@@ -25,6 +25,8 @@ namespace StringManager.Services.Mappings
                 .ForMember(x => x.ScaleLenghtBass, y => y.MapFrom(z => z.Instrument.ScaleLenghtBass))
                 .ForMember(x => x.ScaleLenghtTreble, y => y.MapFrom(z => z.Instrument.ScaleLenghtTreble))
                 .ForMember(x => x.Manufacturer, y => y.MapFrom(z => z.Instrument.Manufacturer.Name))
+                .ForMember(x => x.HoursPlayedWeekly, y => y.MapFrom(z => z.HoursPlayedWeekly))
+                .ForMember(x => x.GuitarPlace, y => y.MapFrom(z => z.GuitarPlace))
                 .ForMember(x => x.NeededLuthierVisit, y => y.MapFrom(z => z.NeededLuthierVisit))
                 .ForMember(x => x.LastDeepCleaning, y => y.MapFrom(z => z.LastDeepCleaning))
                 .ForMember(x => x.NextDeepCleaning, y => y.MapFrom(z => z.NextDeepCleaning))

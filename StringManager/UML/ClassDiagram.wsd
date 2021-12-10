@@ -1,0 +1,2818 @@
+@startuml ClassDiagram
+
+interface IActionResult
+
+interface IMediator
+interface IMapper 
+
+class DbContext
+interface IDesignTimeDbContextFactory<T>
+interface "IDesignTimeDbContextFactory<StringManagerStorageContext>" as IDesignTimeDbContextFactory_StringManagerStorageContext
+
+interface IRequest<T>
+interface "IRequest<StatusCodeResponse<InstalledString>>" as IRequest_InstalledString
+interface "IRequest<StatusCodeResponse<Instrument>>" as IRequest_Instrument
+interface "IRequest<StatusCodeResponse<List<Instrument>>>" as IRequest_ListInstrument
+interface "IRequest<StatusCodeResponse<Manufacturer>>" as IRequest_Manufacturer
+interface "IRequest<StatusCodeResponse<List<Manufacturer>>>" as IRequest_ListManufacturer
+interface "IRequest<StatusCodeResponse<MyInstrument>>" as IRequest_MyInstrument
+interface "IRequest<StatusCodeResponse<List<MyInstrument>>>" as IRequest_ListMyInstrument
+interface "IRequest<StatusCodeResponse<StringInSet>>" as IRequest_StringInSet
+interface "IRequest<StatusCodeResponse<String>>" as IRequest_String
+interface "IRequest<StatusCodeResponse<List<String>>>" as IRequest_ListString
+interface "IRequest<StatusCodeResponse<StringsSet>>" as IRequest_StringsSet
+interface "IRequest<StatusCodeResponse<List<StringsSet>>>" as IRequest_ListStringsSet
+interface "IRequest<StatusCodeResponse<ToneInTuning>>" as IRequest_ToneInTuning
+interface "IRequest<StatusCodeResponse<Tone>>" as IRequest_Tone
+interface "IRequest<StatusCodeResponse<List<Tone>>>" as IRequest_ListTone
+interface "IRequest<StatusCodeResponse<Tuning>>" as IRequest_Tuning
+interface "IRequest<StatusCodeResponse<List<Tuning>>>" as IRequest_ListTuning
+interface "IRequest<StatusCodeResponse<User>>" as IRequest_User
+interface "IRequest<StatusCodeResponse<List<User>>>" as IRequest_ListUser
+interface "IRequest<StatusCodeResponse<int[]>>" as IRequest_ints
+interface "IRequest<StatusCodeResponse<double?>>" as IRequest_double
+
+interface IRequestHandler<TRequest, TResponse>
+interface "IRequestHandler<AddInstalledStringRequest, StatusCodeResponse<Core.Models.InstalledString>>" as IRequestHandlerAddInstalledStringRequest
+interface "IRequestHandler<AddInstrumentRequest, StatusCodeResponse<Core.Models.Instrument>>" as IRequestHandlerAddInstrumentRequest
+interface "IRequestHandler<AddManufacturerRequest, StatusCodeResponse<Core.Models.Manufacturer>>" as IRequestHandlerAddManufacturerHandler
+interface "IRequestHandler<AddMyInstrumentRequest, StatusCodeResponse<Core.Models.MyInstrument>>" as IRequestHandlerAddMyInstrumentHandler
+interface "IRequestHandler<AddStringRequest, StatusCodeResponse<Core.Models.String>>" as IRequestHandlerAddStringHandler
+interface "IRequestHandler<AddStringInSetRequest, StatusCodeResponse<Core.Models.StringInSet>>" as IRequestHandlerAddStringInSetHandler
+interface "IRequestHandler<AddStringsSetRequest, StatusCodeResponse<Core.Models.StringsSet>>" as IRequestHandlerAddStringsSetHandler
+interface "IRequestHandler<AddToneRequest, StatusCodeResponse<Core.Models.Tone>>" as IRequestHandlerAddToneHandler
+interface "IRequestHandler<AddToneInTuningRequest, StatusCodeResponse<Core.Models.ToneInTuning>>" as IRequestHandlerAddToneInTuningHandler
+interface "IRequestHandler<AddTuningRequest, StatusCodeResponse<Core.Models.Tuning>>" as IRequestHandlerAddTuningHandler
+interface "IRequestHandler<AddUserRequest, StatusCodeResponse<Core.Models.User>>" as IRequestHandlerAddUserHandler
+interface "IRequestHandler<GetInstrumentsRequest, StatusCodeResponse<List<Instrument>>>" as IRequestHandlerGetInstrumentsHandler
+interface "IRequestHandler<GetInstrumentsManufacturersRequest, StatusCodeResponse<List<Manufacturer>>>" as IRequestHandlerGetInstrumentsManufacturersHandler
+interface "IRequestHandler<GetMyInstrumentRequest, StatusCodeResponse<MyInstrument>>" as IRequestHandlerGetMyInstrumentHandler
+interface "IRequestHandler<GetMyInstrumentsRequest, StatusCodeResponse<List<MyInstrumentList>>>" as IRequestHandlerGetMyInstrumentsHandler
+interface "IRequestHandler<GetScaleLenghtsRequest, StatusCodeResponse<int[]>>" as IRequestHandlerGetScaleLenghtsHandler
+interface "IRequestHandler<GetStringsRequest, StatusCodeResponse<List<String>>>" as IRequestHandlerGetStringsHandler
+interface "IRequestHandler<GetStringSizeWithCorrepondingTensionRequest, StatusCodeResponse<List<String>>>" as IRequestHandlerGetStringSizeWithCorrepondingTensionHandler
+interface "IRequestHandler<GetStringsManufacturersRequest, StatusCodeResponse<List<Manufacturer>>>" as IRequestHandlerGetStringsManufacturersHandler
+interface "IRequestHandler<GetStringsSetRequest, StatusCodeResponse<StringsSet>>" as IRequestHandlerGetStringsSetHandler
+interface "IRequestHandler<GetStringsSetsRequest, StatusCodeResponse<List<StringsSet>>>" as IRequestHandlerGetStringsSetsHandler
+interface "IRequestHandler<GetStringsSetsWithCorrepondingTensionRequest, StatusCodeResponse<List<Core.Models.StringsSet>>>" as IRequestHandlerGetStringsSetsWithCorrepondingTensionHandler
+interface "IRequestHandler<GetStringTensionRequest, StatusCodeResponse<double?>>" as IRequestHandlerGetStringTensionHandler
+interface "IRequestHandler<GetTonesRequest, StatusCodeResponse<List<Tone>>>" as IRequestHandlerGetTonesHandler
+interface "IRequestHandler<GetTuningRequest, StatusCodeResponse<Tuning>>" as IRequestHandlerGetTuningHandler
+interface "IRequestHandler<GetTuningsRequest, StatusCodeResponse<List<TuningList>>>" as IRequestHandlerGetTuningsHandler
+interface "IRequestHandler<GetUserRequest, StatusCodeResponse<User>>" as IRequestHandlerGetUserHandler
+interface "IRequestHandler<GetUsersRequest, StatusCodeResponse<List<User>>>" as IRequestHandlerGetUsersHandler
+interface "IRequestHandler<ModifyInstalledStringRequest, StatusCodeResponse<InstalledString>>" as IRequestHandlerModifyInstalledStringHandler
+interface "IRequestHandler<ModifyInstrumentRequest, StatusCodeResponse<Instrument>>" as IRequestHandlerModifyInstrumentHandler
+interface "IRequestHandler<ModifyManufacturerRequest, StatusCodeResponse<Manufacturer>>" as IRequestHandlerModifyManufacturerHandler
+interface "IRequestHandler<ModifyMyInstrumentRequest, StatusCodeResponse<MyInstrument>>" as IRequestHandlerModifyMyInstrumentHandler
+interface "IRequestHandler<ModifyStringRequest, StatusCodeResponse<String>>" as IRequestHandlerModifyStringHandler
+interface "IRequestHandler<ModifyStringInSetRequest, StatusCodeResponse<StringInSet>>" as IRequestHandlerModifyStringInSetHandler
+interface "IRequestHandler<ModifyStringsSetRequest, StatusCodeResponse<StringsSet>>" as IRequestHandlerModifyStringsSetHandler
+interface "IRequestHandler<ModifyToneRequest, StatusCodeResponse<Tone>>" as IRequestHandlerModifyToneHandler
+interface "IRequestHandler<ModifyTuningRequest, StatusCodeResponse<Tuning>>" as IRequestHandlerModifyTuningHandler
+interface "IRequestHandler<ModifyUserRequest, StatusCodeResponse<User>>" as IRequestHandlerModifyUserHandler
+interface "IRequestHandler<RemoveInstalledStringRequest, StatusCodeResponse<InstalledString>>" as IRequestHandlerRemoveInstalledStringHandler
+interface "IRequestHandler<RemoveInstrumentRequest, StatusCodeResponse<Instrument>>" as IRequestHandlerRemoveInstrumentHandler
+interface "IRequestHandler<RemoveManufacturerRequest, StatusCodeResponse<Manufacturer>>" as IRequestHandlerRemoveManufacturerHandler
+interface "IRequestHandler<RemoveMyInstrumentRequest, StatusCodeResponse<MyInstrument>>" as IRequestHandlerRemoveMyInstrumentHandler
+interface "IRequestHandler<RemoveStringRequest, StatusCodeResponse<String>>" as IRequestHandlerRemoveStringHandler
+interface "IRequestHandler<RemoveStringsSetRequest, StatusCodeResponse<StringsSet>>" as IRequestHandlerRemoveStringsSetHandler
+interface "IRequestHandler<RemoveToneRequest, StatusCodeResponse<Tone>>" as IRequestHandlerRemoveToneHandler
+interface "IRequestHandler<RemoveToneInTuningRequest, StatusCodeResponse<ToneInTuning>>" as IRequestHandlerRemoveToneInTuningHandler
+interface "IRequestHandler<RemoveTuningRequest, StatusCodeResponse<Tuning>>" as IRequestHandlerRemoveTuningHandler
+
+class Profile
+
+class AbstractValidator<T>
+class "AbstractValidator<AddInstalledStringRequest>" as AbstractValidator_AddInstalledStringRequest
+class "AbstractValidator<AddInstrumentRequest>" as AbstractValidator_AddInstrumentRequest
+class "AbstractValidator<AddManufacturerRequest>" as AbstractValidator_AddManufacturerRequest
+class "AbstractValidator<AddMyInstrumentRequest>" as AbstractValidator_AddMyInstrumentRequest
+class "AbstractValidator<AddStringInSetRequest>" as AbstractValidator_AddStringInSetRequest
+class "AbstractValidator<AddStringRequest>" as AbstractValidator_AddStringRequest
+class "AbstractValidator<AddStringsSetRequest>" as AbstractValidator_AddStringsSetRequest
+class "AbstractValidator<AddToneInTuningRequest>" as AbstractValidator_AddToneInTuningRequest
+class "AbstractValidator<AddToneRequest>" as AbstractValidator_AddToneRequest
+class "AbstractValidator<AddTuningRequest>" as AbstractValidator_AddTuningRequest
+class "AbstractValidator<AddUserRequest>" as AbstractValidator_AddUserRequest
+class "AbstractValidator<GetScaleLenghtsRequest>" as AbstractValidator_GetScaleLenghtsRequest
+class "AbstractValidator<GetStringSizeWithCorrepondingTensionRequest>" as AbstractValidator_GetStringSizeWithCorrepondingTensionRequest
+class "AbstractValidator<GetStringsSetsWithCorrepondingTensionRequest>" as AbstractValidator_GetStringsSetsWithCorrepondingTensionRequest
+class "AbstractValidator<GetStringTensionRequest>" as AbstractValidator_GetStringTensionRequest
+class "AbstractValidator<ModifyInstalledStringRequest>" as AbstractValidator_ModifyInstalledStringRequest
+class "AbstractValidator<ModifyInstrumentRequest>" as AbstractValidator_ModifyInstrumentRequest
+class "AbstractValidator<ModifyManufacturerRequest>" as AbstractValidator_ModifyManufacturerRequest
+class "AbstractValidator<ModifyMyInstrumentRequest>" as AbstractValidator_ModifyMyInstrumentRequest
+class "AbstractValidator<ModifyStringInSetRequest>" as AbstractValidator_ModifyStringInSetRequest
+class "AbstractValidator<ModifyStringRequest>" as AbstractValidator_ModifyStringRequest
+class "AbstractValidator<ModifyStringsSetRequest>" as AbstractValidator_ModifyStringsSetRequest
+class "AbstractValidator<ModifyToneInTuningRequest>" as AbstractValidator_ModifyToneInTuningRequest
+class "AbstractValidator<ModifyToneRequest>" as AbstractValidator_ModifyToneRequest
+class "AbstractValidator<ModifyTuningRequest>" as AbstractValidator_ModifyTuningRequest
+class "AbstractValidator<ModifyUserRequest>" as AbstractValidator_ModifyUserRequest
+class "AbstractValidator<RemoveInstalledStringRequest>" as AbstractValidator_RemoveInstalledStringRequest
+class "AbstractValidator<RemoveInstrumentRequest>" as AbstractValidator_RemoveInstrumentRequest
+class "AbstractValidator<RemoveManufacturerRequest>" as AbstractValidator_RemoveManufacturerRequest
+class "AbstractValidator<RemoveMyInstrumentRequest>" as AbstractValidator_RemoveMyInstrumentRequest
+class "AbstractValidator<RemoveStringInSetRequest>" as AbstractValidator_RemoveStringInSetRequest
+class "AbstractValidator<RemoveStringRequest>" as AbstractValidator_RemoveStringRequest
+class "AbstractValidator<RemoveStringsSetRequest>" as AbstractValidator_RemoveStringsSetRequest
+class "AbstractValidator<RemoveToneInTuningRequest>" as AbstractValidator_RemoveToneInTuningRequest
+class "AbstractValidator<RemoveToneRequest>" as AbstractValidator_RemoveToneRequest
+class "AbstractValidator<RemoveTuningRequest>" as AbstractValidator_RemoveTuningRequest
+
+'StringManager classes
+package StringManager <<Rectangle>>
+{
+    class Program
+    {
+        +{static} Main(args : string[]) : void
+        +{static} CreateHostBuilder(args : string[]) : IHostBuilder
+    }
+
+    class Startup
+    {
+        +Configuration : IConfiguration
+        +Startup(configuration : IConfiguration ) : Startup
+        +ConfigureServices(services : IServiceCollection ) : void
+        +Configure(app : IApplicationBuilder, env : IWebHostEnvironment) : void
+    }
+
+    class BasicAuthenticationHandler
+    {
+        -IQueryExecutor queryExecutor 
+        +BasicAuthenticationHandler BasicAuthenticationHandler(options : IOptionsMonitor< AuthenticationSchemeOptions >, logger : ILoggerFactory, encoder : UrlEncoder, clock : ISystemClock, queryExecutor : IQueryExecutor)
+        #Task<AuthenticateResult> HandleAuthenticateAsync()
+    }
+
+    package Controllers <<folder>>
+    {
+        abstract class ApiControllerBase < TController >
+        {
+            -mediator : IMediator 
+            -logger : ILogger< TController > 
+            +ApiControllerBase(mediator : IMediator, logger : ILogger<TController>) : ApiControllerBase 
+            #HandleResult<TRequest, TResponse, TModel>(request : TRequest) : Task<IActionResult> 
+        }
+
+        class InstalledStringsController
+        {
+            +InstalledStringsController(mediator : IMediator, logger : ILogger<InstalledStringsController>) : InstalledStringsController 
+            +AddInstalledStringAsync(request : AddInstalledStringRequest) : Task<IActionResult> 
+            +ModifyInstalledStringAsync(request : ModifyInstalledStringRequest) : Task<IActionResult> 
+            +RemoveInstalledStringAsync(request : RemoveInstalledStringRequest) : Task<IActionResult> 
+        }
+
+        abstract class "ApiControllerBase<InstalledStringsController>" as ApiControllerBase_InstalledStringsController
+
+        class InstrumentsController
+        {
+            +InstrumentsController(mediator : IMediator, logger : ILogger<InstrumentsController>) : InstrumentsController 
+            +GetInstrumentsAsync() : Task<IActionResult>
+            +AddInstrumentAsync(request : AddInstrumentRequest) : Task<IActionResult>
+            +ModifyInstrumentAsync(request : ModifyInstrumentRequest) : Task<IActionResult>
+            +RemoveInstrumentAsync(request : RemoveInstrumentRequest) : Task<IActionResult>
+        }
+
+        abstract class "ApiControllerBase<InstrumentsController>" as ApiControllerBase_InstrumentsController
+
+        class ManufacturersController
+        {
+            +ManufacturersController(mediator : IMediator, logger : ILogger<InstrumentsController>) : ManufacturersController
+            +GetInstrumentsManufacturersAsync() : Task<IActionResult>
+            +GetStringsManufacturersAsync() : Task<IActionResult>
+            +AddManufacturerAsync(request : AddManufacturerRequest) : Task<IActionResult>
+            +ModifyManufacturerAsync(request : ModifyManufacturerRequest) : Task<IActionResult>
+            +RemoveManufacturerAsync(request : RemoveManufacturerRequest) : Task<IActionResult>
+        }
+
+        abstract class "ApiControllerBase<ManufacturersController>" as ApiControllerBase_ManufacturersController
+
+        class MyInstrumentsController
+        {
+            +MyInstrumentsController(mediator : IMediator, logger : ILogger<InstrumentsController>) : MyInstrumentsController 
+            +GetMyInstrumentsAsync(request : GetMyInstrumentsRequest) : Task<IActionResult>
+            +GetMyInstrumentAsync(request : GetMyInstrumentRequest) : Task<IActionResult>
+            +AddMyInstrumentAsync(request : AddMyInstrumentRequest) : Task<IActionResult>
+            +ModifyMyInstrumentAsync(request : ModifyMyInstrumentRequest) : Task<IActionResult>
+            +RemoveMyInstrumentAsync(request : RemoveMyInstrumentRequest) : Task<IActionResult>
+        }
+
+        abstract class "ApiControllerBase<MyInstrumentsController>" as ApiControllerBase_MyInstrumentsController
+
+        class StringsController
+        {
+            +StringsController(mediator : IMediator, logger : ILogger<StringsController>) : StringsController 
+            +GetStringsAsync() : Task<IActionResult> 
+            +AddStringAsync(request : AddStringRequest) : Task<IActionResult> 
+            +ModifyStringAsync(request : ModifyStringRequest) : Task<IActionResult> 
+            +RemoveStringAsync(request : RemoveStringRequest  : Task<IActionResult> 
+        }
+
+        abstract class "ApiControllerBase<StringsController>" as ApiControllerBase_StringsController
+
+        class StringsInSetsController
+        {
+            +StringsInSetsController(mediator : IMediator, logger : ILogger<StringsInSetsController>) : StringsInSetsController
+            +AddStringInSetAsync(request : AddStringInSetRequest) : Task<IActionResult>
+            +ModifyStringInSetAsync(request : ModifyStringInSetRequest) : Task<IActionResult>
+            +RemoveStringInSetAsync(request : RemoveStringInSetRequest) : Task<IActionResult>
+        }
+
+        abstract class "ApiControllerBase<StringsInSetsController>" as ApiControllerBase_StringsInSetsController
+
+        class StringsSetsController
+        {
+            +StringsSetsController(mediator : IMediator, logger : ILogger<StringsSetsController>) : StringsSetsController 
+            +GetStringsSetsAsync(request : GetStringsSetsRequest) : Task<IActionResult>
+            +GetStringsSetAsync(request : GetStringsSetRequest) : Task<IActionResult>
+            +AddStringsSetAsync(request : AddStringsSetRequest) : Task<IActionResult>
+            +ModifyStringsSetAsync(request : ModifyStringsSetRequest) : Task<IActionResult>
+            +RemoveStringsSetAsync(request : RemoveStringsSetRequest) : Task<IActionResult>
+        }
+
+        abstract class "ApiControllerBase<StringsSetsController>" as ApiControllerBase_StringsSetsController
+
+        class StringTensionController 
+        {
+            +StringTensionController(mediator : IMediator, logger : ILogger<StringTensionController>) : StringTensionController
+            +GetScaleLenghtAsync(request : GetScaleLenghtsRequest) : Task<IActionResult>
+            +GetStringSizeWithCorrepondingTensionAsync(request : GetStringSizeWithCorrepondingTensionRequest) : Task<IActionResult>
+            +GetStringsSetsWithCorrepondingTensionAsync(request : GetStringsSetsWithCorrepondingTensionRequest) : Task<IActionResult>
+            +GetStringTensionAsync(request : GetStringTensionRequest) : Task<IActionResult>
+        }
+
+        abstract class "ApiControllerBase<StringTensionController>" as ApiControllerBase_StringTensionController
+
+        class TonesController
+        {
+            +TonesController(mediator : IMediator, logger : ILogger<TonesController>) : TonesController
+            +GetTonesAsync() : Task<IActionResult>
+            +AddToneAsync(request : AddToneRequest) : Task<IActionResult>
+            +ModifyToneAsync(request : ModifyToneRequest) : Task<IActionResult>
+            +RemoveToneAsync(request : RemoveToneRequest) : Task<IActionResult>
+        }
+
+        abstract class "ApiControllerBase<TonesController>" as ApiControllerBase_TonesController
+
+        class TonesInTuningsController
+        {
+            +TonesInTuningsController(mediator : IMediator, logger : ILogger<TonesInTuningsController>) : TonesInTuningsController
+            +AddToneInTuningAsync(request : AddToneInTuningRequest) : Task<IActionResult>
+            +ModifyToneInTuningAsync(request : ModifyToneInTuningRequest) : Task<IActionResult>
+            +RemoveToneInTuningAsync(request : RemoveToneInTuningRequest) : Task<IActionResult>
+        }
+
+        abstract class "ApiControllerBase<TonesInTuningsController>" as ApiControllerBase_TonesInTuningsController
+
+        class TuningsController
+        {
+            +TuningsController(mediator : IMediator, logger : ILogger<TuningsController>) : TuningsController
+            +GetTuningsAsync() : Task<IActionResult>
+            +GetTuningAsync(request : GetTuningRequest) : Task<IActionResult>
+            +AddTuningAsync(request : AddTuningRequest) : Task<IActionResult>
+            +ModifyTuningAsync(request : ModifyTuningRequest) : Task<IActionResult>
+            +RemoveTuningAsync(request : RemoveTuningRequest) : Task<IActionResult>
+        }
+
+        abstract class "ApiControllerBase<TuningsController>" as ApiControllerBase_TuningsController
+
+        class UsersController
+        {
+            +UsersController(mediator : IMediator, logger : ILogger<UsersController>) : UsersController
+            +GetUsersAsync(request : GetUsersRequest) : Task<IActionResult>
+            +GetUserAsync() : Task<IActionResult>
+            +AddUserAsync(request : AddUserRequest) : Task<IActionResult>
+            +ModifyUserAsync(request : ModifyUserRequest) : Task<IActionResult>
+        }
+
+        abstract class "ApiControllerBase<UsersController>" as ApiControllerBase_UsersController
+    }
+}
+
+package StringManager.Core <<Rectangle>>
+{
+    package Enums <<folder>>
+    {
+        enum AccountType
+        {
+            User
+            Admin
+        }
+
+        enum GuitarDailyMaintanance
+        {
+            CleanHandsWipedStrings
+            WipedString
+            CleanHands
+            PlayAsIs
+        }
+
+        enum PlayStyle
+        {
+            Hard
+            Moderate
+            Light  
+        }
+
+        enum StringType
+        {
+            PlainNikled,
+            WoundNikled,
+            PlainBrass,
+            WoundBrass,
+            PlainNylon,
+            WoundNylon
+        }
+
+        enum WhereGuitarKept
+        {
+            Stand,
+            SoftCase,
+            HardCase
+        }
+    }
+
+    package Models <<folder>>
+    {
+        class "InstalledString" as ModelInstalledString
+        {
+            +Id : int 
+            +StringId : int
+            +ToneId : int 
+            +Manufacturer : string
+            +StringType : StringType
+            +Size : int 
+            +SpecificWeight : double
+            +Position : int
+            +ToneName : string
+            +Frequency : int
+            +WaveLenght : int
+        }
+
+        class "Instrument" as ModelInstrument
+        {
+            +Id : int
+            +Manufacturer : string
+            +Model : string 
+            +NumberOfStrings : int
+            +ScaleLenghtBass : int
+            +ScaleLenghtTreble : int
+        }
+
+        class "Manufacturer" as ModelManufacturer
+        {
+            +Id : int 
+            +Name : string
+        }
+
+        package ModelResult <<Rectangle>>
+        {
+            class ModelResult < T >
+            {
+                +Error : string 
+                +Data : T
+            }
+
+            class ModelActionResult< T >
+            {
+                -result : ModelResult<T>
+                -statusCode : int
+                +ModelActionResult(statusCode : int, data : T, error : string = null) : ModelActionResult
+                ~IActionResult.ExecuteResultAsync(context : ActionContext) : Task
+            }
+        }
+
+        class "MyInstrument" as ModelMyInstrument
+        {
+            +Id : int
+            +OwnName : string
+            +Manufacturer : string 
+            +Model : string
+            +NumberOfStrings : int
+            +ScaleLenghtBass : int
+            +ScaleLenghtTreble : int
+            +GuitarPlace : WhereGuitarKept
+            +HoursPlayedWeekly : int
+            +InstalledStrings : List<InstalledString>
+            +NeededLuthierVisit : bool 
+            +LastDeepCleaning : DateTime? 
+            +NextDeepCleaning : DateTime? 
+            +LastStringChange : DateTime? 
+            +NextStringChange : DateTime? 
+        }
+
+        class MyInstrumentList 
+        {
+            +Id : int
+            +OwnName : string
+            +Manufacturer : string
+            +Model : string
+            +NumberOfStrings : int
+            +ScaleLenghtBass : int
+            +ScaleLenghtTreble : int
+        }
+
+        class "String" as ModelString
+        {
+            +Id : int
+            +Manufacturer : string
+            +NumberOfDaysGood : int
+            +StringType : StringType
+            +Size : int
+            +SpecificWeight : double
+        }
+
+        class "StringInSet" as ModelStringInSet
+        {
+            +Id : int
+            +StringId : int
+            +Manufacturer : string
+            +StringType : StringType
+            +Size : int
+            +SpecificWeight : double
+            +Position : int
+        }
+
+        class "StringsSet" as ModelStringsSet
+        {
+            +Id : int 
+            +Name : string 
+            +NumberOfStrings : int 
+            +StringsInSet : List<StringInSet> 
+        }
+
+        class "Tone" as ModelTone
+        {
+            +Id : int 
+            +Name : string
+            +Frequency : int 
+            +WaveLenght : int 
+        }
+
+        class "ToneInTuning" as ModelToneInTuning
+        {
+            +Id : int 
+            +Position : int 
+            +ToneName : string
+            +Frequency : int 
+            +WaveLenght : int 
+        }
+
+        class "Tuning" as ModelTuning
+        {
+            +Id : int 
+            +Name : string
+            +NumberOfStrings : int 
+            +TonesInTuning : List<ToneInTuning> 
+        }
+
+        class TuningList
+        {
+            +Id : int 
+            +Name : string
+            +NumberOfStrings : int 
+        }
+
+        class "User" as ModelUser
+        {
+            +Id : int 
+            +Username : string
+            +Email : string
+            +DailyMaintanance : GuitarDailyMaintanance 
+            +PlayStyle : PlayStyle 
+            +AccountType : AccountType 
+        }
+    }
+}
+
+package StringManager.DataAccess <<Rectangle>>
+{
+    package CQRS <<folder>>
+    {
+        package Commands <<folder>>
+        {
+            abstract class CommandBase<TParameter, TResult>
+            {
+                +Parameter : TParameter
+                +{abstract} Execute(context : StringManagerStorageContext ) : Task<TResult> 
+            }
+
+            abstract class "CommandBase<InstalledString,InstalledString>" as CommandBase_InstalledString
+
+            class AddInstalledStringCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<InstalledString> 
+            }
+
+            class ModifyInstalledStringCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<InstalledString> 
+            }
+
+            class RemoveInstalledStringCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<InstalledString> 
+                -Remove(context : StringManagerStorageContext, installedStringToDelete : InstalledString) : Task<InstalledString> 
+            }
+
+            abstract class "CommandBase<Instrument, Instrument>" as CommandBase_Instrument
+
+            class AddInstrumentCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<Instrument> 
+            }
+
+            class ModifyInstrumentCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<Instrument> 
+            }
+
+            class RemoveInstrumentCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<Instrument>
+                -Remove(context : StringManagerStorageContext, instrumentToDelete : Instrument) : Task<Instrument> 
+            }
+
+            abstract class "CommandBase<Manufacturer, Manufacturer>" as CommandBase_Manufacturer
+
+            class AddManufacturerCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<Manufacturer> 
+            }
+
+            class ModifyManufacturerCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<Manufacturer> 
+            }
+
+            class RemoveManufacturerCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<Manufacturer>
+                -Remove(context : StringManagerStorageContext, manufacturerToDelete : Manufacturer) : Task<Manufacturer> 
+            }
+             
+            abstract class "CommandBase<MyInstrument, MyInstrument>" as CommandBase_MyInstrument
+
+            class AddMyInstrumentCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<MyInstrument> 
+            }
+
+            class ModifyMyInstrumentCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<MyInstrument> 
+            }
+
+            class RemoveMyInstrumentCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<MyInstrument>
+                -Remove(context : StringManagerStorageContext, myInstrumentToDelete : MyInstrument) : Task<MyInstrument> 
+            }
+
+            abstract class "CommandBase<String, String>" as CommandBase_String
+
+            class AddStringCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<String> 
+            }
+
+            class ModifyStringCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<String> 
+            }
+
+            class RemoveStringCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<String>
+                -Remove(context : StringManagerStorageContext, stringToDelete : String) : Task<String> 
+            }
+
+            abstract class "CommandBase<StringInSet, StringInSet>" as CommandBase_StringInSet
+
+            class AddStringInSetCommand
+            {
+                +Execute(context : StringManagerStorageContext): Task<StringInSet> 
+            }
+
+            class ModifyStringInSetCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<StringInSet> 
+            }
+
+            class RemoveStringInSetCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<StringInSet>
+                -Remove(context : StringManagerStorageContext, stringInSetToDelete : StringInSet) : Task<StringInSet> 
+            }
+            
+            abstract class "CommandBase<StringsSet, StringsSet>" as CommandBase_StringsSet
+
+            class AddStringsSetCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<StringsSet>
+            }
+            
+            class ModifyStringsSetCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<StringsSet>
+            }
+
+            class RemoveStringsSetCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<StringsSet>
+                -Remove(context : StringManagerStorageContext, stingsSetToDelete : StringsSet) : Task<StringsSet> 
+            }
+
+            abstract class "CommandBase<Tone, Tone>" as CommandBase_Tone
+
+            class AddToneCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<Tone>
+            }
+
+            class ModifyToneCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<Tone>
+            }
+
+            class RemoveToneCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<Tone>
+                -Remove( context, Tone toneToDelete) : Task<Tone> 
+            }
+
+            abstract class "CommandBase<ToneInTuning, ToneInTuning>" as CommandBase_ToneInTuning
+
+            class AddToneInTuningCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<ToneInTuning> 
+            }
+
+            class ModifyToneInTuningCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<ToneInTuning> 
+            }
+
+            class RemoveToneInTuningCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<ToneInTuning>
+                -Remove(context : StringManagerStorageContext, toneInTuningToDelete : ToneInTuning) : Task<ToneInTuning> 
+            }
+
+            abstract class "CommandBase<Tuning, Tuning>" as CommandBase_Tuning
+
+            class AddTuningCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<Tuning>
+            }
+
+            class ModifyTuningCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<Tuning>
+            }
+
+            class RemoveTuningCommand
+            {
+                +Execute(context : StringManagerStorageContext) : Task<Tuning>
+                -Remove(context : StringManagerStorageContext, tuningToDelete : Tuning) : Task<Tuning> 
+            }
+
+            abstract class "CommandBase<User, User>" as CommandBase_User
+
+            class AddUserCommand
+            {
+                Execute(context : StringManagerStorageContext) : Task<User> 
+            }
+
+            class ModifyUserCommand
+            {
+                Execute(context : StringManagerStorageContext) : Task<User> 
+            }
+        }
+
+        package Queries <<folder>>
+        {
+            abstract class QueryBase<TResult>
+            {
+                +{abstract} Execute(context : StringManagerStorageContext) : Task<TResult> 
+            }
+
+            abstract class "QueryBase<InstalledString>" as QueryBase_InstalledString
+
+            class GetInstalledStringQuery
+            {
+                +Id : int
+                +UserId : int
+                +AccountType : AccountType
+                +Execute(context : StringManagerStorageContext) : Task<InstalledString> 
+            }
+
+            abstract class "QueryBase<Instrument>" as QueryBase_Instrument
+
+            class GetInstrumentQuery
+            {
+                +Id : int
+                +Execute(context : StringManagerStorageContext) : Task<Instrument> 
+            }
+
+            abstract class "QueryBase<List<Manufacturer>>" as QueryBase_ListManufacturer
+
+            class GetInstrumentsManufacturersQuery
+            {
+                +Execute(context : StringManagerStorageContext) : Task<List<Manufacturer>> 
+            }
+
+            class GetStringsManufacturersQuery
+            {
+                +Execute(context : StringManagerStorageContext) : Task<List<Manufacturer>> 
+            }
+
+            abstract class "QueryBase<Manufacturer>" as QueryBase_Manufacturer
+
+            class GetManufacturerQuery
+            {
+                +Id : int
+                +Execute(context : StringManagerStorageContext) : Task<Manufacturer> 
+            }
+            
+            abstract class "QueryBase<MyInstrument>" as QueryBase_MyInstrument
+
+            class GetMyInstrumentQuery
+            {
+                +Id : int
+                +UserId : int
+                +AccountType : AccountType
+                +Execute(context : StringManagerStorageContext) : Task<MyInstrument> 
+            }
+
+            abstract class "QueryBase<List<MyInstrument>>" as QueryBase_ListMyInstrument
+
+            class GetMyInstrumentsQuery
+            {
+                +UserId : int?
+                +Execute(context : StringManagerStorageContext) : Task<List<MyInstrument>> 
+            }
+
+            abstract class "QueryBase<StringInSet>" as QueryBase_StringInSet
+
+            class GetStringInSetQuery
+            {
+                +Id : int
+                +Execute(context : StringManagerStorageContext) : Task<StringInSet> 
+            }
+
+            abstract class "QueryBase<String>" as QueryBase_String
+
+            class GetStringQuery
+            {
+                +Id : int
+                +Execute(context : StringManagerStorageContext) : Task<String> 
+            }
+
+            abstract class "QueryBase<List<String>>" as QueryBase_ListString
+
+            class GetStringsQuery
+            {
+                +Execute(context : StringManagerStorageContext) : Task<List<String>> 
+            }
+
+            abstract class "QueryBase<StringsSet>" as QueryBase_StringsSet
+
+            class GetStringsSetQuery
+            {
+                +Id : int
+                +Execute(context : StringManagerStorageContext) : Task<StringsSet> 
+            }
+
+            abstract class "QueryBase<List<StringsSet>>" as QueryBase_ListStringsSet
+
+            class GetStringsSetsQuery
+            {
+                +StringType : StringType
+                +Execute(context : StringManagerStorageContext) : Task<List<StringsSet>> 
+            }
+
+            abstract class "QueryBase<ToneInTuning>" as QueryBase_ToneInTuning
+
+            class GetToneInTuningQuery
+            {
+                +Id : int
+                +Execute(context : StringManagerStorageContext) : Task<ToneInTuning> 
+            }
+
+            abstract class "QueryBase<Tone>" as QueryBase_Tone
+
+            class GetToneQuery
+            {
+                +Id : int
+                +Execute(context : StringManagerStorageContext) : Task<Tone> 
+            }
+
+            abstract class "QueryBase<List<Tone>>" as QueryBase_ListTone
+
+            class GetTonesQuery
+            {
+                +Execute(context : StringManagerStorageContext) : Task<List<Tone>> 
+            }
+
+            abstract class "QueryBase<Tuning>" as QueryBase_Tuning
+
+            class GetTuningQuery
+            {
+                +Id : int
+                +Execute(context : StringManagerStorageContext) : Task<Tuning> 
+            }
+
+            abstract class "QueryBase<List<Tuning>>" as QueryBase_ListTuning
+
+            class GetTuningsQuery
+            {
+                +NumberOfStrings : int
+                +Execute(context : StringManagerStorageContext) : Task<List<Tuning>> 
+            }
+
+            abstract class "QueryBase<User>" as QueryBase_User
+
+            class GetUserByIdQuery
+            {
+                +Id : int
+                +Execute(context : StringManagerStorageContext) : Task<User>
+            }
+
+            class GetUserByUsernameQuery
+            {
+                +Username : string
+                +Execute(context : StringManagerStorageContext) : Task<User>
+            }
+
+           abstract class "QueryBase<List<User>>" as QueryBase_ListUser
+
+           class GetUsersQuery
+           {
+                +Type : AccountType?
+                +Execute(context : StringManagerStorageContext) : Task<List<User>>
+            }
+        }
+
+        interface ICommandExecutor
+        {
+            Execute<TParameter, TResult>(query : CommandBase<TParameter, TResult>) : Task<TResult>
+        }
+
+        class CommandExecutor
+        {
+            -context : StringManagerStorageContext
+            +CommandExecutor(context : StringManagerStorageContext) : CommandExecutor
+            +Execute<TParameter, TResult>(query : CommandBase<TParameter, TResult>) : Task<TResult> 
+        }
+
+        interface IQueryExecutor
+        {
+            Execute<TResult>(query : CommandBase<TResult>) : Task<TResult>
+        }
+
+        class QueryExecutor
+        {
+            -context : StringManagerStorageContext
+            +QueryExecutor(context : StringManagerStorageContext) : QueryExecutor
+            +Execute<TParameter>(query : QueryBase<TResult>) : Task<TResult> 
+        }
+    }
+
+    package Entities <<folder>>
+    {
+        abstract class EntityBase
+        {
+            +Id : int
+        }
+
+        class InstalledString
+        {
+            +Position : int
+            +MyInstrument : MyInstrument
+            +String : String
+            +Tone : Tone
+        }
+
+        class Instrument
+        {
+            +Model : string
+            +NumberOfStrings : int
+            +int ScaleLenghtBass
+            +ScaleLenghtTreble : int
+            +Manufacturer : Manufacturer
+            +MyInstruments : IEnumerable<MyInstrument>
+        }
+
+        class Manufacturer
+        {
+            +Name : string 
+            +Instruments : IEnumerable<Instrument>
+            +Strings : IEnumerable<String>
+        }
+
+        class MyInstrument
+        {
+            +OwnName : string
+            +Instrument : Instrument 
+            +InstalledStrings : IEnumerable<InstalledString>
+            +User : User
+            +GuitarPlace : WhereGuitarKept
+            +HoursPlayedWeekly : int
+            +InstalledStrings : List<InstalledString>
+            +NeededLuthierVisit : bool 
+            +LastDeepCleaning : DateTime? 
+            +NextDeepCleaning : DateTime? 
+            +LastStringChange : DateTime? 
+            +NextStringChange : DateTime? 
+        }
+
+        class String
+        {
+            +StringType : StringType
+            +Size : int 
+            +SpecificWeight : double
+            +NumberOfDaysGood : int
+            +InstalledStrings : IEnumerable<InstalledString>
+            +StringsSets : IEnumerable<StringInSet>
+            +Manufacturer : Manufacturer
+        }
+
+        class StringInSet
+        {
+            +Position : int 
+            +StringsSet : String
+            +String : String
+        }
+
+        class StringsSet
+        {
+            +Name : string 
+            +NumberOfStrings : int
+            +StringsInSet : IEnumerable<StringInSet>
+        }
+
+        class Tone
+        {
+            +Name : string 
+            +Frequency : int 
+            +WaveLenght : int 
+            +InstalledStrings : IEnumerable<InstalledString> 
+            +TonesInTuning : IEnumerable<ToneInTuning> 
+        }
+
+        class ToneInTuning
+        {
+            +Tone : Tone
+            +Tuning : Tuning
+            +Position : int 
+        }
+
+        class Tuning
+        {
+            +Name : string
+            +NumberOfStrings : int 
+            +TonesInTuning : IEnumerable<ToneInTuning>
+        }
+
+        class User
+        {
+            +Username : string 
+            +string Password : string 
+            +string Email : string 
+            +DailyMaintanance : GuitarDailyMaintanance
+            +PlayStyle : PlayStyle
+            +MyInstruments : IEnumerable<MyInstrument>
+            +AccountType : AccountType
+        }
+    }
+
+    class StringManagerStorageContext
+    {
+        +InstalledStrings : DbSet<InstalledString>
+        +Instruments : DbSet<Instrument>
+        +Manufacturers : DbSet<Manufacturer>
+        +MyInstruments : DbSet<MyInstrument>
+        +Strings : DbSet<String>
+        +StringsInSets : DbSet<StringInSet>
+        +StringsSets : DbSet<StringsSet>
+        +Tones : DbSet<Tone>
+        +TonesInTunings : DbSet<ToneInTuning>
+        +Users : DbSet<User>
+        +Tunings : DbSet<Tuning> 
+        +StringManagerStorageContext(opt : DbContextOptions<StringManagerStorageContext>) : StringManagerStorageContext
+    }
+
+    class StringManagerStorageContextFactory
+    {
+        +CreateDbContext(args : string[] ) : StringManagerStorageContext
+    }
+}
+
+package StringManager.Services <<Rectangle>>
+{
+    package API <<Folder>>
+    {
+        package Domain <<Folder>>
+        {
+            package Requests <<Folder>>
+            {
+                abstract class RequestBase<T>
+                {
+                    +UserId : int? 
+                    +AccountType : AccountType?
+                }
+
+                abstract class "RequestBase<InstalledString>" as RequestBase_InstalledString
+
+                class AddInstalledStringRequest
+                {
+                    +Position : int
+                    +MyInstrumentId : int
+                    +StringId : int
+                    +ToneId : int
+                }
+
+                class ModifyInstalledStringRequest
+                {
+                    +Id : int
+                    +StringId : int?
+                    +ToneId : int?
+                }
+
+                class RemoveInstalledStringRequest
+                {
+                    +Id : int
+                }
+
+                abstract class "RequestBase<Instrument>" as RequestBase_Instrument
+                abstract class "RequestBase<List<Instrument>>" as RequestBase_ListInstrument
+
+                class AddInstrumentRequest
+                {
+                    +ManufacturerId : int
+                    +Model : string
+                    +NumberOfStrings : int
+                    +ScaleLenghtBass : int
+                    +ScaleLenghtTreble : int
+                }
+
+                class ModifyInstrumentRequest
+                {
+                    +Id : int
+                    +ManufacturerId : int?
+                    +Model : string
+                    +NumberOfStrings : int?
+                    +ScaleLenghtBass : int?
+                    +ScaleLenghtTreble : int?
+                }
+
+                class RemoveInstrumentRequest
+                {
+                    +Id : int
+                }
+
+                class GetInstrumentsRequest{}
+
+                abstract class "RequestBase<Manufacturer>" as RequestBase_Manufacturer
+                abstract class "RequestBase<List<Manufacturer>>" as RequestBase_ListManufacturer
+
+                class AddManufacturerRequest
+                {
+                    +Name : string
+                }
+
+                class GetInstrumentsManufacturersRequest{}
+
+                class GetStringsManufacturersRequest{}
+
+                class ModifyManufacturerRequest
+                {
+                    +Id : int
+                    +Name : string
+                }
+
+                class RemoveManufacturerRequest
+                {
+                    +Id : int
+                }
+
+                abstract class "RequestBase<MyInstrument>" as RequestBase_MyInstrument
+                abstract class "RequestBase<List<MyInstrument>>" as RequestBase_ListMyInstrument
+
+                class AddMyInstrumentRequest
+                {
+                    +InstrumentId : int
+                    +OwnName : string
+                    +HoursPlayedWeekly : int
+                    +GuitarPlace : WhereGuitarKept
+                    +NeededLuthierVisit : bool
+                    +LastDeepCleaning : DateTime
+                    +LastStringChange : DateTime
+                }
+
+                class ModifyMyInstrumentRequest
+                {
+                    +Id : int
+                    +OwnName : string
+                    +HoursPlayedWeekly : int?
+                    +GuitarPlace : WhereGuitarKept?
+                    +NeededLuthierVisit : bool?
+                    +LastDeepCleaning : DateTime?
+                    +LastStringChange : DateTime?
+                }
+
+                class GetMyInstrumentRequest
+                {
+                    +Id : int
+                }
+
+                class GetMyInstrumentsRequest
+                {
+                    +RequestUserId : int?
+                }
+
+                class RemoveMyInstrumentRequest
+                {
+                    +Id : int
+                }
+
+                abstract class "RequestBase<StringInSet>" as RequestBase_StringInSet
+
+                class AddStringInSetRequest
+                {
+                    +Position : int
+                    +StringsSetId : int
+                    +StringId : int
+                }
+
+                class ModifyStringInSetRequest
+                {
+                    +Id : int
+                    +Position : int?
+                    +StringsSetId : int?
+                    +StringId : int?
+                }
+
+                class RemoveStringInSetRequest
+                {
+                    +Id : int
+                }
+
+                abstract class "RequestBase<String>" as RequestBase_String
+                abstract class "RequestBase<List<String>>" as RequestBase_ListString
+
+                class AddStringRequest
+                {
+                    +StringType : StringType
+                    +Size : int
+                    +SpecificWeight : double
+                    +NumberOfDaysGood : int
+                    +ManufacturerId : int
+                }
+
+                class ModifyStringRequest
+                {
+                    +Id : int
+                    +StringType : StringType?
+                    +Size : int?
+                    +SpecificWeight : double?
+                    +NumberOfDaysGood : int?
+                    +ManufacturerId : int?
+                }
+
+                class GetStringSizeWithCorrepondingTensionRequest
+                {
+                    +ScaleLength : int?
+                    +StringId : int?
+                    +PrimaryToneId : int?
+                    +ResultToneId : int?
+                }
+
+                class GetStringsRequest{}
+
+                class RemoveStringRequest
+                {
+                    +Id : int
+                }
+
+                abstract class "RequestBase<StringsSet>" as RequestBase_StringsSet
+                abstract class "RequestBase<List<StringsSet>>" as RequestBase_ListStringsSet
+
+                class AddStringsSetRequest
+                {
+                    +Name : string
+                    +NumberOfStrings : int
+                }
+
+                class ModifyStringsSetRequest
+                {
+                    +Id : int
+                    +Name : string
+                    +NumberOfStrings : int?
+                }
+
+                class GetStringsSetRequest
+                {
+                    +Id : int
+                }
+
+                class GetStringsSetsRequest
+                {
+                    +StringType : StringType
+                }
+
+                class GetStringsSetsWithCorrepondingTensionRequest
+                {
+                    +MyInstrumentId : int?
+                    +StringType : StringType?
+                    +ResultTuningId : int?
+                }
+
+                class RemoveStringsSetRequest
+                {
+                    +Id : int
+                }
+
+                abstract class "RequestBase<ToneInTuning>" as RequestBase_ToneInTuning
+
+                class AddToneInTuningRequest
+                {
+                    +ToneId : int
+                    +TuningId : int
+                    +Position : int
+                }
+
+                class ModifyToneInTuningRequest
+                {
+                    +Id : int
+                    +ToneId : int?
+                    +TuningId : int?
+                    +Position : int?
+                }
+
+                class RemoveToneInTuningRequest
+                {
+                    +Id : int
+                }
+
+                abstract class "RequestBase<Tone>" as RequestBase_Tone
+                abstract class "RequestBase<List<Tone>>" as RequestBase_ListTone
+
+                class AddToneRequest
+                {
+                    +Name : string
+                    +Frequency : int
+                    +WaveLenght : int
+                }
+
+                class ModifyToneRequest
+                {
+                    +Id : int
+                    +Name : string
+                    +Frequency : int?
+                    +WaveLenght : int?
+                }
+
+                class GetTonesRequest{}
+
+                class RemoveToneRequest
+                {
+                    +Id : int
+                }
+
+                abstract class "RequestBase<Tuning>" as RequestBase_Tuning
+                abstract class "RequestBase<List<Tuning>>" as RequestBase_ListTuning
+
+                class AddTuningRequest
+                {
+                    +Name : string
+                    +NumberOfStrings : int
+                }
+
+                class ModifyTuningRequest
+                {
+                    +Id : int
+                    +Name : string
+                    +NumberOfStrings : int?
+                }
+
+                class GetTuningRequest
+                {
+                    +Id : int
+                }
+
+                class GetTuningsRequest
+                {
+                    +NumberOfStrings : int
+                }
+
+                class RemoveTuningRequest
+                {
+                    +Id : int
+                }
+
+                abstract class "RequestBase<User>" as RequestBase_User
+                abstract class "RequestBase<List<User>>" as RequestBase_ListUser
+
+                class AddUserRequest
+                {
+                    +Username : string
+                    +Password : string
+                    +Email : string
+                    +DailyMaintanance : GuitarDailyMaintanance
+                    +PlayStyle : PlayStyle
+                    +AccountTypeToAdd : AccountType?
+                }
+
+                class ModifyUserRequest
+                {
+                    +Id : int?
+                    +Username : string
+                    +Password : string
+                    +Email : string
+                    +DailyMaintanance : GuitarDailyMaintanance?
+                    +PlayStyle : PlayStyle?
+                    +AccountTypeToAdd : AccountType?
+                }
+
+                class GetUserRequest{}
+
+                class GetUsersRequest
+                {
+                    +Type : AccountType?
+                }
+
+                abstract class "RequestBase<int[]>" as RequestBase_ints
+
+                class GetScaleLenghtsRequest
+                {
+                    +InstrumentId : int?
+                }
+
+                abstract class "RequestBase<double?>" as RequestBase_double
+
+                class GetStringTensionRequest
+                {
+                    +StringId : int?
+                    +ToneId : int?
+                    +ScaleLenght : int
+                }
+            }
+
+            class StatusCodeResponse<T>
+            {
+                +Result : ModelActionResult<T>
+            }
+
+            class "StatusCodeResponse<InstalledString>" as StatusCodeResponse_InstalledString
+
+            class "StatusCodeResponse<Instrument>" as StatusCodeResponse_Instrument
+            class "StatusCodeResponse<List<Instrument>>" as StatusCodeResponse_ListInstrument
+
+            class "StatusCodeResponse<Manufacturer>" as StatusCodeResponse_Manufacturer
+            class "StatusCodeResponse<List<Manufacturer>>" as StatusCodeResponse_ListManufacturer
+
+            class "StatusCodeResponse<MyInstrument>" as StatusCodeResponse_MyInstrument
+            class "StatusCodeResponse<List<MyInstrument>>" as StatusCodeResponse_ListMyInstrument
+
+            class "StatusCodeResponse<StringInSet>" as StatusCodeResponse_StringInSet
+
+            class "StatusCodeResponse<String>" as StatusCodeResponse_String
+            class "StatusCodeResponse<List<String>>" as StatusCodeResponse_ListString
+
+            class "StatusCodeResponse<StringsSet>" as StatusCodeResponse_StringsSet
+            class "StatusCodeResponse<List<StringsSet>>" as StatusCodeResponse_ListStringsSet
+
+            class "StatusCodeResponse<ToneInTuning>" as StatusCodeResponse_ToneInTuning
+
+            class "StatusCodeResponse<Tone>" as StatusCodeResponse_Tone
+            class "StatusCodeResponse<List<Tone>>" as StatusCodeResponse_ListTone
+
+            class "StatusCodeResponse<Tuning>" as StatusCodeResponse_Tuning
+            class "StatusCodeResponse<List<Tuning>>" as StatusCodeResponse_ListTuning
+
+            class "StatusCodeResponse<User>" as StatusCodeResponse_User
+            class "StatusCodeResponse<List<User>>" as StatusCodeResponse_ListUser
+
+            class "StatusCodeResponse<int[]>" as StatusCodeResponse_ints
+
+            class "StatusCodeResponse<double?>" as StatusCodeResponse_double
+        }
+        package Handlers <<Folder>>
+        {
+            class AddInstalledStringHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -mapper : IMapper
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<AddInstalledStringHandler>
+                +AddInstalledStringHandler(queryExecutor : IQueryExecutor, mapper : IMapper, commandExecutor : ICommandExecutor, logger : ILogger<AddInstalledStringHandler>) : AddInstalledStringHandler
+                +Handle(request : AddInstalledStringRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<Core.Models.InstalledString>>
+            }
+
+            class AddInstrumentHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -mapper : IMapper
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<AddInstrumentHandler>
+                +AddInstrumentHandler(queryExecutor : IQueryExecutor, mapper : IMapper, commandExecutor : ICommandExecutor, logger : ILogger<AddInstrumentHandler>) : AddInstrumentHandler
+                +Handle(request : AddInstrumentRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<Core.Models.Instrument>>
+            }
+
+            class AddManufacturerHandler
+            {
+                -mapper : IMapper
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<AddManufacturerHandler>
+                +AddManufacturerHandler(mapper : IMapper, commandExecutor : ICommandExecutor, logger : ILogger<AddManufacturerHandler>) : AddManufacturerHandler
+                +Handle(request : AddManufacturerRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<Core.Models.Manufacturer>>
+            }
+
+            class AddMyInstrumentHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -mapper : IMapper
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<AddMyInstrumentHandler>
+                +AddMyInstrumentHandler(queryExecutor : IQueryExecutor, mapper : IMapper, commandExecutor : ICommandExecutor, logger : ILogger<AddMyInstrumentHandler>) : AddMyInstrumentHandler
+                +Handle(request : AddMyInstrumentRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<Core.Models.MyInstrument>>
+            }
+
+            class AddStringHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -mapper : IMapper
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<AddStringHandler>
+                +AddStringHandler(queryExecutor : IQueryExecutor, mapper : IMapper, commandExecutor : ICommandExecutor, logger : ILogger<AddStringHandler>) : AddStringHandler
+                +Handle(request : AddStringRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<Core.Models.String>>
+            }
+
+            class AddStringInSetHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -mapper : IMapper
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<AddStringInSetHandler>
+                +AddStringInSetHandler(queryExecutor : IQueryExecutor, mapper : IMapper, commandExecutor : ICommandExecutor, logger : ILogger<AddStringInSetHandler>) : AddStringInSetHandler
+                +Handle(request : AddStringInSetRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<Core.Models.StringInSet>>
+            }
+
+            class AddStringsSetHandler
+            {
+                -mapper : IMapper
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<AddStringsSetHandler>
+                +AddStringsSetHandler(mapper : IMapper, commandExecutor : ICommandExecutor, logger : ILogger<AddStringsSetHandler>) : AddStringsSetHandler
+                +Handle(request : AddStringsSetRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<Core.Models.StringsSet>>
+            }
+
+            class AddToneHandler
+            {
+                -mapper : IMapper
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<AddToneHandler>
+                +AddToneHandler(mapper : IMapper, commandExecutor : ICommandExecutor, logger : ILogger<AddToneHandler>) : AddToneHandler
+                +Handle(request : AddToneRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<Core.Models.Tone>>
+            }
+
+            class AddToneInTuningHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -mapper : IMapper
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<AddToneInTuningHandler>
+                +AddToneInTuningHandler(queryExecutor : IQueryExecutor, mapper : IMapper, commandExecutor : ICommandExecutor, logger : ILogger<AddToneInTuningHandler>) : AddToneInTuningHandler
+                +Handle(request : AddToneInTuningRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<Core.Models.ToneInTuning>>
+            }
+
+            class AddTuningHandler
+            {
+                -mapper : IMapper
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<AddTuningHandler>
+                +AddTuningHandler(mapper : IMapper, commandExecutor : ICommandExecutor, logger : ILogger<AddTuningHandler>) : AddTuningHandler
+                +Handle(request : AddTuningRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<Core.Models.Tuning>>
+            }
+
+            class AddUserHandler
+            {
+                -mapper : IMapper
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<AddUserHandler>
+                +AddUserHandler(mapper : IMapper, commandExecutor : ICommandExecutor, logger : ILogger<AddUserHandler>) : AddUserHandler
+                +Handle(request : AddUserRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<Core.Models.User>>
+            }
+
+            class GetInstrumentsHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -mapper : IMapper
+                -logger : ILogger<GetInstrumentsHandler>
+                +GetInstrumentsHandler(queryExecutor : IQueryExecutor, mapper : IMapper, logger : ILogger<GetInstrumentsHandler>) : GetInstrumentsHandler
+                +Handle(request : GetInstrumentsRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<List<Instrument>>>
+            }
+
+            class GetInstrumentsManufacturersHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -mapper : IMapper
+                -logger : ILogger<GetInstrumentsManufacturersHandler>
+                +GetInstrumentsManufacturersHandler(queryExecutor : IQueryExecutor, mapper : IMapper, logger : ILogger<GetInstrumentsManufacturersHandler>) : GetInstrumentsManufacturersHandler
+                +Handle(request : GetInstrumentsManufacturersRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<List<Manufacturer>>>
+            }
+
+            class GetMyInstrumentHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -mapper : IMapper
+                -logger : ILogger<GetMyInstrumentHandler>
+                +GetMyInstrumentHandler(queryExecutor : IQueryExecutor, mapper : IMapper, logger : ILogger<GetMyInstrumentHandler>) : GetMyInstrumentHandler
+                +Handle(request : GetMyInstrumentRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<MyInstrument>>
+            }
+
+            class GetMyInstrumentsHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -mapper : IMapper
+                -logger : ILogger<GetMyInstrumentsHandler>
+                +GetMyInstrumentsHandler(queryExecutor : IQueryExecutor, mapper : IMapper, logger : ILogger<GetMyInstrumentsHandler>) : GetMyInstrumentsHandler
+                +Handle(request : GetMyInstrumentsRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<List<MyInstrumentList>>>
+            }
+
+            class GetScaleLenghtsHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -logger : ILogger<GetScaleLenghtsHandler>
+                +GetScaleLenghtsHandler(queryExecutor : IQueryExecutor, logger : ILogger<GetScaleLenghtsHandler>) : GetScaleLenghtsHandler
+                +Handle(request : GetScaleLenghtsRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<int[]>>
+            }
+
+            class GetStringsHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -mapper : IMapper
+                -logger : ILogger<GetStringsHandler>
+                +GetStringsHandler(queryExecutor : IQueryExecutor, mapper : IMapper, logger : ILogger<GetStringsHandler>) : GetStringsHandler
+                +Handle(request : GetStringsRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<List<String>>>
+            }
+
+            class GetStringSizeWithCorrepondingTensionHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -mapper : IMapper
+                -logger : ILogger<GetStringSizeWithCorrepondingTensionHandler>
+                +GetStringSizeWithCorrepondingTensionHandler(queryExecutor : IQueryExecutor, mapper : IMapper, logger : ILogger<GetStringSizeWithCorrepondingTensionHandler>) : GetStringSizeWithCorrepondingTensionHandler
+                +Handle(request : GetStringSizeWithCorrepondingTensionRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<List<String>>>
+            }
+            
+            class GetStringsManufacturersHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -mapper : IMapper
+                -logger : ILogger<GetStringsManufacturersHandler>
+                +GetStringsManufacturersHandler(queryExecutor : IQueryExecutor, mapper : IMapper, logger : ILogger<GetStringsManufacturersHandler>) : GetStringsManufacturersHandler
+                +Handle(request : GetStringsManufacturersRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<List<Manufacturer>>>
+            }
+
+            class GetStringsSetHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -mapper : IMapper
+                -logger : ILogger<GetStringsSetHandler>
+                +GetStringsSetHandler(queryExecutor : IQueryExecutor, mapper : IMapper, logger : ILogger<GetStringsSetHandler>) : GetStringsSetHandler
+                +Handle(request : GetStringsSetRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<StringsSet>>
+            }
+
+            class GetStringsSetsHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -mapper : IMapper
+                -logger : ILogger<GetStringsSetsHandler>
+                +GetStringsSetsHandler(queryExecutor : IQueryExecutor, mapper : IMapper, logger : ILogger<GetStringsSetsHandler>) : GetStringsSetsHandler
+                +Handle(request : GetStringsSetsRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<List<StringsSet>>>
+            }
+
+            class GetStringsSetsWithCorrepondingTensionHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -mapper : IMapper
+                -logger : ILogger<GetStringsSetsWithCorrepondingTensionHandler>
+                +GetStringsSetsWithCorrepondingTensionHandler(queryExecutor : IQueryExecutor, mapper : IMapper, logger : ILogger<GetStringsSetsWithCorrepondingTensionHandler>) : GetStringsSetsWithCorrepondingTensionHandler
+                +Handle(request : GetStringsSetsWithCorrepondingTensionRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<List<Core.Models.StringsSet>>>
+            }
+
+            class GetStringTensionHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -logger : ILogger<GetStringTensionHandler>
+                +GetStringTensionHandler(queryExecutor : IQueryExecutor, logger : ILogger<GetStringTensionHandler>) : GetStringTensionHandler
+                +Handle(request : GetStringTensionRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<double?>>
+            }
+
+            class GetTonesHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -mapper : IMapper
+                -logger : ILogger<GetTonesHandler>
+                +GetTonesHandler(queryExecutor : IQueryExecutor, mapper : IMapper, logger : ILogger<GetTonesHandler>) : GetTonesHandler
+                +Handle(request : GetTonesRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<List<Tone>>>
+            }
+
+            class GetTuningHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -mapper : IMapper
+                -logger : ILogger<GetTuningHandler>
+                +GetTuningHandler(queryExecutor : IQueryExecutor, mapper : IMapper, logger : ILogger<GetTuningHandler>) : GetTuningHandler
+                +Handle(request : GetTuningRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<Tuning>>
+            }
+
+            class GetTuningsHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -mapper : IMapper
+                -logger : ILogger<GetTuningsHandler>
+                +GetTuningsHandler(queryExecutor : IQueryExecutor, mapper : IMapper, logger : ILogger<GetTuningsHandler>) : GetTuningsHandler
+                +Handle(request : GetTuningsRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<List<TuningList>>>
+            }
+
+            class GetUserHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -mapper : IMapper
+                -logger : ILogger<GetUserHandler>
+                +GetUserHandler(queryExecutor : IQueryExecutor, mapper : IMapper, logger : ILogger<GetUserHandler>) : GetUserHandler
+                +Handle(request : GetUserRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<User>>
+            }
+
+            class GetUsersHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -mapper : IMapper
+                -logger : ILogger<GetUsersHandler>
+                +GetUsersHandler(queryExecutor : IQueryExecutor, mapper : IMapper, logger : ILogger<GetUsersHandler>) : GetUsersHandler
+                +Handle(request : GetUsersRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<List<User>>>
+            }
+
+            class ModifyInstalledStringHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<ModifyInstalledStringHandler>
+                +ModifyInstalledStringHandler(queryExecutor : IQueryExecutor, commandExecutor : ICommandExecutor, logger : ILogger<ModifyInstalledStringHandler>) : AddToneInTuningHandler
+                +Handle(request : ModifyInstalledStringRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<InstalledString>>
+            }
+
+            class ModifyInstrumentHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<ModifyInstrumentHandler>
+                +ModifyInstrumentHandler(queryExecutor : IQueryExecutor, commandExecutor : ICommandExecutor, logger : ILogger<ModifyInstrumentHandler>) : ModifyInstrumentHandler
+                +Handle(request : ModifyInstrumentRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<Instrument>>
+            }
+
+            class ModifyManufacturerHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<ModifyManufacturerHandler>
+                +ModifyManufacturerHandler(queryExecutor : IQueryExecutor, commandExecutor : ICommandExecutor, logger : ILogger<ModifyManufacturerHandler>) : ModifyManufacturerHandler
+                +Handle(request : ModifyManufacturerRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<Manufacturer>>
+            }
+            
+            class ModifyMyInstrumentHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<ModifyMyInstrumentHandler>
+                +ModifyMyInstrumentHandler(queryExecutor : IQueryExecutor, commandExecutor : ICommandExecutor, logger : ILogger<ModifyMyInstrumentHandler>) : ModifyMyInstrumentHandler
+                +Handle(request : ModifyMyInstrumentRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<MyInstrument>>
+            }
+
+            class ModifyStringHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<ModifyStringHandler>
+                +ModifyStringHandler(queryExecutor : IQueryExecutor, commandExecutor : ICommandExecutor, logger : ILogger<ModifyStringHandler>) : ModifyStringHandler
+                +Handle(request : ModifyStringRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<String>>
+            }
+
+            class ModifyStringInSetHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<ModifyStringInSetHandler>
+                +ModifyStringInSetHandler(queryExecutor : IQueryExecutor, commandExecutor : ICommandExecutor, logger : ILogger<ModifyStringInSetHandler>) : ModifyStringInSetHandler
+                +Handle(request : ModifyStringInSetRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<StringInSet>>
+            }
+
+            class ModifyStringsSetHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<ModifyStringsSetHandler>
+                +ModifyStringsSetHandler(queryExecutor : IQueryExecutor, commandExecutor : ICommandExecutor, logger : ILogger<ModifyStringsSetHandler>) : ModifyStringsSetHandler
+                +Handle(request : ModifyStringsSetRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<StringsSet>>
+            }
+
+            class ModifyToneHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<ModifyToneHandler>
+                +ModifyToneHandler(queryExecutor : IQueryExecutor, commandExecutor : ICommandExecutor, logger : ILogger<ModifyToneHandler>) : ModifyToneHandler
+                +Handle(request : ModifyToneRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<Tone>>
+            }
+
+            class ModifyTuningHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<ModifyTuningHandler>
+                +ModifyTuningHandler(queryExecutor : IQueryExecutor, commandExecutor : ICommandExecutor, logger : ILogger<ModifyTuningHandler>) : ModifyTuningHandler
+                +Handle(request : ModifyTuningRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<Tuning>>
+            }
+
+            class ModifyUserHandler
+            {
+                -queryExecutor : IQueryExecutor
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<ModifyUserHandler>
+                +ModifyUserHandler(queryExecutor : IQueryExecutor, commandExecutor : ICommandExecutor, logger : ILogger<ModifyUserHandler>) : ModifyUserHandler
+                +Handle(request : ModifyUserRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<User>>
+            }
+
+            class RemoveInstalledStringHandler
+            {
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<RemoveInstalledStringHandler>
+                +RemoveInstalledStringHandler(commandExecutor : ICommandExecutor, logger : ILogger<RemoveInstalledStringHandler>) : RemoveInstalledStringHandler
+                +Handle(request : RemoveInstalledStringRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<InstalledString>>
+            }
+
+            class RemoveInstrumentHandler
+            {
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<RemoveInstrumentHandler>
+                +RemoveInstrumentHandler(commandExecutor : ICommandExecutor, logger : ILogger<RemoveInstrumentHandler>) : RemoveInstrumentHandler
+                +Handle(request : RemoveInstrumentRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<Instrument>>
+            }
+
+            class RemoveManufacturerHandler
+            {
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<RemoveManufacturerHandler>
+                +RemoveManufacturerHandler(commandExecutor : ICommandExecutor, logger : ILogger<RemoveManufacturerHandler>) : RemoveManufacturerHandler
+                +Handle(request : RemoveManufacturerRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<Manufacturer>>
+            }
+
+            class RemoveMyInstrumentHandler
+            {
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<RemoveMyInstrumentHandler>
+                +RemoveMyInstrumentHandler(commandExecutor : ICommandExecutor, logger : ILogger<RemoveMyInstrumentHandler>) : RemoveMyInstrumentHandler
+                +Handle(request : RemoveMyInstrumentRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<MyInstrument>>
+            }
+
+            class RemoveStringHandler
+            {
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<RemoveStringHandler>
+                +RemoveStringHandler(commandExecutor : ICommandExecutor, logger : ILogger<RemoveStringHandler>) : RemoveStringHandler
+                +Handle(request : RemoveStringRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<String>>
+            }
+
+            class RemoveStringInSetHandler
+            {
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<RemoveStringInSetHandler>
+                +RemoveStringInSetHandler(commandExecutor : ICommandExecutor, logger : ILogger<RemoveStringInSetHandler>) : RemoveStringInSetHandler
+                +Handle(request : RemoveStringInSetRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<StringInSet>>
+            }
+
+            class RemoveStringsSetHandler
+            {
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<RemoveStringsSetHandler>
+                +RemoveStringsSetHandler(commandExecutor : ICommandExecutor, logger : ILogger<RemoveStringsSetHandler>) : RemoveStringsSetHandler
+                +Handle(request : RemoveStringsSetRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<StringsSet>>
+            }
+
+            class RemoveToneHandler
+            {
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<RemoveToneHandler>
+                +RemoveToneHandler(commandExecutor : ICommandExecutor, logger : ILogger<RemoveToneHandler>) : RemoveToneHandler
+                +Handle(request : RemoveToneRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<Tone>>
+            }
+ 
+            class RemoveToneInTuningHandler
+            {
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<RemoveToneInTuningHandler>
+                +RemoveToneInTuningHandler(commandExecutor : ICommandExecutor, logger : ILogger<RemoveToneInTuningHandler>) : RemoveToneInTuningHandler
+                +Handle(request : RemoveToneInTuningRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<ToneInTuning>>
+            }
+
+            class RemoveTuningHandler
+            {
+                -commandExecutor : ICommandExecutor
+                -logger : ILogger<RemoveTuningHandler>
+                +RemoveTuningHandler(commandExecutor : ICommandExecutor, logger : ILogger<RemoveTuningHandler>) : RemoveTuningHandler
+                +Handle(request : RemoveTuningRequest, cancellationToken : CancellationToken) : Task<StatusCodeResponse<Tuning>>
+            }
+        }
+        package Validators <<Folder>>
+        {
+            class AddInstalledStringRequestValidator
+            {
+                +AddInstalledStringRequestValidator() : AddInstalledStringRequestValidator
+            }
+
+            class AddInstrumentRequestValidator
+            {
+                +AddInstrumentRequestValidator() : AddInstrumentRequestValidator
+            }
+
+            class AddManufacturerRequestValidator
+            {
+                +AddManufacturerRequestValidator() : AddManufacturerRequestValidator
+            }
+
+            class AddMyInstrumentRequestValidator
+            {
+                +AddMyInstrumentRequestValidator() : AddMyInstrumentRequestValidator
+            }
+
+            class AddStringInSetRequestValidator
+            {
+                +AddStringInSetRequestValidator() : AddStringInSetRequestValidator
+            }
+
+            class AddStringRequestValidator
+            {
+                +AddStringRequestValidator() : AddStringRequestValidator
+            }
+
+            class AddStringsSetRequestValidator
+            {
+                +AddStringsSetRequestValidator() : AddStringsSetRequestValidator
+            }
+
+            class AddToneInTuningRequestValidator
+            {
+                +AddToneInTuningRequestValidator() : AddToneInTuningRequestValidator
+            }
+
+            class AddToneRequestValidator
+            {
+                +AddToneRequestValidator() : AddToneRequestValidator
+            }
+
+            class AddTuningRequestValidator
+            {
+                +AddTuningRequestValidator() : AddTuningRequestValidator
+            }
+
+            class AddUserRequestValidator
+            {
+                +AddUserRequestValidator() : AddUserRequestValidator
+            }
+
+            class GetScaleLenghtsRequestValidator
+            {
+                +GetScaleLenghtsRequestValidator() : GetScaleLenghtsRequestValidator
+            }
+
+            class GetStringSizeWithCorrepondingTensionRequestValidator
+            {
+                +GetStringSizeWithCorrepondingTensionRequestValidator() : GetStringSizeWithCorrepondingTensionRequestValidator
+            }
+
+            class GetStringsSetsWithCorrepondingTensionRequestValidator
+            {
+                +GetStringsSetsWithCorrepondingTensionRequestValidator() : GetStringsSetsWithCorrepondingTensionRequestValidator
+            }
+
+            class GetStringTensionRequestValidator
+            {
+                +GetStringTensionRequestValidator() : GetStringTensionRequestValidator
+            }
+
+            class ModifyInstalledStringRequestValidator
+            {
+                +ModifyInstalledStringRequestValidator() : ModifyInstalledStringRequestValidator
+            }
+
+            class ModifyInstrumentRequestValidator
+            {
+                +ModifyInstrumentRequestValidator() : ModifyInstrumentRequestValidator
+            }
+
+            class ModifyManufacturerRequestValidator
+            {
+                +ModifyManufacturerRequestValidator() : ModifyManufacturerRequestValidator
+            }
+
+            class ModifyMyInstrumentRequestValidator
+            {
+                +ModifyMyInstrumentRequestValidator() : ModifyMyInstrumentRequestValidator
+            }
+
+            class ModifyStringInSetRequestValidator
+            {
+                +ModifyStringInSetRequestValidator() : ModifyStringInSetRequestValidator
+            }
+
+            class ModifyStringRequestValidator
+            {
+                +ModifyStringRequestValidator() : ModifyStringRequestValidator
+            }
+
+            class ModifyStringsSetRequestValidator
+            {
+                +ModifyStringsSetRequestValidator() : ModifyStringsSetRequestValidator
+            }
+
+            class ModifyToneInTuningRequestValidator
+            {
+                +ModifyToneInTuningRequestValidator() : ModifyToneInTuningRequestValidator
+            }
+
+            class ModifyToneRequestValidator
+            {
+                +ModifyToneRequestValidator() : ModifyToneRequestValidator
+            }
+
+            class ModifyTuningRequestValidator
+            {
+                +ModifyTuningRequestValidator() : ModifyTuningRequestValidator
+            }
+
+            class ModifyUserRequestValidator
+            {
+                +ModifyUserRequestValidator() : ModifyUserRequestValidator
+            }
+
+            class RemoveInstalledStringRequestValidator
+            {
+                +RemoveInstalledStringRequestValidator() : RemoveInstalledStringRequestValidator
+            }
+
+            class RemoveInstrumentRequestValidator
+            {
+                +RemoveInstrumentRequestValidator() : RemoveInstrumentRequestValidator
+            }
+
+            class RemoveManufacturerRequestValidator
+            {
+                +RemoveManufacturerRequestValidator() : RemoveManufacturerRequestValidator
+            }
+
+            class RemoveMyInstrumentRequestValidator
+            {
+                +RemoveMyInstrumentRequestValidator() : RemoveMyInstrumentRequestValidator
+            }
+
+            class RemoveStringInSetRequestValidator
+            {
+                +RemoveStringInSetRequestValidator() : RemoveStringInSetRequestValidator
+            }
+
+            class RemoveStringRequestValidator
+            {
+                +RemoveStringRequestValidator() : RemoveStringRequestValidator
+            }
+
+            class RemoveStringsSetRequestValidator
+            {
+                +RemoveStringsSetRequestValidator() : RemoveStringsSetRequestValidator
+            }
+
+            class RemoveToneInTuningRequestValidator
+            {
+                +RemoveToneInTuningRequestValidator() : RemoveToneInTuningRequestValidator
+            }
+
+            class RemoveToneRequestValidator
+            {
+                +RemoveToneRequestValidator() : RemoveToneRequestValidator
+            }
+
+            class RemoveTuningRequestValidator
+            {
+                +RemoveTuningRequestValidator() : RemoveTuningRequestValidator
+            }
+        }
+    }
+    package InternalClasses <<Folder>>
+    {
+        class DateCalculator
+        {
+            -myInstrument : MyInstrument
+            -user : User
+            +DateCalculator(myInstrument : MyInstrument) : DateCalculator
+            +NumberOfDaysForStrings(dateOfChange : System.DateTime, strings : String[]) : System.DateTime
+            +NumberOfDaysForCleaning(dateOfCleaning : System.DateTime) : System.DateTime
+            -GetValueFromWhereGuitarKept(guitarPlace : WhereGuitarKept) : double
+            -GetValueFromGuitarDailyMaintanance(guitarDailyMaintanance : GuitarDailyMaintanance) : double
+            -GetValueFromPlayStyle(playStyle : PlayStyle) : double
+        }
+
+        class PasswordHashing
+        {
+            -{static} salt : byte[]
+            +{static} HashPassword(password : string) : string
+        }
+
+        class StringCalculator
+        {
+            +{static} GetScaleLenghtsForStrings(ScaleLenghtBass : int, ScaleLenghtTreble : int, numberOfStrings : int) : int[]
+            +{static} GetStringTension(specificWeight : double, scaleLength : int, frequency : int) : double
+            +{static} GetStringSizeWithCorrepondingTension(scaleLength : int, currentString : String, allStrings : IEnumerable<String>, primaryTone : Tone, resultTone : Tone) : int
+            +{static} GetStringsSetsWithCorrepondingTension(instrument : Instrument, currentStrings : String[], allStringsSets : IEnumerable<StringsSet>, primaryTuning : Tone[], resultTuning : Tone[]) : IEnumerable<StringsSet>
+            +{static} GetTonesFromTuning(tuning : Tuning) : Tone[]
+            -{static} GetStringScaleLengthDifference(scaleLenghtBass : int, scaleLenghtTreble : int, numberOfStrings : int) : int
+            -{static} GetAverageStringTension(strings : String[], scaleLenghts : int[], tones : Tone[]) : double
+            -{static} GetStringsFromStringSet(stringsSet : StringsSet) : String[] 
+        }
+    }
+    package Mappings <<Folder>>
+    {
+        class InstalledStringMapping
+        {
+            +InstalledStringMapping() : InstalledStringMapping
+        }
+
+        class InstrumentMapping 
+        {
+            +InstrumentMapping() : InstrumentMapping
+        }
+
+        class ManufacturerMapping
+        {
+            +ManufacturerMapping() : ManufacturerMapping
+        }
+
+        class MyInstrumentMapping
+        {
+            +MyInstrumentMapping() : MyInstrumentMapping
+        }
+
+        class StringInSetMapping
+        {
+            +StringInSetMapping() : StringInSetMapping
+        }
+
+        class StringsMapping
+        {
+            +StringsMapping() : StringsMapping
+        }
+
+        class StringsSetMapping
+        {
+            +StringsSetMapping() : StringsSetMapping
+        }
+
+        class ToneInTuningMapping
+        {
+            +ToneInTuningMapping() : ToneInTuningMapping
+        }
+
+        class ToneMapping
+        {
+            +ToneMapping() : ToneMapping
+        }
+
+        class TuningMapping
+        {
+            +TuningMapping() : TuningMapping
+        }
+
+        class UserMapping
+        {
+            +UserMapping() : UserMapping
+        }
+    }
+}
+
+Startup <.. Program : <<create>>
+BasicAuthenticationHandler <.. Startup : <<create>>
+BasicAuthenticationHandler <.. ApiControllerBase : <<use>>
+ApiControllerBase <..Startup : <<create>>
+
+ApiControllerBase <|.. ApiControllerBase_InstalledStringsController : <<bind>>
+ApiControllerBase_InstalledStringsController <|-- InstalledStringsController
+
+ApiControllerBase <|.. ApiControllerBase_InstrumentsController : <<bind>>
+ApiControllerBase_InstrumentsController<|-- InstrumentsController
+
+ApiControllerBase <|.. ApiControllerBase_ManufacturersController : <<bind>>
+ApiControllerBase_ManufacturersController <|-- ManufacturersController
+
+ApiControllerBase <|.. ApiControllerBase_MyInstrumentsController : <<bind>>
+ApiControllerBase_MyInstrumentsController <|-- MyInstrumentsController
+
+ApiControllerBase <|.. ApiControllerBase_StringsController : <<bind>>
+ApiControllerBase_StringsController <|-- StringsController
+
+ApiControllerBase <|.. ApiControllerBase_StringsInSetsController : <<bind>>
+ApiControllerBase_StringsInSetsController <|-- StringsInSetsController
+
+ApiControllerBase <|.. ApiControllerBase_StringsSetsController : <<bind>>
+ApiControllerBase_StringsSetsController <|-- StringsSetsController
+
+ApiControllerBase <|.. ApiControllerBase_StringTensionController : <<bind>>
+ApiControllerBase_StringTensionController <|-- StringTensionController
+
+ApiControllerBase <|.. ApiControllerBase_TonesController : <<bind>>
+ApiControllerBase_TonesController <|-- TonesController
+
+ApiControllerBase <|.. ApiControllerBase_TonesInTuningsController : <<bind>>
+ApiControllerBase_TonesInTuningsController <|-- TonesInTuningsController
+
+ApiControllerBase <|.. ApiControllerBase_TuningsController : <<bind>>
+ApiControllerBase_TuningsController <|-- TuningsController
+
+ApiControllerBase <|.. ApiControllerBase_UsersController : <<bind>>
+ApiControllerBase_UsersController <|-- UsersController
+
+IActionResult <|.. ModelActionResult
+ModelResult <|.. ModelActionResult : <<create>>
+
+ModelStringsSet "*" - "1" ModelStringInSet
+ModelTuning "*" - "1" ModelToneInTuning
+ModelMyInstrument "*" - "1" ModelInstalledString
+
+StringType <-- ModelInstalledString
+WhereGuitarKept <-- ModelMyInstrument 
+StringType <-- ModelString 
+StringType <-- StringInSet
+GuitarDailyMaintanance <-- ModelUser
+AccountType <-- ModelUser
+PlayStyle <-- ModelUser
+
+ICommandExecutor<.. CommandExecutor
+IQueryExecutor <.. QueryExecutor
+
+CommandBase<|.. CommandBase_User : <<bind>>
+AddUserCommand --|> CommandBase_User
+ModifyUserCommand --|> CommandBase_User
+
+CommandBase<|.. CommandBase_Tuning : <<bind>>
+AddTuningCommand --|> CommandBase_Tuning
+ModifyTuningCommand --|> CommandBase_Tuning
+RemoveTuningCommand --|> CommandBase_Tuning
+
+CommandBase<|.. CommandBase_ToneInTuning : <<bind>>
+AddToneInTuningCommand --|> CommandBase_ToneInTuning
+ModifyToneInTuningCommand --|> CommandBase_ToneInTuning
+RemoveToneInTuningCommand --|> CommandBase_ToneInTuning
+
+CommandBase<|.. CommandBase_Tone : <<bind>>
+AddToneCommand --|> CommandBase_Tone
+ModifyToneCommand --|> CommandBase_Tone
+RemoveToneCommand --|> CommandBase_Tone
+
+CommandBase<|.. CommandBase_StringsSet : <<bind>>
+AddStringsSetCommand --|> CommandBase_StringsSet
+ModifyStringsSetCommand --|> CommandBase_StringsSet
+RemoveStringsSetCommand --|> CommandBase_StringsSet
+
+CommandBase<|.. CommandBase_StringInSet : <<bind>>
+AddStringInSetCommand --|> CommandBase_StringInSet
+ModifyStringInSetCommand --|> CommandBase_StringInSet
+RemoveStringInSetCommand --|> CommandBase_StringInSet
+
+CommandBase<|.. CommandBase_String : <<bind>>
+AddStringCommand --|> CommandBase_String
+ModifyStringCommand --|> CommandBase_String
+RemoveStringCommand --|> CommandBase_String
+
+CommandBase <|.. CommandBase_MyInstrument : <<bind>>
+AddMyInstrumentCommand --|> CommandBase_MyInstrument
+ModifyMyInstrumentCommand --|> CommandBase_MyInstrument
+RemoveMyInstrumentCommand --|> CommandBase_MyInstrument
+
+CommandBase <|.. CommandBase_Manufacturer : <<bind>>
+AddManufacturerCommand --|> CommandBase_Manufacturer
+ModifyManufacturerCommand --|> CommandBase_Manufacturer
+RemoveManufacturerCommand --|> CommandBase_Manufacturer
+
+CommandBase <|.. CommandBase_Instrument: <<bind>>
+AddInstrumentCommand --|> CommandBase_Instrument
+ModifyInstrumentCommand --|> CommandBase_Instrument
+RemoveInstrumentCommand --|> CommandBase_Instrument
+
+CommandBase <|.. CommandBase_InstalledString: <<bind>>
+AddInstalledStringCommand --|> CommandBase_InstalledString
+ModifyInstalledStringCommand --|> CommandBase_InstalledString
+RemoveInstalledStringCommand --|> CommandBase_InstalledString
+
+QueryBase <|.. QueryBase_InstalledString: <<bind>>
+GetInstalledStringQuery --|> QueryBase_InstalledString
+
+QueryBase <|.. QueryBase_Instrument: <<bind>>
+GetInstrumentQuery --|> QueryBase_Instrument
+
+QueryBase <|.. QueryBase_ListManufacturer: <<bind>>
+GetInstrumentsManufacturersQuery --|> QueryBase_ListManufacturer
+GetStringsManufacturersQuery --|> QueryBase_ListManufacturer
+
+QueryBase <|.. QueryBase_Manufacturer: <<bind>>
+GetManufacturerQuery --|> QueryBase_Manufacturer
+
+QueryBase <|.. QueryBase_MyInstrument: <<bind>>
+GetMyInstrumentQuery --|> QueryBase_MyInstrument
+
+QueryBase <|.. QueryBase_ListMyInstrument: <<bind>>
+GetMyInstrumentsQuery --|> QueryBase_ListMyInstrument
+
+QueryBase <|.. QueryBase_StringInSet: <<bind>>
+GetStringInSetQuery --|> QueryBase_StringInSet
+
+QueryBase <|.. QueryBase_String: <<bind>>
+GetStringQuery --|> QueryBase_String
+
+QueryBase <|.. QueryBase_ListString: <<bind>>
+GetStringsQuery --|> QueryBase_ListString
+
+QueryBase <|.. QueryBase_StringsSet: <<bind>>
+GetStringsSetQuery --|> QueryBase_StringsSet
+
+QueryBase <|.. QueryBase_ListStringsSet: <<bind>>
+GetStringsSetsQuery --|> QueryBase_ListStringsSet
+
+QueryBase <|.. QueryBase_ToneInTuning: <<bind>>
+GetToneInTuningQuery --|> QueryBase_ToneInTuning
+
+QueryBase <|.. QueryBase_Tone: <<bind>>
+GetToneQuery --|> QueryBase_Tone
+
+QueryBase <|.. QueryBase_ListTone: <<bind>>
+GetTonesQuery --|> QueryBase_ListTone
+
+QueryBase <|.. QueryBase_Tuning: <<bind>>
+GetTuningQuery --|> QueryBase_Tuning
+
+QueryBase <|.. QueryBase_ListTuning: <<bind>>
+GetTuningsQuery --|> QueryBase_ListTuning
+
+QueryBase <|.. QueryBase_User: <<bind>>
+GetUserByIdQuery --|> QueryBase_User
+GetUserByUsernameQuery --|> QueryBase_User
+
+QueryBase <|.. QueryBase_ListUser: <<bind>>
+GetUsersQuery --|> QueryBase_ListUser
+
+EntityBase <|-- InstalledString
+EntityBase <|-- Instrument
+EntityBase <|-- Manufacturer
+EntityBase <|-- MyInstrument
+EntityBase <|-- String
+EntityBase <|-- StringInSet
+EntityBase <|-- StringsSet
+EntityBase <|-- Tone
+EntityBase <|-- ToneInTuning
+EntityBase <|-- Tuning
+EntityBase <|-- User
+
+DbContext <|-- StringManagerStorageContext
+
+IDesignTimeDbContextFactory <|.. IDesignTimeDbContextFactory_StringManagerStorageContext: <<bind>>
+IDesignTimeDbContextFactory_StringManagerStorageContext <.. StringManagerStorageContextFactory
+
+StringManagerStorageContext <.. Startup : <<create>>
+StringManagerStorageContext <.. StringManagerStorageContextFactory : <<use>>
+
+InstalledString *-- StringManagerStorageContext
+Instrument *-- StringManagerStorageContext
+Manufacturer *-- StringManagerStorageContext
+MyInstrument *-- StringManagerStorageContext
+String *-- StringManagerStorageContext
+StringInSet *-- StringManagerStorageContext
+StringsSet *-- StringManagerStorageContext
+Tone *-- StringManagerStorageContext
+ToneInTuning *-- StringManagerStorageContext
+Tuning *-- StringManagerStorageContext
+User *-- StringManagerStorageContext
+
+MyInstrument "1" - "1..*" InstalledString
+String "1" - "*" InstalledString
+Tone "1" - "*" InstalledString
+Manufacturer "1" - "*" Instrument
+Manufacturer "1" - "*" String
+Instrument "1" - "*" MyInstrument
+MyInstrument "1" - "*" User
+String "1" - "*" StringInSet
+StringsSet "1" - "*" StringInSet
+Tone "1" - "*" ToneInTuning
+Tuning "1" - "*" ToneInTuning
+
+StringType <-- String
+AccountType <-- User
+PlayStyle <-- User
+GuitarDailyMaintanance <-- User
+WhereGuitarKept <-- MyInstrument
+
+ApiControllerBase <.. Startup : <<create>>
+
+QueryBase <.. QueryExecutor : <<call>>
+CommandBase <.. CommandExecutor : <<call>>
+
+StringManagerStorageContext <.. AddInstalledStringCommand : <<use>>
+StringManagerStorageContext <.. ModifyInstalledStringCommand : <<use>>
+StringManagerStorageContext <.. RemoveInstalledStringCommand : <<use>>
+StringManagerStorageContext <.. AddInstrumentCommand : <<use>>
+StringManagerStorageContext <.. ModifyInstrumentCommand : <<use>>
+StringManagerStorageContext <.. RemoveInstrumentCommand : <<use>>
+StringManagerStorageContext <.. AddManufacturerCommand : <<use>>
+StringManagerStorageContext <.. ModifyManufacturerCommand : <<use>>
+StringManagerStorageContext <.. RemoveManufacturerCommand : <<use>>
+StringManagerStorageContext <.. AddMyInstrumentCommand : <<use>>
+StringManagerStorageContext <.. ModifyMyInstrumentCommand : <<use>>
+StringManagerStorageContext <.. RemoveMyInstrumentCommand : <<use>>
+StringManagerStorageContext <.. AddStringCommand : <<use>>
+StringManagerStorageContext <.. ModifyStringCommand : <<use>>
+StringManagerStorageContext <.. RemoveStringCommand : <<use>>
+StringManagerStorageContext <.. AddStringInSetCommand : <<use>>
+StringManagerStorageContext <.. ModifyStringInSetCommand : <<use>>
+StringManagerStorageContext <.. RemoveStringInSetCommand : <<use>>
+StringManagerStorageContext <.. AddStringsSetCommand : <<use>>
+StringManagerStorageContext <.. ModifyStringsSetCommand : <<use>>
+StringManagerStorageContext <.. RemoveStringsSetCommand : <<use>>
+StringManagerStorageContext <.. AddToneCommand : <<use>>
+StringManagerStorageContext <.. ModifyToneCommand : <<use>>
+StringManagerStorageContext <.. RemoveToneCommand : <<use>>
+StringManagerStorageContext <.. AddToneInTuningCommand : <<use>>
+StringManagerStorageContext <.. ModifyToneInTuningCommand : <<use>>
+StringManagerStorageContext <.. RemoveToneInTuningCommand : <<use>>
+StringManagerStorageContext <.. AddTuningCommand : <<use>>
+StringManagerStorageContext <.. ModifyTuningCommand : <<use>>
+StringManagerStorageContext <.. RemoveTuningCommand : <<use>>
+StringManagerStorageContext <.. AddUserCommand : <<use>>
+StringManagerStorageContext <.. ModifyUserCommand : <<use>>
+
+StringManagerStorageContext <..GetInstalledStringQuery : <<use>>
+StringManagerStorageContext <..GetInstrumentQuery : <<use>>
+StringManagerStorageContext <..GetInstrumentsManufacturersQuery : <<use>>
+StringManagerStorageContext <..GetStringsManufacturersQuery : <<use>>
+StringManagerStorageContext <..GetManufacturerQuery : <<use>>
+StringManagerStorageContext <..GetMyInstrumentQuery : <<use>>
+StringManagerStorageContext <..GetMyInstrumentsQuery : <<use>>
+StringManagerStorageContext <..GetStringInSetQuery : <<use>>
+StringManagerStorageContext <..GetStringQuery : <<use>>
+StringManagerStorageContext <..GetStringsQuery : <<use>>
+StringManagerStorageContext <..GetStringsSetQuery : <<use>>
+StringManagerStorageContext <..GetStringsSetsQuery : <<use>>
+StringManagerStorageContext <..GetToneInTuningQuery : <<use>>
+StringManagerStorageContext <..GetToneQuery : <<use>>
+StringManagerStorageContext <..GetTonesQuery : <<use>>
+StringManagerStorageContext <..GetTuningQuery : <<use>>
+StringManagerStorageContext <..GetTuningsQuery : <<use>>
+StringManagerStorageContext <..GetUserByIdQuery : <<use>>
+StringManagerStorageContext <..GetUserByUsernameQuery : <<use>>
+StringManagerStorageContext <..GetUsersQuery : <<use>>
+
+AbstractValidator <|.. AbstractValidator_AddInstalledStringRequest : <<bind>>
+AbstractValidator_AddInstalledStringRequest <|-- AddInstalledStringRequestValidator 
+AbstractValidator <|.. AbstractValidator_AddInstrumentRequest : <<bind>>
+AbstractValidator_AddInstrumentRequest <|-- AddInstrumentRequestValidator
+AbstractValidator <|.. AbstractValidator_AddManufacturerRequest : <<bind>>
+AbstractValidator_AddManufacturerRequest <|-- AddManufacturerRequestValidator
+AbstractValidator <|.. AbstractValidator_AddMyInstrumentRequest : <<bind>>
+AbstractValidator_AddMyInstrumentRequest <|-- AddMyInstrumentRequestValidator
+AbstractValidator <|.. AbstractValidator_AddStringInSetRequest : <<bind>>
+AbstractValidator_AddStringInSetRequest <|-- AddStringInSetRequestValidator
+AbstractValidator <|.. AbstractValidator_AddStringRequest : <<bind>>
+AbstractValidator_AddStringRequest <|-- AddStringRequestValidator
+AbstractValidator <|.. AbstractValidator_AddStringsSetRequest : <<bind>>
+AbstractValidator_AddStringsSetRequest <|-- AddStringsSetRequestValidator
+AbstractValidator <|.. AbstractValidator_AddToneInTuningRequest : <<bind>>
+AbstractValidator_AddToneInTuningRequest <|-- AddToneInTuningRequestValidator
+AbstractValidator <|.. AbstractValidator_AddToneRequest : <<bind>>
+AbstractValidator_AddToneRequest <|-- AddToneRequestValidator
+AbstractValidator <|.. AbstractValidator_AddTuningRequest : <<bind>>
+AbstractValidator_AddTuningRequest <|-- AddTuningRequestValidator
+AbstractValidator <|.. AbstractValidator_AddUserRequest : <<bind>>
+AbstractValidator_AddUserRequest <|-- AddUserRequestValidator
+AbstractValidator <|.. AbstractValidator_GetScaleLenghtsRequest : <<bind>>
+AbstractValidator_GetScaleLenghtsRequest <|-- GetScaleLenghtsRequestValidator
+AbstractValidator <|.. AbstractValidator_GetStringSizeWithCorrepondingTensionRequest : <<bind>>
+AbstractValidator_GetStringSizeWithCorrepondingTensionRequest <|-- GetStringSizeWithCorrepondingTensionRequestValidator
+AbstractValidator <|.. AbstractValidator_GetStringsSetsWithCorrepondingTensionRequest : <<bind>>
+AbstractValidator_GetStringsSetsWithCorrepondingTensionRequest <|-- GetStringsSetsWithCorrepondingTensionRequestValidator
+AbstractValidator <|.. AbstractValidator_GetStringTensionRequest : <<bind>>
+AbstractValidator_GetStringTensionRequest <|-- GetStringTensionRequestValidator
+AbstractValidator <|.. AbstractValidator_ModifyInstalledStringRequest : <<bind>>
+AbstractValidator_ModifyInstalledStringRequest <|-- ModifyInstalledStringRequestValidator
+AbstractValidator <|.. AbstractValidator_ModifyInstrumentRequest : <<bind>>
+AbstractValidator_ModifyInstrumentRequest <|-- ModifyInstrumentRequestValidator
+AbstractValidator <|.. AbstractValidator_ModifyManufacturerRequest : <<bind>>
+AbstractValidator_ModifyManufacturerRequest <|-- ModifyManufacturerRequestValidator
+AbstractValidator <|.. AbstractValidator_ModifyMyInstrumentRequest : <<bind>>
+AbstractValidator_ModifyMyInstrumentRequest <|-- ModifyMyInstrumentRequestValidator
+AbstractValidator <|.. AbstractValidator_ModifyStringInSetRequest : <<bind>>
+AbstractValidator_ModifyStringInSetRequest <|-- ModifyStringInSetRequestValidator
+AbstractValidator <|.. AbstractValidator_ModifyStringRequest : <<bind>>
+AbstractValidator_ModifyStringRequest <|-- ModifyStringRequestValidator
+AbstractValidator <|.. AbstractValidator_ModifyStringsSetRequest : <<bind>>
+AbstractValidator_ModifyStringsSetRequest <|-- ModifyStringsSetRequestValidator
+AbstractValidator <|.. AbstractValidator_ModifyToneInTuningRequest : <<bind>>
+AbstractValidator_ModifyToneInTuningRequest <|-- ModifyToneInTuningRequestValidator
+AbstractValidator <|.. AbstractValidator_ModifyToneRequest : <<bind>>
+AbstractValidator_ModifyToneRequest <|-- ModifyToneRequestValidator
+AbstractValidator <|.. AbstractValidator_ModifyTuningRequest : <<bind>>
+AbstractValidator_ModifyTuningRequest <|-- ModifyTuningRequestValidator
+AbstractValidator <|.. AbstractValidator_ModifyUserRequest : <<bind>>
+AbstractValidator_ModifyUserRequest <|-- ModifyUserRequestValidator
+AbstractValidator <|.. AbstractValidator_RemoveInstalledStringRequest : <<bind>>
+AbstractValidator_RemoveInstalledStringRequest <|-- RemoveInstalledStringRequestValidator
+AbstractValidator <|.. AbstractValidator_RemoveInstrumentRequest : <<bind>>
+AbstractValidator_RemoveInstrumentRequest <|-- RemoveInstrumentRequestValidator
+AbstractValidator <|.. AbstractValidator_RemoveManufacturerRequest : <<bind>>
+AbstractValidator_RemoveManufacturerRequest <|-- RemoveManufacturerRequestValidator
+AbstractValidator <|.. AbstractValidator_RemoveMyInstrumentRequest : <<bind>>
+AbstractValidator_RemoveMyInstrumentRequest <|-- RemoveMyInstrumentRequestValidator
+AbstractValidator <|.. AbstractValidator_RemoveStringInSetRequest : <<bind>>
+AbstractValidator_RemoveStringInSetRequest <|-- RemoveStringInSetRequestValidator
+AbstractValidator <|.. AbstractValidator_RemoveStringRequest : <<bind>>
+AbstractValidator_RemoveStringRequest <|-- RemoveStringRequestValidator
+AbstractValidator <|.. AbstractValidator_RemoveStringsSetRequest : <<bind>>
+AbstractValidator_RemoveStringsSetRequest <|-- RemoveStringsSetRequestValidator
+AbstractValidator <|.. AbstractValidator_RemoveToneInTuningRequest : <<bind>>
+AbstractValidator_RemoveToneInTuningRequest <|-- RemoveToneInTuningRequestValidator
+AbstractValidator <|.. AbstractValidator_RemoveToneRequest : <<bind>>
+AbstractValidator_RemoveToneRequest <|-- RemoveToneRequestValidator
+AbstractValidator <|.. AbstractValidator_RemoveTuningRequest : <<bind>>
+AbstractValidator_RemoveTuningRequest <|-- RemoveTuningRequestValidator
+
+Profile <|-- InstalledStringMapping 
+Profile <|-- InstrumentMapping
+Profile <|-- ManufacturerMapping
+Profile <|-- MyInstrumentMapping
+Profile <|-- StringInSetMapping
+Profile <|-- StringsMapping
+Profile <|-- StringsSetMapping
+Profile <|-- ToneInTuningMapping
+Profile <|-- ToneMapping
+Profile <|-- TuningMapping
+Profile <|-- UserMapping
+
+IRequest <|.. IRequest_InstalledString : <<bind>>
+IRequest <|.. IRequest_Instrument : <<bind>>
+IRequest <|.. IRequest_ListInstrument : <<bind>>
+IRequest <|.. IRequest_Manufacturer : <<bind>>
+IRequest <|.. IRequest_ListManufacturer : <<bind>>
+IRequest <|.. IRequest_MyInstrument : <<bind>>
+IRequest <|.. IRequest_ListMyInstrument : <<bind>>
+IRequest <|.. IRequest_StringInSet : <<bind>>
+IRequest <|.. IRequest_String : <<bind>>
+IRequest <|.. IRequest_ListString : <<bind>>
+IRequest <|.. IRequest_StringsSet : <<bind>>
+IRequest <|.. IRequest_ListStringsSet : <<bind>>
+IRequest <|.. IRequest_ToneInTuning : <<bind>>
+IRequest <|.. IRequest_Tone : <<bind>>
+IRequest <|.. IRequest_ListTone : <<bind>>
+IRequest <|.. IRequest_Tuning : <<bind>>
+IRequest <|.. IRequest_ListTuning : <<bind>>
+IRequest <|.. IRequest_User : <<bind>>
+IRequest <|.. IRequest_ListUser : <<bind>>
+IRequest <|.. IRequest_ints : <<bind>>
+IRequest <|.. IRequest_double : <<bind>>
+
+StatusCodeResponse_InstalledString <.. IRequest_InstalledString : <<use>>
+StatusCodeResponse_Instrument <.. IRequest_Instrument : <<use>>
+StatusCodeResponse_ListInstrument <.. IRequest_ListInstrument : <<use>>
+StatusCodeResponse_Manufacturer <.. IRequest_Manufacturer : <<use>>
+StatusCodeResponse_ListManufacturer <.. IRequest_ListManufacturer : <<use>>
+StatusCodeResponse_MyInstrument <.. IRequest_MyInstrument : <<use>>
+StatusCodeResponse_ListMyInstrument <.. IRequest_ListMyInstrument : <<use>>
+StatusCodeResponse_StringInSet <.. IRequest_StringInSet : <<use>>
+StatusCodeResponse_String <.. IRequest_String : <<use>>
+StatusCodeResponse_ListString <.. IRequest_ListString : <<use>>
+StatusCodeResponse_StringsSet <.. IRequest_StringsSet : <<use>>
+StatusCodeResponse_ListStringsSet <.. IRequest_ListStringsSet : <<use>>
+StatusCodeResponse_ToneInTuning <.. IRequest_ToneInTuning : <<use>>
+StatusCodeResponse_Tone <.. IRequest_Tone : <<use>>
+StatusCodeResponse_ListTone <.. IRequest_ListTone : <<use>>
+StatusCodeResponse_Tuning <.. IRequest_Tuning : <<use>>
+StatusCodeResponse_ListTuning <.. IRequest_ListTuning : <<use>>
+StatusCodeResponse_User <.. IRequest_User : <<use>>
+StatusCodeResponse_ListUser <.. IRequest_ListUser : <<use>>
+StatusCodeResponse_ints <.. IRequest_ints : <<use>>
+StatusCodeResponse_double <.. IRequest_double : <<use>>
+
+StatusCodeResponse <|.. StatusCodeResponse_InstalledString : <<bind>>
+StatusCodeResponse <|.. StatusCodeResponse_Instrument : <<bind>>
+StatusCodeResponse <|.. tatusCodeResponse_ListInstrument : <<bind>>
+StatusCodeResponse <|.. StatusCodeResponse_Manufacturer : <<bind>>
+StatusCodeResponse <|.. StatusCodeResponse_ListManufacturer : <<bind>>
+StatusCodeResponse <|.. StatusCodeResponse_MyInstrument : <<bind>>
+StatusCodeResponse <|.. StatusCodeResponse_ListMyInstrument : <<bind>>
+StatusCodeResponse <|.. StatusCodeResponse_StringInSet : <<bind>>
+StatusCodeResponse <|.. StatusCodeResponse_String : <<bind>>
+StatusCodeResponse <|.. StatusCodeResponse_ListString : <<bind>>
+StatusCodeResponse <|.. StatusCodeResponse_StringsSet : <<bind>>
+StatusCodeResponse <|.. StatusCodeResponse_ListStringsSet : <<bind>>
+StatusCodeResponse <|.. StatusCodeResponse_ToneInTuning : <<bind>>
+StatusCodeResponse <|.. StatusCodeResponse_Tone : <<bind>>
+StatusCodeResponse <|.. StatusCodeResponse_ListTone : <<bind>>
+StatusCodeResponse <|.. StatusCodeResponse_Tuning : <<bind>>
+StatusCodeResponse <|.. StatusCodeResponse_ListTuning : <<bind>>
+StatusCodeResponse <|.. StatusCodeResponse_User : <<bind>>
+StatusCodeResponse <|.. StatusCodeResponse_ListUser : <<bind>>
+StatusCodeResponse <|.. StatusCodeResponse_ints : <<bind>>
+StatusCodeResponse <|.. StatusCodeResponse_double : <<bind>>
+
+IRequest_InstalledString <.. RequestBase_InstalledString
+IRequest_Instrument <.. RequestBase_Instrument
+IRequest_ListInstrument <.. RequestBase_ListInstrument
+IRequest_Manufacturer <.. RequestBase_Manufacturer
+IRequest_ListManufacturer <.. RequestBase_ListManufacturer
+IRequest_MyInstrument <.. RequestBase_MyInstrument
+IRequest_ListMyInstrument <.. RequestBase_ListMyInstrument
+IRequest_StringInSet <.. RequestBase_StringInSet
+IRequest_String <.. RequestBase_String
+IRequest_ListString <.. RequestBase_ListString
+IRequest_StringsSet <.. RequestBase_StringsSet
+IRequest_ListStringsSet <.. RequestBase_ListStringsSet
+IRequest_ToneInTuning <.. RequestBase_ToneInTuning
+IRequest_Tone <.. RequestBase_Tone
+IRequest_ListTone <.. RequestBase_ListTone
+IRequest_Tuning <.. RequestBase_Tuning
+IRequest_ListTuning <.. RequestBase_ListTuning
+IRequest_User <.. RequestBase_User
+IRequest_ListUser <.. RequestBase_ListUser
+IRequest_ints <.. RequestBase_ints
+IRequest_double <.. RequestBase_double
+
+RequestBase_InstalledString <|-- AddInstalledStringRequest
+RequestBase_InstalledString <|-- ModifyInstalledStringRequest
+RequestBase_InstalledString <|-- RemoveInstalledStringRequest
+
+RequestBase_Instrument <|-- AddInstrumentRequest
+RequestBase_Instrument <|-- ModifyInstrumentRequest
+RequestBase_Instrument <|-- RemoveInstrumentRequest
+RequestBase_ListInstrument <|-- GetInstrumentsRequest
+
+RequestBase_Manufacturer <|-- AddManufacturerRequest
+RequestBase_Manufacturer <|-- ModifyManufacturerRequest
+RequestBase_Manufacturer <|-- RemoveManufacturerRequest
+RequestBase_ListManufacturer <|-- GetStringsManufacturersRequest
+RequestBase_ListManufacturer <|-- GetInstrumentsManufacturersRequest
+
+RequestBase_MyInstrument <|-- AddMyInstrumentRequest
+RequestBase_MyInstrument <|-- ModifyMyInstrumentRequest
+RequestBase_MyInstrument <|-- GetMyInstrumentRequest
+RequestBase_MyInstrument <|-- RemoveMyInstrumentRequest
+RequestBase_ListMyInstrument <|-- GetMyInstrumentsRequest
+
+RequestBase_StringInSet <|-- AddStringInSetRequest
+RequestBase_StringInSet <|-- ModifyStringInSetRequest
+RequestBase_StringInSet <|-- RemoveStringInSetRequest
+
+RequestBase_String <|-- AddStringRequest
+RequestBase_String <|-- RemoveStringRequest
+RequestBase_String <|-- ModifyStringRequest
+RequestBase_ListString <|-- GetStringsRequest
+RequestBase_ListString <|-- GetStringSizeWithCorrepondingTensionRequest
+
+RequestBase_StringsSet <|-- AddStringsSetRequest
+RequestBase_StringsSet <|-- ModifyStringsSetRequest
+RequestBase_StringsSet <|-- RemoveStringsSetRequest
+RequestBase_StringsSet <|-- GetStringsSetRequest
+RequestBase_ListStringsSet <|-- GetStringsSetsRequest
+RequestBase_ListStringsSet <|-- GetStringsSetsWithCorrepondingTensionRequest
+
+RequestBase_ToneInTuning <|-- AddToneInTuningRequest
+RequestBase_ToneInTuning <|-- ModifyToneInTuningRequest
+RequestBase_ToneInTuning <|-- RemoveToneInTuningRequest
+
+RequestBase_Tone <|-- AddToneRequest
+RequestBase_Tone <|-- ModifyToneRequest
+RequestBase_Tone <|-- RemoveToneRequest
+RequestBase_ListTone <|-- GetTonesRequest
+
+RequestBase_Tuning <|-- AddTuningRequest
+RequestBase_Tuning <|-- ModifyTuningRequest
+RequestBase_Tuning <|-- GetTuningRequest
+RequestBase_Tuning <|-- RemoveTuningRequest
+RequestBase_ListTuning <|-- GetTuningsRequest
+
+RequestBase_User <|-- AddUserRequest
+RequestBase_User <|-- ModifyUserRequest
+RequestBase_User <|-- GetUserRequest
+RequestBase_ListUser <|-- GetUsersRequest
+
+RequestBase_ints <|-- GetScaleLenghtsRequest
+
+RequestBase_double <|-- GetStringTensionRequest
+
+IRequestHandler <|.. IRequestHandlerAddInstalledStringRequest : <<bind>>
+IRequestHandler <|.. IRequestHandlerAddInstrumentRequest : <<bind>>
+IRequestHandler <|.. IRequestHandlerAddManufacturerHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerAddMyInstrumentHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerAddStringHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerAddStringInSetHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerAddStringsSetHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerAddToneHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerAddToneInTuningHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerAddTuningHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerAddUserHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerGetInstrumentsHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerGetInstrumentsManufacturersHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerGetMyInstrumentHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerGetMyInstrumentsHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerGetScaleLenghtsHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerGetStringsHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerGetStringSizeWithCorrepondingTensionHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerGetStringsManufacturersHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerGetStringsSetHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerGetStringsSetsHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerGetStringsSetsWithCorrepondingTensionHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerGetStringTensionHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerGetTonesHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerGetTuningHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerGetTuningsHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerGetUserHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerGetUsersHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerModifyInstalledStringHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerModifyInstrumentHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerModifyManufacturerHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerModifyMyInstrumentHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerModifyStringHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerModifyStringInSetHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerModifyStringsSetHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerModifyToneHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerModifyTuningHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerModifyUserHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerRemoveInstalledStringHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerRemoveInstrumentHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerRemoveManufacturerHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerRemoveMyInstrumentHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerRemoveStringHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerRemoveStringsSetHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerRemoveToneHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerRemoveToneInTuningHandler : <<bind>>
+IRequestHandler <|.. IRequestHandlerRemoveTuningHandler : <<bind>>
+
+AddInstalledStringRequest ..> IRequestHandlerAddInstalledStringRequest 
+AddInstrumentRequest ..> IRequestHandlerAddInstrumentRequest
+AddManufacturerHandler ..> IRequestHandlerAddManufacturerHandler
+AddMyInstrumentHandler ..> IRequestHandlerAddMyInstrumentHandler
+AddStringHandler ..> IRequestHandlerAddStringHandler
+AddStringInSetHandler ..> IRequestHandlerAddStringInSetHandler
+AddStringsSetHandler ..> IRequestHandlerAddStringsSetHandler
+AddToneHandler ..> IRequestHandlerAddToneHandler
+AddToneInTuningHandler ..> IRequestHandlerAddToneInTuningHandler
+AddTuningHandler ..> IRequestHandlerAddTuningHandler
+AddUserHandler ..> IRequestHandlerAddUserHandler
+GetInstrumentsHandler ..> IRequestHandlerGetInstrumentsHandler
+GetInstrumentsManufacturersHandler ..> IRequestHandlerGetInstrumentsManufacturersHandler
+GetMyInstrumentHandler ..> IRequestHandlerGetMyInstrumentHandler
+GetMyInstrumentsHandler ..> IRequestHandlerGetMyInstrumentsHandler
+GetScaleLenghtsHandler ..> IRequestHandlerGetScaleLenghtsHandler
+GetStringsHandler ..> IRequestHandlerGetStringsHandler
+GetStringSizeWithCorrepondingTensionHandler ..> IRequestHandlerGetStringSizeWithCorrepondingTensionHandler
+GetStringsManufacturersHandler ..> IRequestHandlerGetStringsManufacturersHandler
+GetStringsSetHandler ..> IRequestHandlerGetStringsSetHandler
+GetStringsSetsHandler ..> IRequestHandlerGetStringsSetsHandler
+GetStringsSetsWithCorrepondingTensionHandler ..> IRequestHandlerGetStringsSetsWithCorrepondingTensionHandler
+GetStringTensionHandler ..> IRequestHandlerGetStringTensionHandler
+GetTonesHandler ..> IRequestHandlerGetTonesHandler
+GetTuningHandler ..> IRequestHandlerGetTuningHandler
+GetTuningsHandler ..> IRequestHandlerGetTuningsHandler
+GetUserHandler ..> IRequestHandlerGetUserHandler
+GetUsersHandler ..> IRequestHandlerGetUsersHandler
+ModifyInstalledStringHandler ..> IRequestHandlerModifyInstalledStringHandler
+ModifyInstrumentHandler ..> IRequestHandlerModifyInstrumentHandler
+ModifyManufacturerHandler ..> IRequestHandlerModifyManufacturerHandler
+ModifyMyInstrumentHandler ..> IRequestHandlerModifyMyInstrumentHandler
+ModifyStringHandler ..> IRequestHandlerModifyStringHandler
+ModifyStringInSetHandler ..> IRequestHandlerModifyStringInSetHandler
+ModifyStringsSetHandler ..> IRequestHandlerModifyStringsSetHandler
+ModifyToneHandler ..> IRequestHandlerModifyToneHandler
+ModifyTuningHandler ..> IRequestHandlerModifyTuningHandler
+ModifyUserHandler ..> IRequestHandlerModifyUserHandler
+RemoveInstalledStringHandler ..> IRequestHandlerRemoveInstalledStringHandler
+RemoveInstrumentHandler ..> IRequestHandlerRemoveInstrumentHandler
+RemoveManufacturerHandler ..> IRequestHandlerRemoveManufacturerHandler
+MyInstrumentHandler ..> IRequestHandlerRemoveMyInstrumentHandler
+RemoveStringHandler ..> IRequestHandlerRemoveStringHandler
+RemoveStringsSetHandler ..> IRequestHandlerRemoveStringsSetHandler
+RemoveToneHandler ..> IRequestHandlerRemoveToneHandler
+RemoveToneInTuningHandler ..> IRequestHandlerRemoveToneInTuningHandler
+RemoveTuningHandler ..> IRequestHandlerRemoveTuningHandler
+
+CommandExecutor <.. AddInstalledStringRequest : <<use>>
+CommandExecutor <.. AddInstrumentRequest : <<use>>
+CommandExecutor <.. AddManufacturerHandler : <<use>>
+CommandExecutor <.. AddMyInstrumentHandler : <<use>>
+CommandExecutor <.. AddStringHandler : <<use>>
+CommandExecutor <.. AddStringInSetHandler : <<use>>
+CommandExecutor <.. AddStringsSetHandler : <<use>>
+CommandExecutor <.. AddToneHandler : <<use>>
+CommandExecutor <.. AddToneInTuningHandler : <<use>>
+CommandExecutor <.. AddTuningHandler : <<use>>
+CommandExecutor <.. AddUserHandler : <<use>>
+CommandExecutor <.. ModifyInstalledStringHandler : <<use>>
+CommandExecutor <.. ModifyInstrumentHandler : <<use>>
+CommandExecutor <.. ModifyManufacturerHandler : <<use>>
+CommandExecutor <.. ModifyMyInstrumentHandler : <<use>>
+CommandExecutor <.. ModifyStringHandler : <<use>>
+CommandExecutor <.. ModifyStringInSetHandler : <<use>>
+CommandExecutor <.. ModifyStringsSetHandler : <<use>>
+CommandExecutor <.. ModifyToneHandler : <<use>>
+CommandExecutor <.. ModifyTuningHandler : <<use>>
+CommandExecutor <.. ModifyUserHandler : <<use>>
+CommandExecutor <.. RemoveInstalledStringHandler : <<use>>
+CommandExecutor <.. RemoveInstrumentHandler : <<use>>
+CommandExecutor <.. RemoveManufacturerHandler : <<use>>
+CommandExecutor <.. RemoveMyInstrumentHandler : <<use>>
+CommandExecutor <.. RemoveStringHandler : <<use>>
+CommandExecutor <.. RemoveStringsSetHandler : <<use>>
+CommandExecutor <.. RemoveToneHandler : <<use>>
+CommandExecutor <.. RemoveToneInTuningHandler : <<use>>
+CommandExecutor <.. RemoveTuningHandler : <<use>>
+
+QueryExecutor <..  AddInstalledStringRequest : <<use>>
+QueryExecutor <..  AddInstrumentRequest : <<use>>
+QueryExecutor <..  AddMyInstrumentHandler : <<use>>
+QueryExecutor <..  AddStringHandler : <<use>>
+QueryExecutor <..  AddStringInSetHandler : <<use>>
+QueryExecutor <..  AddToneInTuningHandler : <<use>>
+QueryExecutor <..  GetInstrumentsHandler : <<use>>
+QueryExecutor <..  GetInstrumentsManufacturersHandler : <<use>>
+QueryExecutor <..  GetMyInstrumentHandler : <<use>>
+QueryExecutor <..  GetMyInstrumentsHandler : <<use>>
+QueryExecutor <..  GetScaleLenghtsHandler : <<use>>
+QueryExecutor <..  GetStringsHandler : <<use>>
+QueryExecutor <..  GetStringSizeWithCorrepondingTensionHandler : <<use>>
+QueryExecutor <..  GetStringsManufacturersHandler : <<use>>
+QueryExecutor <..  GetStringsSetHandler : <<use>>
+QueryExecutor <..  GetStringsSetsHandler : <<use>>
+QueryExecutor <..  GetStringsSetsWithCorrepondingTensionHandler : <<use>>
+QueryExecutor <..  GetStringTensionHandler : <<use>>
+QueryExecutor <..  GetTonesHandler : <<use>>
+QueryExecutor <..  GetTuningHandler : <<use>>
+QueryExecutor <..  GetTuningsHandler : <<use>>
+QueryExecutor <..  GetUserHandler : <<use>>
+QueryExecutor <..  GetUsersHandler : <<use>>
+QueryExecutor <..  ModifyInstalledStringHandler : <<use>>
+QueryExecutor <..  ModifyInstrumentHandler : <<use>>
+QueryExecutor <..  ModifyManufacturerHandler : <<use>>
+QueryExecutor <..  ModifyMyInstrumentHandler : <<use>>
+QueryExecutor <..  ModifyStringHandler : <<use>>
+QueryExecutor <..  ModifyStringInSetHandler : <<use>>
+QueryExecutor <..  ModifyStringsSetHandler : <<use>>
+QueryExecutor <..  ModifyToneHandler : <<use>>
+QueryExecutor <..  ModifyTuningHandler : <<use>>
+QueryExecutor <..  ModifyUserHandler : <<use>>
+
+IMapper <.. AddInstalledStringRequest : <<use>>
+IMapper <.. AddInstrumentRequest : <<use>>
+IMapper <.. AddManufacturerHandler : <<use>>
+IMapper <.. AddMyInstrumentHandler : <<use>>
+IMapper <.. AddStringHandler : <<use>>
+IMapper <.. AddStringInSetHandler : <<use>>
+IMapper <.. AddStringsSetHandler : <<use>>
+IMapper <.. AddToneHandler : <<use>>
+IMapper <.. AddToneInTuningHandler : <<use>>
+IMapper <.. AddTuningHandler : <<use>>
+IMapper <.. AddUserHandler : <<use>>
+IMapper <.. GetInstrumentsHandler : <<use>>
+IMapper <.. GetInstrumentsManufacturersHandler : <<use>>
+IMapper <.. GetMyInstrumentHandler : <<use>>
+IMapper <.. GetMyInstrumentsHandler : <<use>>
+IMapper <.. GetScaleLenghtsHandler : <<use>>
+IMapper <.. GetStringsHandler : <<use>>
+IMapper <.. GetStringSizeWithCorrepondingTensionHandler : <<use>>
+IMapper <.. GetStringsManufacturersHandler : <<use>>
+IMapper <.. GetStringsSetHandler : <<use>>
+IMapper <.. GetStringsSetsHandler : <<use>>
+IMapper <.. GetStringsSetsWithCorrepondingTensionHandler : <<use>>
+IMapper <.. GetStringTensionHandler : <<use>>
+IMapper <.. GetTonesHandler : <<use>>
+IMapper <.. GetTuningHandler : <<use>>
+IMapper <.. GetTuningsHandler : <<use>>
+IMapper <.. GetUserHandler : <<use>>
+IMapper <.. GetUsersHandler : <<use>>
+
+
+IMediator <.. Startup : <<create>>
+QueryExecutor <.. Startup : <<create>>
+CommandExecutor <.. Startup : <<create>>
+IMapper <.. Startup : <<create>>
+Profile <.. IMediator : <<use>>
+IMediator <.. ApiControllerBase : <<use>>
+IRequest <.. IMediator : <<use>>
+StatusCodeResponse <.. IMediator : <<use>>
+IRequestHandler <.. IMediator : <<call>>
+@enduml

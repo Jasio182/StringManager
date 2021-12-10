@@ -70,11 +70,6 @@ namespace StringManager.Services.InternalClasses
             return result;
         }
 
-        internal static object GetStringTension(double specificWeight, int? scaleLenght, int frequency)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public static Tone[] GetTonesFromTuning(Tuning tuning)
         {
             return tuning.TonesInTuning.Select(toneInTuning => toneInTuning.Tone).ToArray();
