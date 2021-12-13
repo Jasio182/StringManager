@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StringManager.Services", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringManager.Tests", "StringManager.Tests\StringManager.Tests.csproj", "{0611460D-901B-4F0B-BB06-5C9A7F743BF2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringManager.DataAccess.Tests", "StringManager.DataAccess.Tests\StringManager.DataAccess.Tests.csproj", "{FCA74CF4-1F13-4C23-915D-85D92DC441F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{0611460D-901B-4F0B-BB06-5C9A7F743BF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0611460D-901B-4F0B-BB06-5C9A7F743BF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0611460D-901B-4F0B-BB06-5C9A7F743BF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCA74CF4-1F13-4C23-915D-85D92DC441F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCA74CF4-1F13-4C23-915D-85D92DC441F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCA74CF4-1F13-4C23-915D-85D92DC441F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCA74CF4-1F13-4C23-915D-85D92DC441F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

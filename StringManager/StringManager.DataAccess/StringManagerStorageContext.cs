@@ -1,5 +1,4 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using StringManager.DataAccess.Entities;
 
 namespace StringManager.DataAccess

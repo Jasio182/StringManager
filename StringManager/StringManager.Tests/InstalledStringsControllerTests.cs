@@ -96,5 +96,147 @@ namespace StringManager.Tests
             Assert.IsNull(returnedValue.result.Data);
             Assert.AreEqual("{\"Data\":[\"Data is invalid\"]}",returnedValue.result.Error);
         }
+
+        [Test]
+        public void ModifyInstalledString_returnsValue()
+        {
+            //Arrange
+            var mockResponseValue = new ModelActionResult<InstalledString>(204, null);
+            var mockResponse = new StatusCodeResponse<InstalledString>()
+            {
+                Result = mockResponseValue
+            };
+            mediatorMock.Setup(m => m.Send(It.IsAny<ModifyInstalledStringRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(mockResponse));
+            var test = new ModifyInstalledStringRequest();
+
+            //Act
+            var returnedValue = controller.ModifyInstalledStringAsync(test).Result as ModelActionResult<InstalledString>;
+
+            //Assert
+            Assert.IsNotNull(returnedValue);
+            Assert.AreEqual(mockResponseValue, returnedValue);
+        }
+
+        [Test]
+        public void ModifyInstalledString_returnsNull()
+        {
+            //Arrange
+            mediatorMock.Setup(m => m.Send(It.IsAny<ModifyInstalledStringRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult((StatusCodeResponse<InstalledString>)null));
+            var test = new ModifyInstalledStringRequest();
+
+            //Act
+            var returnedValue = controller.ModifyInstalledStringAsync(test).Result as ModelActionResult<object>;
+
+            //Assert
+            Assert.IsNotNull(returnedValue);
+            Assert.AreEqual(500, returnedValue.statusCode);
+            Assert.IsNull(returnedValue.result.Data);
+            Assert.AreEqual(exceptionResponse, returnedValue.result.Error);
+        }
+
+        [Test]
+        public void ModifyInstalledString_throwsException()
+        {
+            //Arrange
+            mediatorMock.Setup(m => m.Send(It.IsAny<ModifyInstalledStringRequest>(), It.IsAny<CancellationToken>())).Throws<Exception>();
+            var test = new ModifyInstalledStringRequest();
+
+            //Act
+            var returnedValue = controller.ModifyInstalledStringAsync(test).Result as ModelActionResult<object>;
+
+            //Assert
+            Assert.IsNotNull(returnedValue);
+            Assert.AreEqual(500, returnedValue.statusCode);
+            Assert.IsNull(returnedValue.result.Data);
+            Assert.AreEqual(exceptionResponse, returnedValue.result.Error);
+        }
+
+        [Test]
+        public void ModifyInstalledString_invalidState()
+        {
+            //Arrange
+            controller.ModelState.AddModelError("Data", "Data is invalid");
+            var test = new ModifyInstalledStringRequest();
+
+            //Act
+            var returnedValue = controller.ModifyInstalledStringAsync(test).Result as ModelActionResult<object>;
+
+            //Assert
+            Assert.IsNotNull(returnedValue);
+            Assert.AreEqual(400, returnedValue.statusCode);
+            Assert.IsNull(returnedValue.result.Data);
+            Assert.AreEqual("{\"Data\":[\"Data is invalid\"]}", returnedValue.result.Error);
+        }
+
+        [Test]
+        public void RemoveInstalledString_returnsValue()
+        {
+            //Arrange
+            var mockResponseValue = new ModelActionResult<InstalledString>(204, null);
+            var mockResponse = new StatusCodeResponse<InstalledString>()
+            {
+                Result = mockResponseValue
+            };
+            mediatorMock.Setup(m => m.Send(It.IsAny<RemoveInstalledStringRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(mockResponse));
+            var test = new RemoveInstalledStringRequest();
+
+            //Act
+            var returnedValue = controller.RemoveInstalledStringAsync(test).Result as ModelActionResult<InstalledString>;
+
+            //Assert
+            Assert.IsNotNull(returnedValue);
+            Assert.AreEqual(mockResponseValue, returnedValue);
+        }
+
+        [Test]
+        public void RemoveInstalledString_returnsNull()
+        {
+            //Arrange
+            mediatorMock.Setup(m => m.Send(It.IsAny<RemoveInstalledStringRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult((StatusCodeResponse<InstalledString>)null));
+            var test = new RemoveInstalledStringRequest();
+
+            //Act
+            var returnedValue = controller.RemoveInstalledStringAsync(test).Result as ModelActionResult<object>;
+
+            //Assert
+            Assert.IsNotNull(returnedValue);
+            Assert.AreEqual(500, returnedValue.statusCode);
+            Assert.IsNull(returnedValue.result.Data);
+            Assert.AreEqual(exceptionResponse, returnedValue.result.Error);
+        }
+
+        [Test]
+        public void RemoveInstalledString_throwsException()
+        {
+            //Arrange
+            mediatorMock.Setup(m => m.Send(It.IsAny<RemoveInstalledStringRequest>(), It.IsAny<CancellationToken>())).Throws<Exception>();
+            var test = new RemoveInstalledStringRequest();
+
+            //Act
+            var returnedValue = controller.RemoveInstalledStringAsync(test).Result as ModelActionResult<object>;
+
+            //Assert
+            Assert.IsNotNull(returnedValue);
+            Assert.AreEqual(500, returnedValue.statusCode);
+            Assert.IsNull(returnedValue.result.Data);
+            Assert.AreEqual(exceptionResponse, returnedValue.result.Error);
+        }
+
+        [Test]
+        public void RemoveInstalledString_invalidState()
+        {
+            //Arrange
+            controller.ModelState.AddModelError("Data", "Data is invalid");
+            var test = new RemoveInstalledStringRequest();
+
+            //Act
+            var returnedValue = controller.RemoveInstalledStringAsync(test).Result as ModelActionResult<object>;
+
+            //Assert
+            Assert.IsNotNull(returnedValue);
+            Assert.AreEqual(400, returnedValue.statusCode);
+            Assert.IsNull(returnedValue.result.Data);
+            Assert.AreEqual("{\"Data\":[\"Data is invalid\"]}", returnedValue.result.Error);
+        }
     }
 }
