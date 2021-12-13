@@ -20,7 +20,7 @@ namespace StringManager.DataAccess.Tests.Commands
         }
 
         [Test]
-        public void AddInstalledStringCommand()
+        public void AddInstalledStringCommand_success()
         {
             var mockParameter = new InstalledString()
             {
@@ -47,7 +47,7 @@ namespace StringManager.DataAccess.Tests.Commands
         }
 
         [Test]
-        public void ModifyInstalledStringCommand()
+        public void ModifyInstalledStringCommand_success()
         {
             var mockParameter = new InstalledString()
             {
@@ -75,7 +75,7 @@ namespace StringManager.DataAccess.Tests.Commands
         }
 
         [Test]
-        public void GetInstalledStringQuery()
+        public void GetInstalledStringQuery_success()
         {
             using (var context = new StringManagerStorageContext(options))
             {
@@ -93,7 +93,41 @@ namespace StringManager.DataAccess.Tests.Commands
         }
 
         [Test]
-        public void RemoveInstalledStringCommand()
+        public void GetInstalledStringQuery_notFound()
+        {
+            using (var context = new StringManagerStorageContext(options))
+            {
+                var queryExecutor = new QueryExecutor(context);
+                var installedStringQuery = new GetInstalledStringQuery()
+                {
+                    AccountType = Core.Enums.AccountType.Admin,
+                    UserId = 1,
+                    Id = 7
+                };
+                var response = queryExecutor.Execute(installedStringQuery).Result;
+                Assert.IsNull(response);
+            }
+        }
+
+        [Test]
+        public void GetInstalledStringQuery_NotAuthorized()
+        {
+            using (var context = new StringManagerStorageContext(options))
+            {
+                var queryExecutor = new QueryExecutor(context);
+                var installedStringQuery = new GetInstalledStringQuery()
+                {
+                    AccountType = Core.Enums.AccountType.User,
+                    UserId = 1,
+                    Id = 7
+                };
+                var response = queryExecutor.Execute(installedStringQuery).Result;
+                Assert.IsNull(response);
+            }
+        }
+
+        [Test]
+        public void RemoveInstalledStringCommand_success()
         {
             using (var context = new StringManagerStorageContext(options))
             {
@@ -105,6 +139,21 @@ namespace StringManager.DataAccess.Tests.Commands
                 var response = commandExecutor.Execute(installedStringCommand).Result;
                 Assert.IsNotNull(response);
                 Assert.AreEqual(2, response.Id);
+            }
+        }
+
+        [Test]
+        public void RemoveInstalledStringCommand_notFound()
+        {
+            using (var context = new StringManagerStorageContext(options))
+            {
+                var commandExecutor = new CommandExecutor(context);
+                var installedStringCommand = new RemoveInstalledStringCommand()
+                {
+                    Parameter = 6
+                };
+                var response = commandExecutor.Execute(installedStringCommand).Result;
+                Assert.IsNull(response);
             }
         }
     }
