@@ -12,8 +12,8 @@ namespace StringManager.Core.Models
 
     public class ModelActionResult<T> : IActionResult
     {
-        private ModelResult<T> result;
-        private readonly int statusCode;
+        public ModelResult<T> result { get; private set; }
+        public readonly int statusCode;
 
         public ModelActionResult(int statusCode, T data, string error = null)
         {

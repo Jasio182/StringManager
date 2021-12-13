@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using StringManager.Core.Models;
 using StringManager.Services.API.Domain;
 using StringManager.Services.API.Domain.Requests;
@@ -30,26 +31,20 @@ namespace StringManager.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    var modelState = ModelState.Where(entry => entry.Value.Errors.Any())
-                                .Select(entry => new { property = entry.Key, entry.Value.Errors });
-                    var error = "ModelState is invalid: " + ModelState;
+                    var serializableModelState = new SerializableError(ModelState);
+                    var modelStateJson = JsonConvert.SerializeObject(serializableModelState);
+                    var error = "ModelState is invalid: " + modelStateJson.ToString();
                     logger.LogInformation(error);
-                    return new ModelActionResult<object>(400, null, error);
+                    return new ModelActionResult<object>(400, null, modelStateJson);
                 }
                 request.UserId = int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var tempUserId) ? tempUserId : null;
-                request.AccountType = System.Enum.TryParse<Core.Enums.AccountType>(User.FindFirstValue(ClaimTypes.Role), out var tempAccountType) ? tempAccountType : null;
+                request.AccountType = Enum.TryParse<Core.Enums.AccountType>(User.FindFirstValue(ClaimTypes.Role), out var tempAccountType) ? tempAccountType : null;
                 var response = await mediator.Send(request);
-                if (response.Result == null)
-                {
-                    var error = "An error encountered during handling a request";
-                    logger.LogInformation(error);
-                    return new ModelActionResult<object>(500, null, error);
-                }
                 return response.Result;
             }
             catch(Exception e)
             {
-                var error = "An error encountered during preparation to send an request via controller " + typeof(TModel).Name;
+                var error = "An error occured during preparation to send an request via controller: " + typeof(TController).Name;
                 logger.LogInformation(error);
                 return new ModelActionResult<object>(500, null, error);
             }
