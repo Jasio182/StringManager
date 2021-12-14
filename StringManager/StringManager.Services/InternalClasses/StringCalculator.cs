@@ -14,12 +14,14 @@ namespace StringManager.Services.InternalClasses
             {
                 result[i] = ScaleLenghtTreble + scaleLengthDifference * i;
             }
+            result[numberOfStrings - 1] = ScaleLenghtBass;
             return result;
         }
 
-        public static double GetStringTension(double specificWeight, int scaleLength, int frequency)
+        public static double GetStringTension(double specificWeight, int scaleLength, double frequency)
         {
-            return specificWeight * System.Math.Pow(2.0 * scaleLength * frequency, 2) / 386.4;
+            var scaleLengthInMeters = scaleLength / 1000.0;
+            return System.Math.Round(specificWeight * System.Math.Pow(2.0 * scaleLengthInMeters * frequency, 2), 3);
         }
 
         public static int GetStringSizeWithCorrepondingTension(int scaleLength, String currentString, IEnumerable<String> allStrings, Tone primaryTone, Tone resultTone)
@@ -78,7 +80,7 @@ namespace StringManager.Services.InternalClasses
         private static int GetStringScaleLengthDifference(int scaleLenghtBass, int scaleLenghtTreble, int numberOfStrings)
         {
             return scaleLenghtBass != scaleLenghtTreble
-                ? scaleLenghtTreble + (scaleLenghtBass - scaleLenghtTreble) / numberOfStrings
+                ? ((scaleLenghtBass - scaleLenghtTreble) / (numberOfStrings - 1))
                 : 0;
         }
 

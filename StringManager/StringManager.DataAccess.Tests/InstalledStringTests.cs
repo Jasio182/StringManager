@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.DataAccess.Entities;
+using System.Linq;
 
 namespace StringManager.DataAccess.Tests.Commands
 {
@@ -22,6 +22,7 @@ namespace StringManager.DataAccess.Tests.Commands
         [Test]
         public void AddInstalledStringCommand_success()
         {
+            //Arrange
             var mockParameter = new InstalledString()
             {
                 MyInstrument = new MyInstrument(),
@@ -36,7 +37,11 @@ namespace StringManager.DataAccess.Tests.Commands
                 {
                     Parameter = mockParameter
                 };
+
+                //Act
                 var response = commandExecutor.Execute(installedStringCommand).Result;
+
+                //Assert
                 Assert.IsNotNull(response);
                 Assert.AreEqual(3, response.Id);
                 Assert.AreEqual(mockParameter.MyInstrument, response.MyInstrument);
@@ -49,22 +54,20 @@ namespace StringManager.DataAccess.Tests.Commands
         [Test]
         public void ModifyInstalledStringCommand_success()
         {
-            var mockParameter = new InstalledString()
-            {
-                Id = 1,
-                MyInstrument = new MyInstrument(),
-                Position = 5,
-                String = new String(),
-                Tone = new Tone()
-            };
+            //Arrange
             using (var context = new StringManagerStorageContext(options))
             {
+                var mockParameter = context.InstalledStrings.FirstOrDefault(x => x.Id == 1);
                 var commandExecutor = new CommandExecutor(context);
                 var installedStringCommand = new ModifyInstalledStringCommand()
                 {
                     Parameter = mockParameter
                 };
+
+                //Act
                 var response = commandExecutor.Execute(installedStringCommand).Result;
+
+                //Assert
                 Assert.IsNotNull(response);
                 Assert.AreEqual(1, response.Id);
                 Assert.AreEqual(mockParameter.MyInstrument, response.MyInstrument);
@@ -77,6 +80,7 @@ namespace StringManager.DataAccess.Tests.Commands
         [Test]
         public void GetInstalledStringQuery_success()
         {
+            //Arrange
             using (var context = new StringManagerStorageContext(options))
             {
                 var queryExecutor = new QueryExecutor(context);
@@ -86,7 +90,11 @@ namespace StringManager.DataAccess.Tests.Commands
                     UserId = 1,
                     Id = 1
                 };
+
+                //Act
                 var response = queryExecutor.Execute(installedStringQuery).Result;
+
+                //Assert
                 Assert.IsNotNull(response);
                 Assert.AreEqual(1, response.Id);
             }
@@ -95,6 +103,7 @@ namespace StringManager.DataAccess.Tests.Commands
         [Test]
         public void GetInstalledStringQuery_notFound()
         {
+            //Arrange
             using (var context = new StringManagerStorageContext(options))
             {
                 var queryExecutor = new QueryExecutor(context);
@@ -104,7 +113,11 @@ namespace StringManager.DataAccess.Tests.Commands
                     UserId = 1,
                     Id = 7
                 };
+
+                //Act
                 var response = queryExecutor.Execute(installedStringQuery).Result;
+
+                //Assert
                 Assert.IsNull(response);
             }
         }
@@ -112,6 +125,7 @@ namespace StringManager.DataAccess.Tests.Commands
         [Test]
         public void GetInstalledStringQuery_NotAuthorized()
         {
+            //Arrange
             using (var context = new StringManagerStorageContext(options))
             {
                 var queryExecutor = new QueryExecutor(context);
@@ -121,7 +135,11 @@ namespace StringManager.DataAccess.Tests.Commands
                     UserId = 1,
                     Id = 7
                 };
+
+                //Act
                 var response = queryExecutor.Execute(installedStringQuery).Result;
+
+                //Assert
                 Assert.IsNull(response);
             }
         }
@@ -129,6 +147,7 @@ namespace StringManager.DataAccess.Tests.Commands
         [Test]
         public void RemoveInstalledStringCommand_success()
         {
+            //Arrange
             using (var context = new StringManagerStorageContext(options))
             {
                 var commandExecutor = new CommandExecutor(context);
@@ -136,7 +155,11 @@ namespace StringManager.DataAccess.Tests.Commands
                 {
                     Parameter = 2
                 };
+
+                //Act
                 var response = commandExecutor.Execute(installedStringCommand).Result;
+
+                //Assert
                 Assert.IsNotNull(response);
                 Assert.AreEqual(2, response.Id);
             }
@@ -145,6 +168,7 @@ namespace StringManager.DataAccess.Tests.Commands
         [Test]
         public void RemoveInstalledStringCommand_notFound()
         {
+            //Arrange
             using (var context = new StringManagerStorageContext(options))
             {
                 var commandExecutor = new CommandExecutor(context);
@@ -152,7 +176,11 @@ namespace StringManager.DataAccess.Tests.Commands
                 {
                     Parameter = 6
                 };
+
+                //Act
                 var response = commandExecutor.Execute(installedStringCommand).Result;
+
+                //Assert
                 Assert.IsNull(response);
             }
         }

@@ -7,9 +7,9 @@ namespace StringManager.DataAccess.Entities
     {
         public string Name { get; set; }
 
-        public int Frequency { get; set; }
+        public double Frequency { get; set; }
 
-        public int WaveLenght { get; set; }
+        public double WaveLenght { get; set; }
 
         public IEnumerable<InstalledString> InstalledStrings { get; set; }
 
