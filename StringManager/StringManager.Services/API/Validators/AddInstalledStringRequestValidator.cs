@@ -1,17 +1,17 @@
 ﻿using FluentValidation;
+using StringManager.Core.Models;
 using StringManager.Services.API.Domain.Requests;
 
 namespace StringManager.Services.API.Validators
 {
-    public class AddInstalledStringRequestValidator : AbstractValidator<AddInstalledStringRequest>
+    public class AddInstalledStringRequestValidator : RequestBaseValidator<AddInstalledStringRequest, InstalledString>
     {
-        public AddInstalledStringRequestValidator()
+        public AddInstalledStringRequestValidator() : base()
         {
             RuleFor(installedString => installedString.Position).GreaterThan(0);
-            RuleFor(installedString => installedString.Position).NotNull();
-            RuleFor(installedString => installedString.MyInstrumentId).NotNull();
-            RuleFor(installedString => installedString.StringId).NotNull();
-            RuleFor(installedString => installedString.ToneId).NotNull();
+            RuleFor(installedString => installedString.MyInstrumentId).GreaterThan(0);
+            RuleFor(installedString => installedString.StringId).GreaterThan(0);
+            RuleFor(installedString => installedString.ToneId).GreaterThan(0);
         }
     }
 }

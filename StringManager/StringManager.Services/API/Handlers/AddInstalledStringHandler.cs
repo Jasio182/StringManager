@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    class AddInstalledStringHandler : IRequestHandler<AddInstalledStringRequest, StatusCodeResponse<Core.Models.InstalledString>>
+    public class AddInstalledStringHandler : IRequestHandler<AddInstalledStringRequest, StatusCodeResponse<Core.Models.InstalledString>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;

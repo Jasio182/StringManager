@@ -6,15 +6,15 @@ namespace StringManager.Services.InternalClasses
 {
     public static class StringCalculator
     {
-        public static int[] GetScaleLenghtsForStrings(int ScaleLenghtBass, int ScaleLenghtTreble, int numberOfStrings)
+        public static int[] GetScaleLenghtsForStrings(int scaleLenghtBass, int scaleLenghtTreble, int numberOfStrings)
         {
             var result = new int[numberOfStrings];
-            var scaleLengthDifference = GetStringScaleLengthDifference(ScaleLenghtBass, ScaleLenghtTreble, numberOfStrings);
+            var scaleLengthDifference = GetStringScaleLengthDifference(scaleLenghtBass, scaleLenghtTreble, numberOfStrings);
             for (int i = 0; i < numberOfStrings; i++)
             {
-                result[i] = ScaleLenghtTreble + scaleLengthDifference * i;
+                result[i] = scaleLenghtTreble + scaleLengthDifference * i;
             }
-            result[numberOfStrings - 1] = ScaleLenghtBass;
+            result[numberOfStrings - 1] = scaleLenghtBass;
             return result;
         }
 
@@ -54,7 +54,7 @@ namespace StringManager.Services.InternalClasses
                 scaleLenghts, primaryTuning);
             var correctStringSets = allStringsSets.Where(stringSet => stringSet.NumberOfStrings == instrument.NumberOfStrings);
             List<StringsSet> result = new List<StringsSet>();
-            double tensionDifference = System.Math.Abs(currentAverageTension - GetAverageStringTension(currentStrings, scaleLenghts, resultTuning));
+            double tensionDifference = currentAverageTension;
             foreach (var stringsSet in correctStringSets)
             {
                 var tempTensionDifference = System.Math.Abs(currentAverageTension - GetAverageStringTension(GetStringsFromStringSet(stringsSet), scaleLenghts, resultTuning));
@@ -91,7 +91,7 @@ namespace StringManager.Services.InternalClasses
             double sumOfTensions = .0;
             for (int i = 0; i < strings.Length; i++)
             {
-                sumOfTensions += strings[i].SpecificWeight * System.Math.Pow(2.0 * scaleLenghts[i] * tones[i].Frequency, 2) / 386.4;
+                sumOfTensions += GetStringTension(strings[i].SpecificWeight, scaleLenghts[i], tones[i].Frequency);
             }
             return sumOfTensions / strings.Length;
         }

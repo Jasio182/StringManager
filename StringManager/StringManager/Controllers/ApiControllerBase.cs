@@ -45,7 +45,7 @@ namespace StringManager.Controllers
             catch(Exception e)
             {
                 var error = "An error occured during preparation to send an request via controller: " + typeof(TController).Name;
-                logger.LogInformation(error);
+                logger.LogInformation(error +". Exception: "+ e);
                 return new ModelActionResult<object>(500, null, error);
             }
         }
