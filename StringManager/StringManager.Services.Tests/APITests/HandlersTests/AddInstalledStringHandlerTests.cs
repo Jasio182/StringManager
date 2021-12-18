@@ -21,7 +21,9 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         private Mock<IQueryExecutor> mockedQueryExecutor;
         private Mock<ILogger<AddInstalledStringHandler>> mockedLogger;
         private Mock<IMapper> mockedMapper;
+
         private AddInstalledStringHandler testHandler;
+
         private String testString;
         private Tone testTone;
         private MyInstrument testMyInstrument;
@@ -36,7 +38,9 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
             mockedQueryExecutor = new Mock<IQueryExecutor>();
             mockedMapper = new Mock<IMapper>();
             mockedLogger = new Mock<ILogger<AddInstalledStringHandler>>();
+
             testHandler = new AddInstalledStringHandler(mockedQueryExecutor.Object, mockedMapper.Object, mockedCommandExecutor.Object, mockedLogger.Object);
+
             testString = new String()
             {
                 Id = 1,
@@ -148,7 +152,6 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
             var response = testHandler.Handle(testRequest, new CancellationToken());
             
             //Assert
-            Assert.IsTrue(true);
             Assert.AreEqual(expectedResponse.statusCode, response.Result.Result.statusCode);
             Assert.AreEqual(expectedResponse.result.Error, response.Result.Result.result.Error);
             Assert.AreEqual(expectedResponse.result.Data, response.Result.Result.result.Data);
@@ -158,7 +161,8 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         public void AddInstalledStringHandler_ShouldMyInstrumentBeNull()
         {
             //Arrange
-            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.InstalledString>((int)HttpStatusCode.BadRequest, null, "MyInstrument of given Id: " + testRequest.MyInstrumentId + " has not been found");
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.InstalledString>((int)HttpStatusCode.BadRequest,
+                null, "MyInstrument of given Id: " + testRequest.MyInstrumentId + " has not been found");
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetStringQuery>())).Returns(Task.FromResult(testString));
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetToneQuery>())).Returns(Task.FromResult(testTone));
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetMyInstrumentQuery>())).Returns(Task.FromResult((MyInstrument)null));
@@ -167,7 +171,6 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
             var response = testHandler.Handle(testRequest, new CancellationToken());
 
             //Assert
-            Assert.IsTrue(true);
             Assert.AreEqual(expectedResponse.statusCode, response.Result.Result.statusCode);
             Assert.AreEqual(expectedResponse.result.Error, response.Result.Result.result.Error);
             Assert.AreEqual(expectedResponse.result.Data, response.Result.Result.result.Data);
@@ -177,7 +180,8 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         public void AddInstalledStringHandler_ShouldToneBeNull()
         {
             //Arrange
-            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.InstalledString>((int)HttpStatusCode.BadRequest, null, "Tone of given Id: " + testRequest.ToneId + " has not been found");
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.InstalledString>((int)HttpStatusCode.BadRequest,
+                null, "Tone of given Id: " + testRequest.ToneId + " has not been found");
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetStringQuery>())).Returns(Task.FromResult(testString));
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetToneQuery>())).Returns(Task.FromResult((Tone)null));
 
@@ -185,7 +189,6 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
             var response = testHandler.Handle(testRequest, new CancellationToken());
 
             //Assert
-            Assert.IsTrue(true);
             Assert.AreEqual(expectedResponse.statusCode, response.Result.Result.statusCode);
             Assert.AreEqual(expectedResponse.result.Error, response.Result.Result.result.Error);
             Assert.AreEqual(expectedResponse.result.Data, response.Result.Result.result.Data);
@@ -195,14 +198,14 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         public void AddInstalledStringHandler_ShouldStringBeNull()
         {
             //Arrange
-            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.InstalledString>((int)HttpStatusCode.BadRequest, null, "String of given Id: " + testRequest.StringId + " has not been found");
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.InstalledString>((int)HttpStatusCode.BadRequest,
+                null, "String of given Id: " + testRequest.StringId + " has not been found");
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetStringQuery>())).Returns(Task.FromResult((String)null));
 
             //Act
             var response = testHandler.Handle(testRequest, new CancellationToken());
 
             //Assert
-            Assert.IsTrue(true);
             Assert.AreEqual(expectedResponse.statusCode, response.Result.Result.statusCode);
             Assert.AreEqual(expectedResponse.result.Error, response.Result.Result.result.Error);
             Assert.AreEqual(expectedResponse.result.Data, response.Result.Result.result.Data);
@@ -213,7 +216,8 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             var expectedException = new System.Exception();
-            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.InstalledString>((int)HttpStatusCode.InternalServerError, null, "Exception has occured during proccesing adding new InstalledString item");
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.InstalledString>((int)HttpStatusCode.InternalServerError,
+                null, "Exception has occured during proccesing adding new InstalledString item");
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetStringQuery>())).Returns(Task.FromResult(testString));
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetToneQuery>())).Returns(Task.FromResult(testTone));
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetMyInstrumentQuery>())).Returns(Task.FromResult(testMyInstrument));
@@ -225,7 +229,6 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
             var response = testHandler.Handle(testRequest, new CancellationToken());
 
             //Assert
-            Assert.IsTrue(true);
             Assert.AreEqual(expectedResponse.statusCode, response.Result.Result.statusCode);
             Assert.AreEqual(expectedResponse.result.Error, response.Result.Result.result.Error);
             Assert.AreEqual(expectedResponse.result.Data, response.Result.Result.result.Data);

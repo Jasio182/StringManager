@@ -17,6 +17,8 @@ namespace StringManager.DataAccess.Entities
 
         public IEnumerable<StringInSet> StringSets { get; set; }
 
+        public int ManufacturerId { get; set; }
+
         public Manufacturer Manufacturer { get; set; }
     }
 }

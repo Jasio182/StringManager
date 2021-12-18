@@ -64,8 +64,8 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during proccesing adding new Instrument item; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during proccesing adding new Instrument item";
+                logger.LogError(e, error + "exeception: " + e + " message: " + e.Message);
                 return new StatusCodeResponse<Core.Models.Instrument>()
                 {
                     Result = new Core.Models.ModelActionResult<Core.Models.Instrument>((int)HttpStatusCode.InternalServerError, null, error)

@@ -16,7 +16,8 @@ namespace StringManager.DataAccess.CQRS.Queries
                 .Include(myInstrument=>myInstrument.Instrument)
                 .ThenInclude(instrument=>instrument.Manufacturer)
                 .Include(myInstrument => myInstrument.User)
-                .Where(myInstrument=>UserId==null || myInstrument.User.Id == UserId).ToListAsync();
+                .Where(myInstrument=>UserId==null || myInstrument.User.Id == UserId)
+                .ToListAsync();
             return myInstruments;
         }
     }

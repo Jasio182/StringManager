@@ -8,10 +8,13 @@ namespace StringManager.DataAccess.Entities
     {
         public string OwnName { get; set; }
 
+        public int InstrumentId { get; set; }
+
         public Instrument Instrument { get; set; }
 
         public IEnumerable<InstalledString> InstalledStrings { get; set; }
 
+        public int UserId { get; set; }
         public User User { get; set; }
 
         public int HoursPlayedWeekly { get; set; }

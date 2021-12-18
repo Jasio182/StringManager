@@ -12,6 +12,8 @@ namespace StringManager.DataAccess.Entities
 
         public int ScaleLenghtTreble { get; set; }
 
+        public int ManufacturerId { get; set; }
+
         public Manufacturer Manufacturer { get; set; }
 
         public IEnumerable<MyInstrument> MyInstruments { get; set; }
