@@ -6,10 +6,10 @@ namespace StringManager.Services.API.Domain.Requests
 {
     public class GetStringsSetsWithCorrepondingTensionRequest : RequestBase<List<StringsSet>>
     {
-        public int? MyInstrumentId { get; set; }
+        public int MyInstrumentId { get; set; }
 
         public StringType? StringType { get; set; }
 
-        public int? ResultTuningId { get; set; }
+        public int ResultTuningId { get; set; }
     }
 }

@@ -1,15 +1,17 @@
 ﻿using FluentValidation;
+using StringManager.Core.Models;
 using StringManager.Services.API.Domain.Requests;
 
 namespace StringManager.Services.API.Validators
 {
-    public class AddTuningRequestValidator : AbstractValidator<AddTuningRequest>
+    public class AddTuningRequestValidator : RequestBaseValidator<AddTuningRequest, Tuning>
     {
         public AddTuningRequestValidator()
         {
             RuleFor(tuning => tuning.Name).NotNull();
-            RuleFor(tuning => tuning.NumberOfStrings).NotNull();
             RuleFor(tuning => tuning.NumberOfStrings).GreaterThan(0);
+            RuleFor(tone => tone.AccountType).NotNull();
+            RuleFor(tone => tone.UserId).NotNull();
         }
     }
 }

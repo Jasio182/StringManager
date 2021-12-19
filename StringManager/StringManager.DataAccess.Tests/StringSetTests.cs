@@ -10,6 +10,25 @@ namespace StringManager.DataAccess.Tests
 {
     public class StringSetTests
     {
+        private String[] testStrings =
+        {
+            new String()
+            {
+                NumberOfDaysGood = 11,
+                Size = 11,
+                SpecificWeight = 0.001,
+                StringType = Core.Enums.StringType.PlainNikled,
+                ManufacturerId = 1
+            },
+            new String()
+            {
+                NumberOfDaysGood = 11,
+                Size = 11,
+                SpecificWeight = 0.001,
+                StringType = Core.Enums.StringType.PlainBrass,
+                ManufacturerId = 1
+            }
+        };
         private StringInSet[] testStringsInSets =
         {
             new StringInSet()
@@ -70,6 +89,10 @@ namespace StringManager.DataAccess.Tests
                     Name = "TestStringsSet2",
                     NumberOfStrings = 2
                 });
+                foreach(var testString in testStrings)
+                {
+                    context.Strings.Add(testString);
+                }
                 foreach(var testStringInSet in testStringsInSets)
                 {
                     context.StringsInSets.Add(testStringInSet);
@@ -174,7 +197,7 @@ namespace StringManager.DataAccess.Tests
 
                 //Assert
                 Assert.IsNotNull(response);
-                Assert.IsTrue(response.Count >= 2);
+                Assert.IsTrue(response.Count >= 1);
             }
         }
 

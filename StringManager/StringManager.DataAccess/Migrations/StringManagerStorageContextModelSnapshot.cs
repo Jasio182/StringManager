@@ -26,16 +26,16 @@ namespace StringManager.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("MyInstrumentId")
+                    b.Property<int>("MyInstrumentId")
                         .HasColumnType("int");
 
                     b.Property<int>("Position")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StringId")
+                    b.Property<int>("StringId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ToneId")
+                    b.Property<int>("ToneId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -56,7 +56,7 @@ namespace StringManager.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ManufacturerId")
+                    b.Property<int>("ManufacturerId")
                         .HasColumnType("int");
 
                     b.Property<string>("Model")
@@ -106,7 +106,7 @@ namespace StringManager.DataAccess.Migrations
                     b.Property<int>("HoursPlayedWeekly")
                         .HasColumnType("int");
 
-                    b.Property<int?>("InstrumentId")
+                    b.Property<int>("InstrumentId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("LastDeepCleaning")
@@ -114,6 +114,9 @@ namespace StringManager.DataAccess.Migrations
 
                     b.Property<DateTime?>("LastStringChange")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("NeededLuthierVisit")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("NextDeepCleaning")
                         .HasColumnType("datetime2");
@@ -124,7 +127,7 @@ namespace StringManager.DataAccess.Migrations
                     b.Property<string>("OwnName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -143,7 +146,7 @@ namespace StringManager.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ManufacturerId")
+                    b.Property<int>("ManufacturerId")
                         .HasColumnType("int");
 
                     b.Property<int>("NumberOfDaysGood")
@@ -175,13 +178,10 @@ namespace StringManager.DataAccess.Migrations
                     b.Property<int>("Position")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StringId")
+                    b.Property<int>("StringId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StringsSetId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ToneId")
+                    b.Property<int>("StringsSetId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -189,8 +189,6 @@ namespace StringManager.DataAccess.Migrations
                     b.HasIndex("StringId");
 
                     b.HasIndex("StringsSetId");
-
-                    b.HasIndex("ToneId");
 
                     b.ToTable("StringsInSets");
                 });
@@ -220,14 +218,14 @@ namespace StringManager.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Frequency")
-                        .HasColumnType("int");
+                    b.Property<double>("Frequency")
+                        .HasColumnType("float");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("WaveLenght")
-                        .HasColumnType("int");
+                    b.Property<double>("WaveLenght")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -244,10 +242,10 @@ namespace StringManager.DataAccess.Migrations
                     b.Property<int>("Position")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ToneId")
+                    b.Property<int>("ToneId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TuningId")
+                    b.Property<int>("TuningId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -256,7 +254,7 @@ namespace StringManager.DataAccess.Migrations
 
                     b.HasIndex("TuningId");
 
-                    b.ToTable("ToneInTuning");
+                    b.ToTable("TonesInTunings");
                 });
 
             modelBuilder.Entity("StringManager.DataAccess.Entities.Tuning", b =>
@@ -311,15 +309,21 @@ namespace StringManager.DataAccess.Migrations
                 {
                     b.HasOne("StringManager.DataAccess.Entities.MyInstrument", "MyInstrument")
                         .WithMany("InstalledStrings")
-                        .HasForeignKey("MyInstrumentId");
+                        .HasForeignKey("MyInstrumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("StringManager.DataAccess.Entities.String", "String")
                         .WithMany("InstalledStrings")
-                        .HasForeignKey("StringId");
+                        .HasForeignKey("StringId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("StringManager.DataAccess.Entities.Tone", "Tone")
-                        .WithMany()
-                        .HasForeignKey("ToneId");
+                        .WithMany("InstalledStrings")
+                        .HasForeignKey("ToneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("MyInstrument");
 
@@ -332,7 +336,9 @@ namespace StringManager.DataAccess.Migrations
                 {
                     b.HasOne("StringManager.DataAccess.Entities.Manufacturer", "Manufacturer")
                         .WithMany("Instruments")
-                        .HasForeignKey("ManufacturerId");
+                        .HasForeignKey("ManufacturerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Manufacturer");
                 });
@@ -341,11 +347,15 @@ namespace StringManager.DataAccess.Migrations
                 {
                     b.HasOne("StringManager.DataAccess.Entities.Instrument", "Instrument")
                         .WithMany("MyInstruments")
-                        .HasForeignKey("InstrumentId");
+                        .HasForeignKey("InstrumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("StringManager.DataAccess.Entities.User", "User")
                         .WithMany("MyInstruments")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Instrument");
 
@@ -356,7 +366,9 @@ namespace StringManager.DataAccess.Migrations
                 {
                     b.HasOne("StringManager.DataAccess.Entities.Manufacturer", "Manufacturer")
                         .WithMany("Strings")
-                        .HasForeignKey("ManufacturerId");
+                        .HasForeignKey("ManufacturerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Manufacturer");
                 });
@@ -365,15 +377,15 @@ namespace StringManager.DataAccess.Migrations
                 {
                     b.HasOne("StringManager.DataAccess.Entities.String", "String")
                         .WithMany("StringSets")
-                        .HasForeignKey("StringId");
+                        .HasForeignKey("StringId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("StringManager.DataAccess.Entities.StringsSet", "StringsSet")
                         .WithMany("StringsInSet")
-                        .HasForeignKey("StringsSetId");
-
-                    b.HasOne("StringManager.DataAccess.Entities.Tone", null)
-                        .WithMany("StringsInSets")
-                        .HasForeignKey("ToneId");
+                        .HasForeignKey("StringsSetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("String");
 
@@ -384,11 +396,15 @@ namespace StringManager.DataAccess.Migrations
                 {
                     b.HasOne("StringManager.DataAccess.Entities.Tone", "Tone")
                         .WithMany("TonesInTuning")
-                        .HasForeignKey("ToneId");
+                        .HasForeignKey("ToneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("StringManager.DataAccess.Entities.Tuning", "Tuning")
                         .WithMany("TonesInTuning")
-                        .HasForeignKey("TuningId");
+                        .HasForeignKey("TuningId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Tone");
 
@@ -426,7 +442,7 @@ namespace StringManager.DataAccess.Migrations
 
             modelBuilder.Entity("StringManager.DataAccess.Entities.Tone", b =>
                 {
-                    b.Navigation("StringsInSets");
+                    b.Navigation("InstalledStrings");
 
                     b.Navigation("TonesInTuning");
                 });

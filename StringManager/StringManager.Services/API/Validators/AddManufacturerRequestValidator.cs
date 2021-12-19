@@ -1,13 +1,16 @@
 ﻿using FluentValidation;
+using StringManager.Core.Models;
 using StringManager.Services.API.Domain.Requests;
 
 namespace StringManager.Services.API.Validators
 {
-    public class AddManufacturerRequestValidator : AbstractValidator<AddManufacturerRequest>
+    public class AddManufacturerRequestValidator : RequestBaseValidator<AddManufacturerRequest, Manufacturer>
     {
         public AddManufacturerRequestValidator()
         {
             RuleFor(manufacturer => manufacturer.Name).NotNull();
+            RuleFor(manufacturer => manufacturer.AccountType).NotNull();
+            RuleFor(manufacturer => manufacturer.UserId).NotNull();
         }
     }
 }

@@ -2,6 +2,6 @@
 {
     public class GetScaleLenghtsRequest : RequestBase<int[]>
     {
-        public int? InstrumentId { get; set; }
+        public int InstrumentId { get; set; }
     }
 }

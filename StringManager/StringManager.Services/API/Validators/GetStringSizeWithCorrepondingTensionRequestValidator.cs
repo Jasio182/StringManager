@@ -1,19 +1,17 @@
 ﻿using FluentValidation;
+using StringManager.Core.Models;
 using StringManager.Services.API.Domain.Requests;
+using System.Collections.Generic;
 
 namespace StringManager.Services.API.Validators
 {
-    public class GetStringSizeWithCorrepondingTensionRequestValidator : AbstractValidator<GetStringSizeWithCorrepondingTensionRequest>
+    public class GetStringSizeWithCorrepondingTensionRequestValidator : RequestBaseValidator<GetStringSizeWithCorrepondingTensionRequest, List<String>>
     {
         public GetStringSizeWithCorrepondingTensionRequestValidator()
         {
-            RuleFor(request => request.PrimaryToneId).NotNull();
             RuleFor(request => request.PrimaryToneId).GreaterThan(0);
-            RuleFor(request => request.ResultToneId).NotNull();
             RuleFor(request => request.ResultToneId).GreaterThan(0);
-            RuleFor(request => request.ScaleLength).NotNull();
             RuleFor(request => request.ScaleLength).GreaterThan(0);
-            RuleFor(request => request.StringId).NotNull();
             RuleFor(request => request.StringId).GreaterThan(0);
         }
     }
