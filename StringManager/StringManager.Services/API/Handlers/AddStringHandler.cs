@@ -68,13 +68,13 @@ namespace StringManager.Services.API.Handlers
                 var mappedAddedString = mapper.Map<Core.Models.String>(addedString);
                 return new StatusCodeResponse<Core.Models.String>()
                 {
-                    Result = new Core.Models.ModelActionResult<Core.Models.String>((int)HttpStatusCode.BadRequest, mappedAddedString)
+                    Result = new Core.Models.ModelActionResult<Core.Models.String>((int)HttpStatusCode.OK, mappedAddedString)
                 };
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during proccesing adding new String item; message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during proccesing adding new String item";
+                logger.LogError(e, error + "; exeception:" + e + " message: " + e.Message);
                 return new StatusCodeResponse<Core.Models.String>()
                 {
                     Result = new Core.Models.ModelActionResult<Core.Models.String>((int)HttpStatusCode.InternalServerError, null, error)

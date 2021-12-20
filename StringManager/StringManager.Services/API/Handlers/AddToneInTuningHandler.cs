@@ -87,8 +87,8 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during proccesing adding new ToneInTuning item; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during proccesing adding new ToneInTuning item";
+                logger.LogError(e, error+ "; exeception:" + e + " message: " + e.Message);
                 return new StatusCodeResponse<Core.Models.ToneInTuning>()
                 {
                     Result = new Core.Models.ModelActionResult<Core.Models.ToneInTuning>((int)HttpStatusCode.InternalServerError, null, error)

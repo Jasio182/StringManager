@@ -87,8 +87,8 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during proccesing adding new StringInSet item; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during proccesing adding new StringInSet item";
+                logger.LogError(e, error + "; exeception:" + e + " message: " + e.Message);
                 return new StatusCodeResponse<Core.Models.StringInSet>()
                 {
                     Result = new Core.Models.ModelActionResult<Core.Models.StringInSet>((int)HttpStatusCode.InternalServerError, null, error)
