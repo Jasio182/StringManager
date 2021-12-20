@@ -41,8 +41,6 @@ namespace StringManager.Services.API.Handlers
                         Result = new Core.Models.ModelActionResult<Core.Models.User>((int)HttpStatusCode.Unauthorized, null, error)
                     };
                 }
-                else
-                    request.AccountTypeToAdd = Core.Enums.AccountType.User;
                 request.Password = PasswordHashing.HashPassword(request.Password);
                 var userToAdd = mapper.Map<User>(request);
                 var command = new AddUserCommand()
