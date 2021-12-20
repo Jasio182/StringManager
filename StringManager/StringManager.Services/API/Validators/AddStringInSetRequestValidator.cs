@@ -8,7 +8,6 @@ namespace StringManager.Services.API.Validators
     {
         public AddStringInSetRequestValidator()
         {
-            RuleFor(stringInSet => stringInSet.Position).NotNull();
             RuleFor(stringInSet => stringInSet.Position).GreaterThan(0);
             RuleFor(stringInSet => stringInSet.StringId).GreaterThan(0);
             RuleFor(stringInSet => stringInSet.StringsSetId).GreaterThan(0);

@@ -169,7 +169,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [Test]
         [TestCase((Core.Enums.AccountType)(-1), 1, Core.Enums.GuitarDailyMaintanance.PlayAsIs, Core.Enums.AccountType.User, "testEmail1", "testPassword1", Core.Enums.PlayStyle.Hard, "testUsername1")]
         [TestCase((Core.Enums.AccountType)8, 2, Core.Enums.GuitarDailyMaintanance.CleanHands, Core.Enums.AccountType.Admin, "testEmail2", "testPassword2", Core.Enums.PlayStyle.Moderate, "testUsername2")]
-        [TestCase(null, 3, Core.Enums.GuitarDailyMaintanance.CleanHandsWipedStrings, Core.Enums.AccountType.User, "testEmail3", "testPassword3", Core.Enums.PlayStyle.Light, "testUsername3")]
+        [TestCase((Core.Enums.AccountType)18, 3, Core.Enums.GuitarDailyMaintanance.CleanHandsWipedStrings, Core.Enums.AccountType.User, "testEmail3", "testPassword3", Core.Enums.PlayStyle.Light, "testUsername3")]
         public void ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, Core.Enums.GuitarDailyMaintanance dailyMaintenance, Core.Enums.AccountType accountTypeToAdd,
             string email, string password, Core.Enums.PlayStyle playStyle, string username)
         {
@@ -191,9 +191,9 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [Test]
         [TestCase((Core.Enums.AccountType)0, -1, Core.Enums.GuitarDailyMaintanance.PlayAsIs, Core.Enums.AccountType.User, "testEmail1", "testPassword1", Core.Enums.PlayStyle.Hard, "testUsername1")]
         [TestCase((Core.Enums.AccountType)1, 0, Core.Enums.GuitarDailyMaintanance.CleanHands, Core.Enums.AccountType.Admin, "testEmail2", "testPassword2", Core.Enums.PlayStyle.Moderate, "testUsername2")]
-        [TestCase((Core.Enums.AccountType)0, null, Core.Enums.GuitarDailyMaintanance.CleanHandsWipedStrings, Core.Enums.AccountType.User, "testEmail3", "testPassword3", Core.Enums.PlayStyle.Light, "testUsername3")]
+        [TestCase((Core.Enums.AccountType)0, -6, Core.Enums.GuitarDailyMaintanance.CleanHandsWipedStrings, Core.Enums.AccountType.User, "testEmail3", "testPassword3", Core.Enums.PlayStyle.Light, "testUsername3")]
         public void ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, Core.Enums.GuitarDailyMaintanance dailyMaintenance, Core.Enums.AccountType accountTypeToAdd,
-    string email, string password, Core.Enums.PlayStyle playStyle, string username)
+            string email, string password, Core.Enums.PlayStyle playStyle, string username)
         {
             var testUserRequest = new AddUserRequest()
             {

@@ -17,8 +17,6 @@ namespace StringManager.Services.API.Validators
             RuleFor(user => user.DailyMaintanance).IsInEnum();
             RuleFor(user => user.PlayStyle).IsInEnum();
             RuleFor(user => user.AccountTypeToAdd).IsInEnum();
-            RuleFor(user => user.AccountType).NotNull();
-            RuleFor(user => user.UserId).NotNull();
         }
     }
 }
