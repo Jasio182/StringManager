@@ -49,8 +49,8 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during calculating strings scale lenghts for Instrument; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during calculating strings scale lenghts for Instrument";
+                logger.LogError(e, error+ "; exeception:" + e + " message: " + e.Message);
                 return new StatusCodeResponse<int[]>()
                 {
                     Result = new ModelActionResult<int[]>((int)HttpStatusCode.InternalServerError, null, error)

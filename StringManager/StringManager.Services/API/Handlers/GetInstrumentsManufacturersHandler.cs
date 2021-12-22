@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    class GetInstrumentsManufacturersHandler : IRequestHandler<GetInstrumentsManufacturersRequest, StatusCodeResponse<List<Manufacturer>>>
+    public class GetInstrumentsManufacturersHandler : IRequestHandler<GetInstrumentsManufacturersRequest, StatusCodeResponse<List<Manufacturer>>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -42,8 +42,8 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during proccesing getting list of Manufacturer items that have connected Instrument items to it; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during proccesing getting list of Manufacturer items that have connected Instrument items to it";
+                logger.LogError(e, error + "; exeception:" + e + " message: " + e.Message);
                 return new StatusCodeResponse<List<Manufacturer>>()
                 {
                     Result = new ModelActionResult<List<Manufacturer>>((int)HttpStatusCode.InternalServerError, null, error)

@@ -42,8 +42,8 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during proccesing getting list of Instrument items; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during proccesing getting list of Instrument items";
+                logger.LogError(e, error+ "; exeception:" + e + " message: " + e.Message);
                 return new StatusCodeResponse<List<Instrument>>()
                 {
                     Result = new ModelActionResult<List<Instrument>>((int)HttpStatusCode.InternalServerError, null, error)

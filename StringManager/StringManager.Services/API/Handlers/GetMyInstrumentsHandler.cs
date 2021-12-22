@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
@@ -35,7 +34,7 @@ namespace StringManager.Services.API.Handlers
             {
                 if (request.RequestUserId == null && request.AccountType != Core.Enums.AccountType.Admin)
                     request.RequestUserId = request.UserId;
-                else if(request.RequestUserId != null && request.AccountType != Core.Enums.AccountType.Admin)
+                else if(request.RequestUserId != request.UserId && request.AccountType != Core.Enums.AccountType.Admin)
                 {
                     var error = request.UserId == null ? "NonAdmin User of Id: " + request.UserId : "Unregistered user" + " tried to get all MyInstruments of a user: " + request.RequestUserId;
                     logger.LogError(error);
@@ -57,8 +56,8 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during proccesing getting list of MyInstrument items; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during proccesing getting list of MyInstrument items";
+                logger.LogError(e, error+ "; exeception:" + e + " message: " + e.Message);
                 return new StatusCodeResponse<List<MyInstrumentList>>()
                 {
                     Result = new ModelActionResult<List<MyInstrumentList>>((int)HttpStatusCode.InternalServerError, null, error)
