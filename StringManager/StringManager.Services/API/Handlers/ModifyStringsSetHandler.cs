@@ -71,8 +71,8 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during proccesing modyfication of a StringsSet; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during proccesing modyfication of a StringsSet";
+                logger.LogError(e, error + "; exeception:" + e + " message: " + e.Message);
                 return new StatusCodeResponse<StringsSet>()
                 {
                     Result = new ModelActionResult<StringsSet>((int)HttpStatusCode.InternalServerError, null, error)

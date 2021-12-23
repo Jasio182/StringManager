@@ -68,8 +68,8 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during proccesing modyfication of a Manufacturer; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during proccesing modyfication of a Manufacturer";
+                logger.LogError(e, error+ "; exeception:" + e + " message: " + e.Message);
                 return new StatusCodeResponse<Manufacturer>()
                 {
                     Result = new ModelActionResult<Manufacturer>((int)HttpStatusCode.InternalServerError, null, error)

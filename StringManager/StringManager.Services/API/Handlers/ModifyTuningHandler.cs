@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
@@ -72,8 +71,8 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during proccesing modyfication of a Tuning; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during proccesing modyfication of a Tuning";
+                logger.LogError(e, error + "; exeception: " + e + " message: " + e.Message);
                 return new StatusCodeResponse<Tuning>()
                 {
                     Result = new ModelActionResult<Tuning>((int)HttpStatusCode.InternalServerError, null, error)

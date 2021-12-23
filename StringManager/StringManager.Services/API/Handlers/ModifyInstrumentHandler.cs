@@ -49,7 +49,7 @@ namespace StringManager.Services.API.Handlers
                 var instrumentFromDb = await queryExecutor.Execute(instrumentQuery);
                 if (instrumentFromDb == null)
                 {
-                    string error = "instrument of given Id: " + request.Id + " has not been found";
+                    string error = "Instrument of given Id: " + request.Id + " has not been found";
                     logger.LogError(error);
                     return new StatusCodeResponse<Instrument>()
                     {
@@ -95,8 +95,8 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during proccesing modyfication of an Instrument; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during proccesing modyfication of an Instrument";
+                logger.LogError(e, error + "; exeception:" + e + " message: " + e.Message);
                 return new StatusCodeResponse<Instrument>()
                 {
                     Result = new ModelActionResult<Instrument>((int)HttpStatusCode.InternalServerError, null, error)

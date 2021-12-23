@@ -3,6 +3,7 @@ using Moq;
 using NUnit.Framework;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
+using StringManager.DataAccess.CQRS.Queries;
 using StringManager.DataAccess.Entities;
 using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.API.Handlers;
@@ -13,43 +14,47 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.Tests.APITests.HandlersTests
 {
-    internal class RemoveToneInTuningHandlerTests
+    internal class ModifyManufacturerHandlerTests
     {
         private Mock<ICommandExecutor> mockedCommandExecutor;
-        private Mock<ILogger<RemoveToneInTuningHandler>> mockedLogger;
+        private Mock<IQueryExecutor> mockedQueryExecutor;
+        private Mock<ILogger<ModifyManufacturerHandler>> mockedLogger;
 
-        private RemoveToneInTuningHandler testHandler;
+        private ModifyManufacturerHandler testHandler;
 
-        private RemoveToneInTuningRequest testRequest;
-        private ToneInTuning testToneInTuning;
+        private ModifyManufacturerRequest testRequest;
+        private Manufacturer testManufacturer;
 
-        public RemoveToneInTuningHandlerTests()
+        public ModifyManufacturerHandlerTests()
         {
             mockedCommandExecutor = new Mock<ICommandExecutor>();
-            mockedLogger = new Mock<ILogger<RemoveToneInTuningHandler>>();
+            mockedQueryExecutor = new Mock<IQueryExecutor>();
+            mockedLogger = new Mock<ILogger<ModifyManufacturerHandler>>();
 
-            testHandler = new RemoveToneInTuningHandler(mockedCommandExecutor.Object, mockedLogger.Object);
+            testHandler = new ModifyManufacturerHandler(mockedQueryExecutor.Object, mockedCommandExecutor.Object, mockedLogger.Object);
 
-            testRequest = new RemoveToneInTuningRequest()
+            testRequest = new ModifyManufacturerRequest()
             {
-                Id = 1
+                Name = "testChangedName",
+                Id = 1,
             };
-            testToneInTuning = new ToneInTuning()
+            testManufacturer = new Manufacturer()
             {
                 Id = 1,
-                Position = 1,
-                ToneId = 1,
-                TuningId = 1
+                Instruments = new List<Instrument>(),
+                Name = "TestManufacturer",
+                Strings = new List<String>()
             };
         }
 
         [Test]
-        public void RemoveToneInTuningHandler_ShouldNotHaveAnyErrors()
+        public void ModifyManufacturerHandler_ShouldNotHaveAnyErrors()
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.Admin;
-            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.ToneInTuning>((int)HttpStatusCode.NoContent, null);
-            mockedCommandExecutor.Setup(x => x.Execute(It.IsAny<RemoveToneInTuningCommand>())).Returns(Task.FromResult(testToneInTuning));
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.Manufacturer>((int)HttpStatusCode.NoContent, null);
+            mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetManufacturerQuery>())).Returns(Task.FromResult(testManufacturer));
+            mockedCommandExecutor.Setup(x => x.Execute(It.IsAny<ModifyManufacturerCommand>()));
 
             //Act
             var response = testHandler.Handle(testRequest, new CancellationToken());
@@ -61,12 +66,30 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         }
 
         [Test]
-        public void RemoveToneInTuningHandler_ShouldNotHaveBeenUnauthorised()
+        public void ModifyManufacturerHandler_ShouldManufacturerBeNull()
+        {
+            //Arrange
+            testRequest.AccountType = Core.Enums.AccountType.Admin;
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.Manufacturer>((int)HttpStatusCode.NotFound,
+                null, "Manufacturer of given Id: " + testRequest.Id + " has not been found");
+            mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetManufacturerQuery>())).Returns(Task.FromResult((Manufacturer)null));
+
+            //Act
+            var response = testHandler.Handle(testRequest, new CancellationToken());
+
+            //Assert
+            Assert.AreEqual(expectedResponse.statusCode, response.Result.Result.statusCode);
+            Assert.AreEqual(expectedResponse.result.Error, response.Result.Result.result.Error);
+            Assert.AreEqual(expectedResponse.result.Data, response.Result.Result.result.Data);
+        }
+
+        [Test]
+        public void ModifyManufacturerHandler_ShouldNotHaveBeenUnauthorised()
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.User;
-            var expectedResponse = new Core.Models.ModelActionResult<ToneInTuning>((int)HttpStatusCode.Unauthorized,
-                null, testRequest.UserId == null ? "NonAdmin User of Id: " + testRequest.UserId : "Unregistered user" + " tried to remove an ToneInTuning");
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.Manufacturer>((int)HttpStatusCode.Unauthorized,
+                null, testRequest.UserId == null ? "NonAdmin User of Id: " + testRequest.UserId : "Unregistered user" + " tried to modify a Manufacturer");
 
             //Act
             var response = testHandler.Handle(testRequest, new CancellationToken());
@@ -78,31 +101,14 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         }
 
         [Test]
-        public void RemoveToneInTuningHandler_ShouldToneInTuningBeNull()
-        {
-            //Arrange
-            testRequest.AccountType = Core.Enums.AccountType.Admin;
-            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.ToneInTuning>((int)HttpStatusCode.NotFound,
-                null, "ToneInTuning of given Id: " + testRequest.Id + " has not been found");
-            mockedCommandExecutor.Setup(x => x.Execute(It.IsAny<RemoveToneInTuningCommand>())).Returns(Task.FromResult((ToneInTuning)null));
-
-            //Act
-            var response = testHandler.Handle(testRequest, new CancellationToken());
-
-            //Assert
-            Assert.AreEqual(expectedResponse.statusCode, response.Result.Result.statusCode);
-            Assert.AreEqual(expectedResponse.result.Error, response.Result.Result.result.Error);
-            Assert.AreEqual(expectedResponse.result.Data, response.Result.Result.result.Data);
-        }
-
-        [Test]
-        public void RemoveToneInTuningHandler_ThrowsException()
+        public void ModifyManufacturerHandler_ThrowsException()
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.Admin;
             var expectedResponse = new Core.Models.ModelActionResult<ToneInTuning>((int)HttpStatusCode.InternalServerError,
-                null, "Exception has occured during proccesing deletion of a ToneInTuning");
-            mockedCommandExecutor.Setup(x => x.Execute(It.IsAny<RemoveToneInTuningCommand>())).Throws(new System.Exception());
+                null, "Exception has occured during proccesing modyfication of a Manufacturer");
+            mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetManufacturerQuery>())).Returns(Task.FromResult(testManufacturer));
+            mockedCommandExecutor.Setup(x => x.Execute(It.IsAny<ModifyManufacturerCommand>())).Throws(new System.Exception());
 
             //Act
             var response = testHandler.Handle(testRequest, new CancellationToken());

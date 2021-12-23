@@ -96,8 +96,8 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during proccesing modyfication of a InstalledString; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during proccesing modyfication of a InstalledString";
+                logger.LogError(e, error + "; exeception:" + e + " message: " + e.Message);
                 return new StatusCodeResponse<InstalledString>()
                 {
                     Result = new ModelActionResult<InstalledString>((int)HttpStatusCode.InternalServerError, null, error)
