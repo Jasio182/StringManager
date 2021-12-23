@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    class GetTonesHandler : IRequestHandler<GetTonesRequest, StatusCodeResponse<List<Tone>>>
+    public class GetTonesHandler : IRequestHandler<GetTonesRequest, StatusCodeResponse<List<Tone>>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -43,11 +43,11 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during proccesing getting list of Tone items; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during proccesing getting list of Tone items";
+                logger.LogError(e, error + "; exeception: " + e + " message: " + e.Message);
                 return new StatusCodeResponse<List<Tone>>()
                 {
-                    Result = new ModelActionResult<List<Tone>>((int)HttpStatusCode.OK, null, error)
+                    Result = new ModelActionResult<List<Tone>>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

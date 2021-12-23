@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
@@ -45,11 +44,11 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during proccesing getting a User item; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during proccesing getting a User item";
+                logger.LogError(e, error + "; exeception:" + e + " message: " + e.Message);
                 return new StatusCodeResponse<User>()
                 {
-                    Result = new ModelActionResult<User>((int)HttpStatusCode.OK, null, error)
+                    Result = new ModelActionResult<User>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

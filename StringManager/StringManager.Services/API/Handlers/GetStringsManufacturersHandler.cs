@@ -42,8 +42,8 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during proccesing getting list of Manufacturer items that have connected String items to it; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during proccesing getting list of Manufacturer items that have connected String items to it";
+                logger.LogError(e, error + "; exeception:" + e + " message: " + e.Message);
                 return new StatusCodeResponse<List<Manufacturer>>()
                 {
                     Result = new ModelActionResult<List<Manufacturer>>((int)HttpStatusCode.InternalServerError, null, error)

@@ -54,11 +54,11 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during proccesing getting list of User items; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during proccesing getting list of User items";
+                logger.LogError(e, error + "; exeception:" + e + " message: " + e.Message);
                 return new StatusCodeResponse<List<User>>()
                 {
-                    Result = new ModelActionResult<List<User>>((int)HttpStatusCode.OK, null, error)
+                    Result = new ModelActionResult<List<User>>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

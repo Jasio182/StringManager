@@ -48,11 +48,11 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during proccesing getting a Tuning item; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during proccesing getting a Tuning item";
+                logger.LogError(e, error + "; exeception:" + e + " message: " + e.Message);
                 return new StatusCodeResponse<Tuning>()
                 {
-                    Result = new ModelActionResult<Tuning>((int)HttpStatusCode.OK, null, error)
+                    Result = new ModelActionResult<Tuning>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

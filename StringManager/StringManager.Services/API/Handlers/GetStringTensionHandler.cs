@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
@@ -64,8 +63,8 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during calculating string tension; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during calculating string tension";
+                logger.LogError(e, error + "; exeception:" + e + " message: " + e.Message);
                 return new StatusCodeResponse<double?>()
                 {
                     Result = new ModelActionResult<double?>((int)HttpStatusCode.InternalServerError, null, error)

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
@@ -46,11 +45,11 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during proccesing getting list of Tuning items; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during proccesing getting list of Tuning items";
+                logger.LogError(e, error + "; exeception:" + e + " message: " + e.Message);
                 return new StatusCodeResponse<List<TuningList>>()
                 {
-                    Result = new ModelActionResult<List<TuningList>>((int)HttpStatusCode.OK, null, error)
+                    Result = new ModelActionResult<List<TuningList>>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

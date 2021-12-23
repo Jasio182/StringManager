@@ -49,11 +49,11 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during proccesing getting list of StringsSet items; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during proccesing getting list of StringsSet items";
+                logger.LogError(e, error + "; exeception:" + e + " message: " + e.Message);
                 return new StatusCodeResponse<List<StringsSet>>()
                 {
-                    Result = new ModelActionResult<List<StringsSet>>((int)HttpStatusCode.OK, null, error)
+                    Result = new ModelActionResult<List<StringsSet>>((int)HttpStatusCode.InternalServerError, null, error)
                 };
             }
         }

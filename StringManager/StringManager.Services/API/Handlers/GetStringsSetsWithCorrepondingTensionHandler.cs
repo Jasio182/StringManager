@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace StringManager.Services.API.Handlers
 {
-    class GetStringsSetsWithCorrepondingTensionHandler : IRequestHandler<GetStringsSetsWithCorrepondingTensionRequest, StatusCodeResponse<List<Core.Models.StringsSet>>>
+    public class GetStringsSetsWithCorrepondingTensionHandler : IRequestHandler<GetStringsSetsWithCorrepondingTensionRequest, StatusCodeResponse<List<Core.Models.StringsSet>>>
     {
         private readonly IQueryExecutor queryExecutor;
         private readonly IMapper mapper;
@@ -30,7 +30,7 @@ namespace StringManager.Services.API.Handlers
             this.logger = logger;
         }
 
-        public async Task<StatusCodeResponse<List<Core.Models.StringsSet>>> Handle(GetStringsSetsWithCorrepondingTensionRequest request, CancellationToken cancellationToken)
+        public async Task<StatusCodeResponse<List<StringsSet>>> Handle(GetStringsSetsWithCorrepondingTensionRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -69,6 +69,15 @@ namespace StringManager.Services.API.Handlers
                     StringType = (Core.Enums.StringType)request.StringType
                 };
                 var stringSetsFromDb = await queryExecutor.Execute(stringSetsQuery);
+                if (stringSetsFromDb == null)
+                {
+                    string error = "StringsSets list is empty";
+                    logger.LogError(error);
+                    return new StatusCodeResponse<List<StringsSet>>()
+                    {
+                        Result = new ModelActionResult<List<StringsSet>>((int)HttpStatusCode.BadRequest, null, error)
+                    };
+                }
                 var currentStrings = myInstrumentFromDb.InstalledStrings.Select(installedString => installedString.String).ToArray();
                 var currentTuning = myInstrumentFromDb.InstalledStrings.Select(installedString => installedString.Tone).ToArray();
                 var tonesFromTuning = StringCalculator.GetTonesFromTuning(resultTuningFromDb);
@@ -81,8 +90,8 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during calculating List of StringsSets with corresponding Tensions; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during calculating List of StringsSets with corresponding Tensions";
+                logger.LogError(e, error + "; exeception:" + e + " message: " + e.Message);
                 return new StatusCodeResponse<List<StringsSet>>()
                 {
                     Result = new ModelActionResult<List<StringsSet>>((int)HttpStatusCode.InternalServerError, null, error)

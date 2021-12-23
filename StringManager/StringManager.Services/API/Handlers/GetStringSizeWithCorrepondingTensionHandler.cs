@@ -50,6 +50,15 @@ namespace StringManager.Services.API.Handlers
                 }
                 var stringsQuery = new GetStringsQuery();
                 var stringsFromDb = await queryExecutor.Execute(stringsQuery);
+                if (stringsFromDb == null)
+                {
+                    string error = "Strings list is empty";
+                    logger.LogError(error);
+                    return new StatusCodeResponse<List<String>>()
+                    {
+                        Result = new ModelActionResult<List<String>>((int)HttpStatusCode.BadRequest, null, error)
+                    };
+                }
                 var toneQuery = new GetToneQuery()
                 {
                     Id = (int)request.PrimaryToneId
@@ -79,7 +88,7 @@ namespace StringManager.Services.API.Handlers
                                                                                  stringsFromDb, primaryToneFromDb,
                                                                                  resultToneFromDb);
                 var stringsOfSize = stringsFromDb.Where(thisString => thisString.Size == stringSize);
-                var mappedStringsOfSize = mapper.Map<List<Core.Models.String>>(stringsOfSize);
+                var mappedStringsOfSize = mapper.Map<List<String>>(stringsOfSize);
                 return new StatusCodeResponse<List<String>>()
                 {
                     Result = new ModelActionResult<List<String>>((int)HttpStatusCode.OK, mappedStringsOfSize)
@@ -87,8 +96,8 @@ namespace StringManager.Services.API.Handlers
             }
             catch (System.Exception e)
             {
-                var error = "Exception has occured during calculating List of Strings with corresponding tensions; exeception:" + e + " message: " + e.Message;
-                logger.LogError(e, error);
+                var error = "Exception has occured during calculating List of Strings with corresponding tensions";
+                logger.LogError(e, error + "; exeception:" + e + " message: " + e.Message);
                 return new StatusCodeResponse<List<String>>()
                 {
                     Result = new ModelActionResult<List<String>>((int)HttpStatusCode.InternalServerError, null, error)

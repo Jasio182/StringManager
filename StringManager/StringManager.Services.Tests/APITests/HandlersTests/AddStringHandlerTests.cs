@@ -52,7 +52,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
                 Size = 9,
                 SpecificWeight = 0.00032037193,
                 StringType = Core.Enums.StringType.PlainNikled,
-                StringSets = new List<StringInSet>()
+                StringsInSets = new List<StringInSet>()
             };
             testAddedString = new String()
             {
@@ -63,7 +63,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
                 Size = 9,
                 SpecificWeight = 0.00032037193,
                 StringType = Core.Enums.StringType.PlainNikled,
-                StringSets = new List<StringInSet>()
+                StringsInSets = new List<StringInSet>()
             };
             testMappedString = new Core.Models.String()
             {
