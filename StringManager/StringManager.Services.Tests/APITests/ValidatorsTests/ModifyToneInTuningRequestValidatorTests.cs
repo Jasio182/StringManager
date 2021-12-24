@@ -19,7 +19,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, 1, 1, 12, 1)]
         [TestCase((Core.Enums.AccountType)1, 2, null, null, null, 2)]
         [TestCase((Core.Enums.AccountType)0, 3, 65, 21, 69, 3)]
-        public void ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int? userId, int? position, int? toneId, int? tuningId, int id)
+        public void ModifyToneInTuningRequestValidator_ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int? userId, int? position, int? toneId, int? tuningId, int id)
         {
             var testToneInTuningRequest = new ModifyToneInTuningRequest()
             {
@@ -38,7 +38,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, -1, 1, 12, 1)]
         [TestCase((Core.Enums.AccountType)1, 2, -41, 125321, 45, 2)]
         [TestCase((Core.Enums.AccountType)0, 3, 0, 21, 69, 3)]
-        public void ShouldHavePositionErrors(Core.Enums.AccountType? accountType, int? userId, int? position, int? toneId, int? tuningId, int id)
+        public void ModifyToneInTuningRequestValidator_ShouldHavePositionErrors(Core.Enums.AccountType? accountType, int? userId, int? position, int? toneId, int? tuningId, int id)
         {
             var testToneInTuningRequest = new ModifyToneInTuningRequest()
             {
@@ -57,7 +57,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, 1, -1, 12, 1)]
         [TestCase((Core.Enums.AccountType)1, 2, 41, -125321, 45, 2)]
         [TestCase((Core.Enums.AccountType)0, 3, 65, 0, 69, 3)]
-        public void ShouldHaveToneIdErrors(Core.Enums.AccountType? accountType, int? userId, int? position, int? toneId, int? tuningId, int id)
+        public void ModifyToneInTuningRequestValidator_ShouldHaveToneIdErrors(Core.Enums.AccountType? accountType, int? userId, int? position, int? toneId, int? tuningId, int id)
         {
             var testToneInTuningRequest = new ModifyToneInTuningRequest()
             {
@@ -76,7 +76,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, 1, 1, -12, 1)]
         [TestCase((Core.Enums.AccountType)1, 2, 41, 125321, -45, 2)]
         [TestCase((Core.Enums.AccountType)0, 3, 65, 21, 0, 3)]
-        public void ShouldHaveTuningIdErrors(Core.Enums.AccountType? accountType, int? userId, int? position, int? toneId, int? tuningId, int id)
+        public void ModifyToneInTuningRequestValidator_ShouldHaveTuningIdErrors(Core.Enums.AccountType? accountType, int? userId, int? position, int? toneId, int? tuningId, int id)
         {
             var testToneInTuningRequest = new ModifyToneInTuningRequest()
             {
@@ -95,7 +95,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, 1, 1, 12, 0)]
         [TestCase((Core.Enums.AccountType)1, 2, null, null, null, -5)]
         [TestCase((Core.Enums.AccountType)0, 3, 65, 21, 69, -7)]
-        public void ShouldHaveIdErrors(Core.Enums.AccountType? accountType, int? userId, int? position, int? toneId, int? tuningId, int id)
+        public void ModifyToneInTuningRequestValidator_ShouldHaveIdErrors(Core.Enums.AccountType? accountType, int? userId, int? position, int? toneId, int? tuningId, int id)
         {
             var testToneInTuningRequest = new ModifyToneInTuningRequest()
             {
@@ -114,7 +114,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, -1, 1, 1, 12, 1)]
         [TestCase((Core.Enums.AccountType)1, 0, 41, 125321, 45, 2)]
         [TestCase((Core.Enums.AccountType)0, null, 65, 21, 69, 3)]
-        public void ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, int? position, int? toneId, int? tuningId, int id)
+        public void ModifyToneInTuningRequestValidator_ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, int? position, int? toneId, int? tuningId, int id)
         {
             var testToneInTuningRequest = new ModifyToneInTuningRequest()
             {
@@ -133,7 +133,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)(-1), 1, 1, 1, 12, 1)]
         [TestCase((Core.Enums.AccountType)6, 2, 41, 125321, 45, 2)]
         [TestCase(null, 3, 65, 21, 69, 3)]
-        public void ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, int? position, int? toneId, int? tuningId, int id)
+        public void ModifyToneInTuningRequestValidator_ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, int? position, int? toneId, int? tuningId, int id)
         {
             var testToneInTuningRequest = new ModifyToneInTuningRequest()
             {

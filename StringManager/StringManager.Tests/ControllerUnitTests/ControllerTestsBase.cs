@@ -4,7 +4,7 @@ using Moq;
 using StringManager.Core.Enums;
 using System.Security.Claims;
 
-namespace StringManager.Tests
+namespace StringManager.Tests.ControllerUnitTests
 {
     public abstract class ControllerTestsBase<T>
     {

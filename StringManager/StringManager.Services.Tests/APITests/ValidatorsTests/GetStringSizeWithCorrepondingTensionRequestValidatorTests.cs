@@ -19,7 +19,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase(null, 1, 1, 1, 1, 1)]
         [TestCase((Core.Enums.AccountType)1, 2, 21, 16, 632, 65)]
         [TestCase((Core.Enums.AccountType)0, null, 18, 123, 42, 22)]
-        public void ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int? userId, int primaryToneId, int scaleLenght, int resultToneId, int stringId)
+        public void GetStringSizeWithCorrepondingTensionRequestValidator_ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int? userId, int primaryToneId, int scaleLenght, int resultToneId, int stringId)
         {
             var testUserRequest = new GetStringSizeWithCorrepondingTensionRequest()
             {
@@ -38,7 +38,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase(null, 1, -1, 1, 1, 1)]
         [TestCase((Core.Enums.AccountType)1, 2, -21, 16, 632, 65)]
         [TestCase((Core.Enums.AccountType)0, null, 0, 123, 42, 22)]
-        public void ShouldHavePrimaryToneIdErrors(Core.Enums.AccountType? accountType, int? userId, int primaryToneId, int scaleLenght, int resultToneId, int stringId)
+        public void GetStringSizeWithCorrepondingTensionRequestValidator_ShouldHavePrimaryToneIdErrors(Core.Enums.AccountType? accountType, int? userId, int primaryToneId, int scaleLenght, int resultToneId, int stringId)
         {
             var testUserRequest = new GetStringSizeWithCorrepondingTensionRequest()
             {
@@ -57,7 +57,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase(null, 1, 1, -1, 1, 1)]
         [TestCase((Core.Enums.AccountType)1, 2, 21, -16, 632, 65)]
         [TestCase((Core.Enums.AccountType)0, null, 18, 0, 123, 22)]
-        public void ShouldHaveResultToneIdErrors(Core.Enums.AccountType? accountType, int? userId, int primaryToneId, int resultToneId, int scaleLenght, int stringId)
+        public void GetStringSizeWithCorrepondingTensionRequestValidator_ShouldHaveResultToneIdErrors(Core.Enums.AccountType? accountType, int? userId, int primaryToneId, int resultToneId, int scaleLenght, int stringId)
         {
             var testUserRequest = new GetStringSizeWithCorrepondingTensionRequest()
             {
@@ -76,7 +76,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase(null, 1, 1, 1, -1, 1)]
         [TestCase((Core.Enums.AccountType)1, 2, 21, 16, -632, 65)]
         [TestCase((Core.Enums.AccountType)0, null, 18, 123, 0, 22)]
-        public void ShouldHaveScaleLengthErrors(Core.Enums.AccountType? accountType, int? userId, int primaryToneId, int resultToneId, int scaleLenght, int stringId)
+        public void GetStringSizeWithCorrepondingTensionRequestValidator_ShouldHaveScaleLengthErrors(Core.Enums.AccountType? accountType, int? userId, int primaryToneId, int resultToneId, int scaleLenght, int stringId)
         {
             var testUserRequest = new GetStringSizeWithCorrepondingTensionRequest()
             {
@@ -95,7 +95,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase(null, 1, 1, 1, 1, -1)]
         [TestCase((Core.Enums.AccountType)1, 2, 21, 16, 632, 0)]
         [TestCase((Core.Enums.AccountType)0, null, 18, 123, 42, -22)]
-        public void ShouldHaveStringIdErrors(Core.Enums.AccountType? accountType, int? userId, int primaryToneId, int scaleLenght, int resultToneId, int stringId)
+        public void GetStringSizeWithCorrepondingTensionRequestValidator_ShouldHaveStringIdErrors(Core.Enums.AccountType? accountType, int? userId, int primaryToneId, int scaleLenght, int resultToneId, int stringId)
         {
             var testUserRequest = new GetStringSizeWithCorrepondingTensionRequest()
             {
@@ -114,7 +114,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase(null, -1, 1, 1, 1, 1)]
         [TestCase((Core.Enums.AccountType)1, 0, 21, 16, 632, 65)]
         [TestCase((Core.Enums.AccountType)0, -2, 18, 123, 42, 22)]
-        public void ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, int primaryToneId, int scaleLenght, int resultToneId, int stringId)
+        public void GetStringSizeWithCorrepondingTensionRequestValidator_ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, int primaryToneId, int scaleLenght, int resultToneId, int stringId)
         {
             var testUserRequest = new GetStringSizeWithCorrepondingTensionRequest()
             {
@@ -133,7 +133,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)11, 1, 1, 1, 1, 1)]
         [TestCase((Core.Enums.AccountType)2, 2, 21, 16, 632, 65)]
         [TestCase((Core.Enums.AccountType)(-1), null, 18, 123, 42, 22)]
-        public void ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, int primaryToneId, int scaleLenght, int resultToneId, int stringId)
+        public void GetStringSizeWithCorrepondingTensionRequestValidator_ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, int primaryToneId, int scaleLenght, int resultToneId, int stringId)
         {
             var testUserRequest = new GetStringSizeWithCorrepondingTensionRequest()
             {

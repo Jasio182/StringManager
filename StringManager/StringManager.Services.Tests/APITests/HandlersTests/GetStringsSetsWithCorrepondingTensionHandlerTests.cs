@@ -307,7 +307,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         public void GetStringsSetsWithCorrepondingTensionHandler_ShouldAllStingsSetsBeNull()
         {
             //Arrange
-            var expectedResponse = new Core.Models.ModelActionResult<List<String>>((int)HttpStatusCode.BadRequest,
+            var expectedResponse = new Core.Models.ModelActionResult<List<Core.Models.StringsSet>>((int)HttpStatusCode.BadRequest,
                 null, "StringsSets list is empty");
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetMyInstrumentQuery>())).Returns(Task.FromResult(testMyInstrument));
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetTuningQuery>())).Returns(Task.FromResult(testResultTuning));
@@ -327,7 +327,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         public void GetStringsSetsWithCorrepondingTensionHandler_ShouldTuningBeNull()
         {
             //Arrange
-            var expectedResponse = new Core.Models.ModelActionResult<List<String>>((int)HttpStatusCode.BadRequest,
+            var expectedResponse = new Core.Models.ModelActionResult<List<Core.Models.StringsSet>>((int)HttpStatusCode.BadRequest,
                 null, "Tuning of given Id: " + testRequest.ResultTuningId + " has not been found");
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetMyInstrumentQuery>())).Returns(Task.FromResult(testMyInstrument));
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetTuningQuery>())).Returns(Task.FromResult((Tuning)null));
@@ -345,7 +345,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         public void GetStringsSetsWithCorrepondingTensionHandler_ShouldMyInstrumentBeNull()
         {
             //Arrange
-            var expectedResponse = new Core.Models.ModelActionResult<List<String>>((int)HttpStatusCode.BadRequest,
+            var expectedResponse = new Core.Models.ModelActionResult<List<Core.Models.StringsSet>>((int)HttpStatusCode.BadRequest,
                 null, "MyInstrument of given Id: " + testRequest.ResultTuningId + " has not been found");
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetMyInstrumentQuery>())).Returns(Task.FromResult((MyInstrument)null));
 

@@ -97,7 +97,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.Admin;
-            var expectedResponse = new Core.Models.ModelActionResult<ToneInTuning>((int)HttpStatusCode.InternalServerError,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.MyInstrument>((int)HttpStatusCode.InternalServerError,
                 null, "Exception has occured during proccesing modyfication of a MyInstrument");
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetMyInstrumentQuery>())).Returns(Task.FromResult(testMyInstrument));
             mockedCommandExecutor.Setup(x => x.Execute(It.IsAny<ModifyMyInstrumentCommand>())).Throws(new System.Exception());

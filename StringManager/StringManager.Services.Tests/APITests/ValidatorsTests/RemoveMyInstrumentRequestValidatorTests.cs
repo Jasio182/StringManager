@@ -19,7 +19,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, 1)]
         [TestCase((Core.Enums.AccountType)1, 12, 11)]
         [TestCase((Core.Enums.AccountType)0, 13, 21)]
-        public void ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int? userId, int id)
+        public void RemoveMyInstrumentRequestValidator_ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int? userId, int id)
         {
             var testRemoveMyInstrumentRequest = new RemoveMyInstrumentRequest()
             {
@@ -35,7 +35,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, -1)]
         [TestCase((Core.Enums.AccountType)1, 12, -11)]
         [TestCase((Core.Enums.AccountType)0, 13, 0)]
-        public void ShouldHaveIdError(Core.Enums.AccountType? accountType, int? userId, int id)
+        public void RemoveMyInstrumentRequestValidator_ShouldHaveIdError(Core.Enums.AccountType? accountType, int? userId, int id)
         {
             var testRemoveMyInstrumentRequest = new RemoveMyInstrumentRequest()
             {
@@ -51,7 +51,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)2, 1, 1)]
         [TestCase((Core.Enums.AccountType)(-1), 12, 11)]
         [TestCase(null, 13, 21)]
-        public void ShouldHaveAccountTypeError(Core.Enums.AccountType? accountType, int? userId, int id)
+        public void RemoveMyInstrumentRequestValidator_ShouldHaveAccountTypeError(Core.Enums.AccountType? accountType, int? userId, int id)
         {
             var testRemoveMyInstrumentRequest = new RemoveMyInstrumentRequest()
             {
@@ -67,7 +67,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, -1, 1)]
         [TestCase((Core.Enums.AccountType)1, 0, 11)]
         [TestCase((Core.Enums.AccountType)0, null, 21)]
-        public void ShouldHaveUserIdError(Core.Enums.AccountType? accountType, int? userId, int id)
+        public void RemoveMyInstrumentRequestValidator_ShouldHaveUserIdError(Core.Enums.AccountType? accountType, int? userId, int id)
         {
             var testRemoveMyInstrumentRequest = new RemoveMyInstrumentRequest()
             {

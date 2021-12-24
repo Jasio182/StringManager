@@ -96,7 +96,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         public void ModifyInstalledStringHandler_ShouldToneBeNull()
         {
             //Arrange
-            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.String>((int)HttpStatusCode.BadRequest,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.InstalledString>((int)HttpStatusCode.BadRequest,
                 null, "Tone of given Id: " + testRequest.ToneId + " has not been found");
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetInstalledStringQuery>())).Returns(Task.FromResult(testInstalledString));
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetStringQuery>())).Returns(Task.FromResult(testString));
@@ -115,7 +115,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         public void ModifyInstalledStringHandler_ShouldStringBeNull()
         {
             //Arrange
-            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.String>((int)HttpStatusCode.BadRequest,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.InstalledString>((int)HttpStatusCode.BadRequest,
                 null, "String of given Id: " + testRequest.ToneId + " has not been found");
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetInstalledStringQuery>())).Returns(Task.FromResult(testInstalledString));
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetStringQuery>())).Returns(Task.FromResult((String)null));
@@ -133,7 +133,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         public void ModifyInstalledStringHandler_ShouldInstalledStringBeNull()
         {
             //Arrange
-            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.String>((int)HttpStatusCode.NotFound,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.InstalledString>((int)HttpStatusCode.NotFound,
                 null, "InstalledString of given Id: " + testRequest.ToneId + " has not been found");
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetInstalledStringQuery>())).Returns(Task.FromResult((InstalledString)null));
 
@@ -152,7 +152,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
             //Arrange
 
             testRequest.AccountType = Core.Enums.AccountType.Admin;
-            var expectedResponse = new Core.Models.ModelActionResult<ToneInTuning>((int)HttpStatusCode.InternalServerError,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.InstalledString>((int)HttpStatusCode.InternalServerError,
                 null, "Exception has occured during proccesing modyfication of a InstalledString");
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetInstalledStringQuery>())).Returns(Task.FromResult(testInstalledString));
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetStringQuery>())).Returns(Task.FromResult(testString));

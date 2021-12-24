@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace StringManager.Tests
+namespace StringManager.Tests.ControllerUnitTests
 {
     internal class UsersControllerTests : ControllerTestsBase<UsersController>
     {

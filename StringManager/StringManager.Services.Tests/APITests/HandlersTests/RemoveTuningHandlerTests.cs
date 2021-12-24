@@ -63,7 +63,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.User;
-            var expectedResponse = new Core.Models.ModelActionResult<Tuning>((int)HttpStatusCode.Unauthorized,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.Tuning>((int)HttpStatusCode.Unauthorized,
                 null, testRequest.UserId == null ? "NonAdmin User of Id: " + testRequest.UserId : "Unregistered user" + " tried to remove an Tuning");
 
             //Act
@@ -80,7 +80,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.Admin;
-            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.String>((int)HttpStatusCode.NotFound,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.Tuning>((int)HttpStatusCode.NotFound,
                 null, "Tuning of given Id: " + testRequest.Id + " has not been found");
             mockedCommandExecutor.Setup(x => x.Execute(It.IsAny<RemoveTuningCommand>())).Returns(Task.FromResult((Tuning)null));
 
@@ -98,7 +98,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.Admin;
-            var expectedResponse = new Core.Models.ModelActionResult<Tuning>((int)HttpStatusCode.InternalServerError,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.Tuning>((int)HttpStatusCode.InternalServerError,
                 null, "Exception has occured during proccesing deletion of a Tuning");
             mockedCommandExecutor.Setup(x => x.Execute(It.IsAny<RemoveTuningCommand>())).Throws(new System.Exception());
 

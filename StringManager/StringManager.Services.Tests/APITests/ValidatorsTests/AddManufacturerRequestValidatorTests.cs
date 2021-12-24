@@ -19,7 +19,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, "test1", 1)]
         [TestCase((Core.Enums.AccountType)1, "test2", 4)]
         [TestCase((Core.Enums.AccountType)0, "test3", 12)]
-        public void ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, string name, int? userId)
+        public void AddManufacturerRequestValidator_ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, string name, int? userId)
         {
             var testAddInstrumentRequestRequest = new AddManufacturerRequest()
             {
@@ -33,7 +33,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
 
         [Test]
         [TestCase((Core.Enums.AccountType)0, null, 1)]
-        public void ShouldHaveNameError(Core.Enums.AccountType? accountType, string name, int? userId)
+        public void AddManufacturerRequestValidator_ShouldHaveNameError(Core.Enums.AccountType? accountType, string name, int? userId)
         {
             var testAddInstrumentRequestRequest = new AddManufacturerRequest()
             {
@@ -49,7 +49,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, "test1", -1)]
         [TestCase((Core.Enums.AccountType)1, "test2", -4)]
         [TestCase((Core.Enums.AccountType)0, "test3", null)]
-        public void ShouldHaveUserIdError(Core.Enums.AccountType? accountType, string name, int? userId)
+        public void AddManufacturerRequestValidator_ShouldHaveUserIdError(Core.Enums.AccountType? accountType, string name, int? userId)
         {
             var testAddInstrumentRequestRequest = new AddManufacturerRequest()
             {
@@ -65,7 +65,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)3, "test1", 1)]
         [TestCase((Core.Enums.AccountType)7, "test2", 4)]
         [TestCase(null, "test3", 12)]
-        public void ShouldHaveAccountTypeError(Core.Enums.AccountType? accountType, string name, int? userId)
+        public void AddManufacturerRequestValidator_ShouldHaveAccountTypeError(Core.Enums.AccountType? accountType, string name, int? userId)
         {
             var testAddInstrumentRequestRequest = new AddManufacturerRequest()
             {

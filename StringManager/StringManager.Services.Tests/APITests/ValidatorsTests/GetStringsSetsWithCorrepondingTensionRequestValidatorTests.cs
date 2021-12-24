@@ -19,7 +19,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, 1, 1, Core.Enums.StringType.PlainBrass)]
         [TestCase((Core.Enums.AccountType)1, 2, 21, 11, Core.Enums.StringType.WoundNylon)]
         [TestCase((Core.Enums.AccountType)0, 3, 152, 734, null)]
-        public void ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int? userId, int myInstrumentId, int resultTuningId, Core.Enums.StringType? stringType)
+        public void GetStringsSetsWithCorrepondingTensionRequestValidator_ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int? userId, int myInstrumentId, int resultTuningId, Core.Enums.StringType? stringType)
         {
             var testUserRequest = new GetStringsSetsWithCorrepondingTensionRequest()
             {
@@ -37,7 +37,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, -1, 1, Core.Enums.StringType.PlainBrass)]
         [TestCase((Core.Enums.AccountType)1, 2, -21, 11, Core.Enums.StringType.WoundNylon)]
         [TestCase((Core.Enums.AccountType)0, 3, 0, 734, null)]
-        public void ShouldHaveMyInstrumentIdErrors(Core.Enums.AccountType? accountType, int? userId, int myInstrumentId, int resultTuningId, Core.Enums.StringType stringType)
+        public void GetStringsSetsWithCorrepondingTensionRequestValidator_ShouldHaveMyInstrumentIdErrors(Core.Enums.AccountType? accountType, int? userId, int myInstrumentId, int resultTuningId, Core.Enums.StringType stringType)
         {
             var testUserRequest = new GetStringsSetsWithCorrepondingTensionRequest()
             {
@@ -55,7 +55,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, 1, -1, Core.Enums.StringType.PlainBrass)]
         [TestCase((Core.Enums.AccountType)1, 2, 21, -11, Core.Enums.StringType.WoundNylon)]
         [TestCase((Core.Enums.AccountType)0, 3, 152, 0, null)]
-        public void ShouldHaveResultTuningIdErrors(Core.Enums.AccountType? accountType, int? userId, int myInstrumentId, int resultTuningId, Core.Enums.StringType stringType)
+        public void GetStringsSetsWithCorrepondingTensionRequestValidator_ShouldHaveResultTuningIdErrors(Core.Enums.AccountType? accountType, int? userId, int myInstrumentId, int resultTuningId, Core.Enums.StringType stringType)
         {
             var testUserRequest = new GetStringsSetsWithCorrepondingTensionRequest()
             {
@@ -73,7 +73,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, 1, -1, (Core.Enums.StringType)7)]
         [TestCase((Core.Enums.AccountType)1, 2, 21, -11, (Core.Enums.StringType)11)]
         [TestCase((Core.Enums.AccountType)0, 3, 152, 0, (Core.Enums.StringType)(-10))]
-        public void ShouldHaveStringTypedErrors(Core.Enums.AccountType? accountType, int? userId, int myInstrumentId, int resultTuningId, Core.Enums.StringType stringType)
+        public void GetStringsSetsWithCorrepondingTensionRequestValidator_ShouldHaveStringTypedErrors(Core.Enums.AccountType? accountType, int? userId, int myInstrumentId, int resultTuningId, Core.Enums.StringType stringType)
         {
             var testUserRequest = new GetStringsSetsWithCorrepondingTensionRequest()
             {
@@ -91,7 +91,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, -1, 1, 1, Core.Enums.StringType.PlainBrass)]
         [TestCase((Core.Enums.AccountType)1, 0, 21, 11, Core.Enums.StringType.WoundNylon)]
         [TestCase((Core.Enums.AccountType)0, null, 152, 734, null)]
-        public void ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, int myInstrumentId, int resultTuningId, Core.Enums.StringType stringType)
+        public void GetStringsSetsWithCorrepondingTensionRequestValidator_ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, int myInstrumentId, int resultTuningId, Core.Enums.StringType stringType)
         {
             var testUserRequest = new GetStringsSetsWithCorrepondingTensionRequest()
             {
@@ -109,7 +109,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)3, 1, 1, 1, Core.Enums.StringType.PlainBrass)]
         [TestCase((Core.Enums.AccountType)(-1), 2, 21, 11, Core.Enums.StringType.WoundNylon)]
         [TestCase(null, 3, 152, 734, null)]
-        public void ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, int myInstrumentId, int resultTuningId, Core.Enums.StringType stringType)
+        public void GetStringsSetsWithCorrepondingTensionRequestValidator_ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, int myInstrumentId, int resultTuningId, Core.Enums.StringType stringType)
         {
             var testUserRequest = new GetStringsSetsWithCorrepondingTensionRequest()
             {

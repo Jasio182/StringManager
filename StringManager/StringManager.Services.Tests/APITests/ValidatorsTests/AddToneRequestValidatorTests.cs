@@ -19,7 +19,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, "test1", 1.1, 1.1)]
         [TestCase((Core.Enums.AccountType)1, 2, "test2", 125.234, 35.16)]
         [TestCase((Core.Enums.AccountType)0, 3, "test3", 21.11, 152.12)]
-        public void ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int? userId, string name, double frequency, double waveLenght)
+        public void AddToneRequestValidator_ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int? userId, string name, double frequency, double waveLenght)
         {
             var testToneRequest = new AddToneRequest()
             {
@@ -35,7 +35,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
 
         [Test]
         [TestCase((Core.Enums.AccountType)0, 3, null, 21.11, 152.12)]
-        public void ShouldHaveNameErrors(Core.Enums.AccountType? accountType, int? userId, string name, double frequency, double waveLenght)
+        public void AddToneRequestValidator_ShouldHaveNameErrors(Core.Enums.AccountType? accountType, int? userId, string name, double frequency, double waveLenght)
         {
             var testToneRequest = new AddToneRequest()
             {
@@ -53,7 +53,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, "test1", -1.1, 1.1)]
         [TestCase((Core.Enums.AccountType)1, 2, "test2", -125.234, 35.16)]
         [TestCase((Core.Enums.AccountType)0, 3, "test3", 0, 152.12)]
-        public void ShouldHaveFrequencyErrors(Core.Enums.AccountType? accountType, int? userId, string name, double frequency, double waveLenght)
+        public void AddToneRequestValidator_ShouldHaveFrequencyErrors(Core.Enums.AccountType? accountType, int? userId, string name, double frequency, double waveLenght)
         {
             var testToneRequest = new AddToneRequest()
             {
@@ -71,7 +71,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, "test1", 1.1, -1.1)]
         [TestCase((Core.Enums.AccountType)1, 2, "test2", 125.234, -35.16)]
         [TestCase((Core.Enums.AccountType)0, 3, "test3", 21.11, 0)]
-        public void ShouldHaveWaveLenghtErrors(Core.Enums.AccountType? accountType, int? userId, string name, double frequency, double waveLenght)
+        public void AddToneRequestValidator_ShouldHaveWaveLenghtErrors(Core.Enums.AccountType? accountType, int? userId, string name, double frequency, double waveLenght)
         {
             var testToneRequest = new AddToneRequest()
             {
@@ -89,7 +89,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, -1, "test1", 1.1, 1.1)]
         [TestCase((Core.Enums.AccountType)1, -2, "test2", 125.234, 35.16)]
         [TestCase((Core.Enums.AccountType)0, 0, "test3", 21.11, 152.12)]
-        public void ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, string name, double frequency, double waveLenght)
+        public void AddToneRequestValidator_ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, string name, double frequency, double waveLenght)
         {
             var testToneRequest = new AddToneRequest()
             {
@@ -107,7 +107,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)5, 1, "test1", 1.1, 1.1)]
         [TestCase((Core.Enums.AccountType)(-1), 2, "test2", 125.234, 35.16)]
         [TestCase(null, 3, "test3", 21.11, 152.12)]
-        public void ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, string name, double frequency, double waveLenght)
+        public void AddToneRequestValidator_ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, string name, double frequency, double waveLenght)
         {
             var testToneRequest = new AddToneRequest()
             {

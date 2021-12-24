@@ -86,7 +86,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         }
 
         [Test]
-        public void AddInstalledStringHandler_ShouldNotHaveAnyErrors()
+        public void AddStringHandler_ShouldNotHaveAnyErrors()
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.Admin;
@@ -107,7 +107,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         }
 
         [Test]
-        public void AddInstalledStringHandler_ShouldNotHaveBeenUnauthorised()
+        public void AddStringHandler_ShouldNotHaveBeenUnauthorised()
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.User;
@@ -124,7 +124,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         }
 
         [Test]
-        public void AddInstalledStringHandler_ShouldManufacturerBeNull()
+        public void AddStringHandler_ShouldManufacturerBeNull()
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.Admin;
@@ -142,7 +142,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         }
 
         [Test]
-        public void AddInstalledStringHandler_ThrowsException()
+        public void AddStringHandler_ThrowsException()
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.Admin;

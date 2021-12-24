@@ -64,7 +64,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.User;
-            var expectedResponse = new Core.Models.ModelActionResult<Tone>((int)HttpStatusCode.Unauthorized,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.Tone>((int)HttpStatusCode.Unauthorized,
                 null, testRequest.UserId == null ? "NonAdmin User of Id: " + testRequest.UserId : "Unregistered user" + " tried to remove an Tone");
 
             //Act
@@ -81,7 +81,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.Admin;
-            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.String>((int)HttpStatusCode.NotFound,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.Tone>((int)HttpStatusCode.NotFound,
                 null, "Tone of given Id: " + testRequest.Id + " has not been found");
             mockedCommandExecutor.Setup(x => x.Execute(It.IsAny<RemoveToneCommand>())).Returns(Task.FromResult((Tone)null));
 
@@ -99,7 +99,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.Admin;
-            var expectedResponse = new Core.Models.ModelActionResult<Tone>((int)HttpStatusCode.InternalServerError,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.Tone>((int)HttpStatusCode.InternalServerError,
                 null, "Exception has occured during proccesing deletion of a Tone");
             mockedCommandExecutor.Setup(x => x.Execute(It.IsAny<RemoveToneCommand>())).Throws(new System.Exception());
 

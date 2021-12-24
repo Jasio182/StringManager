@@ -33,7 +33,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, 1, 1, 0)]
         [TestCase((Core.Enums.AccountType)1, 6, 7, 1, 1)]
         [TestCase((Core.Enums.AccountType)0, 9, 12, 1, 2)]
-        public void ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int? userId, int id, int hoursPlayedWeekly, int i)
+        public void ModifyMyInstrumentRequestValidator_ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int? userId, int id, int hoursPlayedWeekly, int i)
         {
             var testModifyMyInstrumentRequest = new ModifyMyInstrumentRequest()
             {
@@ -52,7 +52,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, 1, 1, 0)]
         [TestCase((Core.Enums.AccountType)1, 6, 7, 1, 1)]
         [TestCase((Core.Enums.AccountType)0, 9, 12, 1, 2)]
-        public void ShouldHaveLastStringChangeErrors(Core.Enums.AccountType? accountType, int? userId, int id, int hoursPlayedWeekly, int i)
+        public void ModifyMyInstrumentRequestValidator_ShouldHaveLastStringChangeErrors(Core.Enums.AccountType? accountType, int? userId, int id, int hoursPlayedWeekly, int i)
         {
             var testModifyMyInstrumentRequest = new ModifyMyInstrumentRequest()
             {
@@ -71,7 +71,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, 1, -1, 0)]
         [TestCase((Core.Enums.AccountType)1, 6, 7, -15, 1)]
         [TestCase((Core.Enums.AccountType)0, 9, 12, -18, 2)]
-        public void ShouldHaveHoursPlayedWeeklyErrors(Core.Enums.AccountType? accountType, int? userId, int id, int hoursPlayedWeekly, int i)
+        public void ModifyMyInstrumentRequestValidator_ShouldHaveHoursPlayedWeeklyErrors(Core.Enums.AccountType? accountType, int? userId, int id, int hoursPlayedWeekly, int i)
         {
             var testModifyMyInstrumentRequest = new ModifyMyInstrumentRequest()
             {
@@ -90,7 +90,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, 1, 1, 0)]
         [TestCase((Core.Enums.AccountType)1, 6, 7, 1, 1)]
         [TestCase((Core.Enums.AccountType)0, 9, 12, 1, 2)]
-        public void ShouldHaveLastDeepCleaningErrors(Core.Enums.AccountType? accountType, int? userId, int id, int hoursPlayedWeekly, int i)
+        public void ModifyMyInstrumentRequestValidator_ShouldHaveLastDeepCleaningErrors(Core.Enums.AccountType? accountType, int? userId, int id, int hoursPlayedWeekly, int i)
         {
             var testModifyMyInstrumentRequest = new ModifyMyInstrumentRequest()
             {
@@ -109,7 +109,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, -1, 1, 0)]
         [TestCase((Core.Enums.AccountType)1, 6, -7, 1, 1)]
         [TestCase((Core.Enums.AccountType)0, 9, 0, 1, 2)]
-        public void ShouldHaveIdErrors(Core.Enums.AccountType? accountType, int? userId, int id, int hoursPlayedWeekly, int i)
+        public void ModifyMyInstrumentRequestValidator_ShouldHaveIdErrors(Core.Enums.AccountType? accountType, int? userId, int id, int hoursPlayedWeekly, int i)
         {
             var testModifyMyInstrumentRequest = new ModifyMyInstrumentRequest()
             {
@@ -128,7 +128,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, -1, 1, 1, 0)]
         [TestCase((Core.Enums.AccountType)1, 0, 7, 1, 1)]
         [TestCase((Core.Enums.AccountType)0, null, 12, 1, 2)]
-        public void ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, int id, int hoursPlayedWeekly, int i)
+        public void ModifyMyInstrumentRequestValidator_ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, int id, int hoursPlayedWeekly, int i)
         {
             var testModifyMyInstrumentRequest = new ModifyMyInstrumentRequest()
             {
@@ -147,7 +147,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)6, 1, 1, 1, 0)]
         [TestCase((Core.Enums.AccountType)(-1), 6, 7, 1, 1)]
         [TestCase(null, 9, 12, 1, 2)]
-        public void ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, int id, int hoursPlayedWeekly, int i)
+        public void ModifyMyInstrumentRequestValidator_ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, int id, int hoursPlayedWeekly, int i)
         {
             var testModifyMyInstrumentRequest = new ModifyMyInstrumentRequest()
             {

@@ -83,7 +83,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.Admin;
-            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.String>((int)HttpStatusCode.BadRequest,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.Instrument>((int)HttpStatusCode.BadRequest,
                 null, "Manufacturer of given Id: " + testRequest.ManufacturerId + " has not been found");
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetInstrumentQuery>())).Returns(Task.FromResult(testInstrument));
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetManufacturerQuery>())).Returns(Task.FromResult((Manufacturer)null));
@@ -102,7 +102,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.Admin;
-            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.String>((int)HttpStatusCode.NotFound,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.Instrument>((int)HttpStatusCode.NotFound,
                 null, "Instrument of given Id: " + testRequest.ManufacturerId + " has not been found");
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetInstrumentQuery>())).Returns(Task.FromResult((Instrument)null));
 
@@ -120,7 +120,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.User;
-            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.String>((int)HttpStatusCode.Unauthorized,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.Instrument>((int)HttpStatusCode.Unauthorized,
                 null, testRequest.UserId == null ? "NonAdmin User of Id: " + testRequest.UserId : "Unregistered user" + " tried to modify an Instrument");
 
             //Act
@@ -137,7 +137,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.Admin;
-            var expectedResponse = new Core.Models.ModelActionResult<ToneInTuning>((int)HttpStatusCode.InternalServerError,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.Instrument>((int)HttpStatusCode.InternalServerError,
                 null, "Exception has occured during proccesing modyfication of an Instrument");
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetInstrumentQuery>())).Returns(Task.FromResult(testInstrument));
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetManufacturerQuery>())).Returns(Task.FromResult(testManufacturer));

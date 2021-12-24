@@ -19,7 +19,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, 1, 1, 1, 1)]
         [TestCase((Core.Enums.AccountType)1, 2, 2, 4, 123, 154)]
         [TestCase((Core.Enums.AccountType)0, 3, 3, 6, 51, 21)]
-        public void ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int? userId, int id, int position, int stringId, int stringSetId)
+        public void ModifyStringInSetRequestValidator_ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int? userId, int id, int position, int stringId, int stringSetId)
         {
             var testStringInSetRequest = new ModifyStringInSetRequest()
             {
@@ -38,7 +38,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, 1, -1, 1, 1)]
         [TestCase((Core.Enums.AccountType)1, 2, 2, -4, 123, 154)]
         [TestCase((Core.Enums.AccountType)0, 3, 3, 0, 51, 21)]
-        public void ShouldHavePositionErrors(Core.Enums.AccountType? accountType, int? userId, int id, int position, int stringId, int stringSetId)
+        public void ModifyStringInSetRequestValidator_ShouldHavePositionErrors(Core.Enums.AccountType? accountType, int? userId, int id, int position, int stringId, int stringSetId)
         {
             var testStringInSetRequest = new ModifyStringInSetRequest()
             {
@@ -57,7 +57,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, 1, 1, -1, 1)]
         [TestCase((Core.Enums.AccountType)1, 2, 2, 4, -123, 154)]
         [TestCase((Core.Enums.AccountType)0, 3, 3, 6, 0, 21)]
-        public void ShouldHaveStringIdErrors(Core.Enums.AccountType? accountType, int? userId, int id, int position, int stringId, int stringSetId)
+        public void ModifyStringInSetRequestValidator_ShouldHaveStringIdErrors(Core.Enums.AccountType? accountType, int? userId, int id, int position, int stringId, int stringSetId)
         {
             var testStringInSetRequest = new ModifyStringInSetRequest()
             {
@@ -76,7 +76,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, 1, 1, 1, -1)]
         [TestCase((Core.Enums.AccountType)1, 2, 2, 4, 123, -154)]
         [TestCase((Core.Enums.AccountType)0, 3, 3, 6, 51, 0)]
-        public void ShouldHaveStringsSetIdErrors(Core.Enums.AccountType? accountType, int? userId, int id, int position, int stringId, int stringSetId)
+        public void ModifyStringInSetRequestValidator_ShouldHaveStringsSetIdErrors(Core.Enums.AccountType? accountType, int? userId, int id, int position, int stringId, int stringSetId)
         {
             var testStringInSetRequest = new ModifyStringInSetRequest()
             {
@@ -95,7 +95,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, -1, 1, 1, 1)]
         [TestCase((Core.Enums.AccountType)1, 2, -2, 4, 123, 154)]
         [TestCase((Core.Enums.AccountType)0, 3, 0, 6, 51, 21)]
-        public void ShouldHaveIdErrors(Core.Enums.AccountType? accountType, int? userId, int id, int position, int stringId, int stringSetId)
+        public void ModifyStringInSetRequestValidator_ShouldHaveIdErrors(Core.Enums.AccountType? accountType, int? userId, int id, int position, int stringId, int stringSetId)
         {
             var testStringInSetRequest = new ModifyStringInSetRequest()
             {
@@ -114,7 +114,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, -1, 1, 1, 1, 1)]
         [TestCase((Core.Enums.AccountType)1, 0, 2, 4, 123, 154)]
         [TestCase((Core.Enums.AccountType)0, null, 3, 6, 51, 21)]
-        public void ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, int id, int position, int stringId, int stringSetId)
+        public void ModifyStringInSetRequestValidator_ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, int id, int position, int stringId, int stringSetId)
         {
             var testStringInSetRequest = new ModifyStringInSetRequest()
             {
@@ -133,7 +133,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)6, 1, 1, 1, 1, 1)]
         [TestCase((Core.Enums.AccountType)(-1), 2, 2, 4, 123, 154)]
         [TestCase(null, 3, 3, 6, 51, 21)]
-        public void ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, int id, int position, int stringId, int stringSetId)
+        public void ModifyStringInSetRequestValidator_ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, int id, int position, int stringId, int stringSetId)
         {
             var testStringInSetRequest = new ModifyStringInSetRequest()
             {

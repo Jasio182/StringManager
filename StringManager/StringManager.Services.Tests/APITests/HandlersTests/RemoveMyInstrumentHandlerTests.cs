@@ -75,7 +75,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.Admin;
-            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.String>((int)HttpStatusCode.NotFound,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.MyInstrument>((int)HttpStatusCode.NotFound,
                 null, "MyInstrument of given Id: " + testRequest.Id + " has not been found");
             mockedCommandExecutor.Setup(x => x.Execute(It.IsAny<RemoveMyInstrumentCommand>())).Returns(Task.FromResult((MyInstrument)null));
 
@@ -93,7 +93,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.Admin;
-            var expectedResponse = new Core.Models.ModelActionResult<MyInstrument>((int)HttpStatusCode.InternalServerError,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.MyInstrument>((int)HttpStatusCode.InternalServerError,
                 null, "Exception has occured during proccesing deletion of a MyInstrument");
             mockedCommandExecutor.Setup(x => x.Execute(It.IsAny<RemoveMyInstrumentCommand>())).Throws(new System.Exception());
 

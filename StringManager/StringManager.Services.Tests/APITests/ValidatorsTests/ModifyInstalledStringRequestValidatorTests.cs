@@ -19,7 +19,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0,1, 1, 1, 1)]
         [TestCase((Core.Enums.AccountType)1,12, 11, 6, 2)]
         [TestCase((Core.Enums.AccountType)0,13, 21, 55, 3)]
-        public void ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int id, int stringId, int toneId, int? userId)
+        public void ModifyInstalledStringRequestValidator_ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int id, int stringId, int toneId, int? userId)
         {
             var testModifyInstalledStringRequest = new ModifyInstalledStringRequest()
             {
@@ -37,7 +37,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, -1, 1, 1)]
         [TestCase((Core.Enums.AccountType)1, 12, -11, 6, 2)]
         [TestCase((Core.Enums.AccountType)0, 13, -21, 55, 3)]
-        public void ShouldHaveStringIdError(Core.Enums.AccountType? accountType, int id, int stringId, int toneId, int? userId)
+        public void ModifyInstalledStringRequestValidator_ShouldHaveStringIdError(Core.Enums.AccountType? accountType, int id, int stringId, int toneId, int? userId)
         {
             var testModifyInstalledStringRequest = new ModifyInstalledStringRequest()
             {
@@ -55,7 +55,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, 1, 1, -1)]
         [TestCase((Core.Enums.AccountType)1, 12, 11, 6, 0)]
         [TestCase((Core.Enums.AccountType)0, 13, 21, 55, null)]
-        public void ShouldHaveUserIdError(Core.Enums.AccountType? accountType, int id, int stringId, int toneId, int? userId)
+        public void ModifyInstalledStringRequestValidator_ShouldHaveUserIdError(Core.Enums.AccountType? accountType, int id, int stringId, int toneId, int? userId)
         {
             var testModifyInstalledStringRequest = new ModifyInstalledStringRequest()
             {
@@ -73,7 +73,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, -1, 1, 1, 1)]
         [TestCase((Core.Enums.AccountType)1, 0, 11, 6, 2)]
         [TestCase((Core.Enums.AccountType)0, -13, 21, 55, 3)]
-        public void ShouldIdError(Core.Enums.AccountType? accountType, int id, int stringId, int toneId, int? userId)
+        public void ModifyInstalledStringRequestValidator_ShouldIdError(Core.Enums.AccountType? accountType, int id, int stringId, int toneId, int? userId)
         {
             var testModifyInstalledStringRequest = new ModifyInstalledStringRequest()
             {
@@ -91,7 +91,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)3, 1, 1, 1, 1)]
         [TestCase((Core.Enums.AccountType)11, 12, 11, 6, 2)]
         [TestCase(null, 13, 21, 55, 3)]
-        public void ShouldHaveAccountTypeError(Core.Enums.AccountType? accountType, int id,  int stringId, int toneId, int? userId)
+        public void ModifyInstalledStringRequestValidator_ShouldHaveAccountTypeError(Core.Enums.AccountType? accountType, int id,  int stringId, int toneId, int? userId)
         {
             var testModifyInstalledStringRequest = new ModifyInstalledStringRequest()
             {

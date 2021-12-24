@@ -65,7 +65,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.User;
-            var expectedResponse = new Core.Models.ModelActionResult<ToneInTuning>((int)HttpStatusCode.Unauthorized,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.ToneInTuning>((int)HttpStatusCode.Unauthorized,
                 null, testRequest.UserId == null ? "NonAdmin User of Id: " + testRequest.UserId : "Unregistered user" + " tried to remove an ToneInTuning");
 
             //Act
@@ -100,7 +100,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.Admin;
-            var expectedResponse = new Core.Models.ModelActionResult<ToneInTuning>((int)HttpStatusCode.InternalServerError,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.ToneInTuning>((int)HttpStatusCode.InternalServerError,
                 null, "Exception has occured during proccesing deletion of a ToneInTuning");
             mockedCommandExecutor.Setup(x => x.Execute(It.IsAny<RemoveToneInTuningCommand>())).Throws(new System.Exception());
 

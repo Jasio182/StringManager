@@ -108,7 +108,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.Admin;
-            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.String>((int)HttpStatusCode.InternalServerError,
+            var expectedResponse = new Core.Models.ModelActionResult<List<Core.Models.String>>((int)HttpStatusCode.InternalServerError,
                 null, "Exception has occured during proccesing getting list of String items");
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetStringsQuery>())).Throws(new System.Exception());
 

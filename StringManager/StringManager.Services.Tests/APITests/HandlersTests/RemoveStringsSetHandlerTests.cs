@@ -63,7 +63,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.User;
-            var expectedResponse = new Core.Models.ModelActionResult<StringsSet>((int)HttpStatusCode.Unauthorized,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.StringsSet>((int)HttpStatusCode.Unauthorized,
                 null, testRequest.UserId == null ? "NonAdmin User of Id: " + testRequest.UserId : "Unregistered user" + " tried to remove an StringsSet");
 
             //Act
@@ -80,7 +80,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.Admin;
-            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.String>((int)HttpStatusCode.NotFound,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.StringsSet>((int)HttpStatusCode.NotFound,
                 null, "StringsSet of given Id: " + testRequest.Id + " has not been found");
             mockedCommandExecutor.Setup(x => x.Execute(It.IsAny<RemoveStringsSetCommand>())).Returns(Task.FromResult((StringsSet)null));
 
@@ -98,7 +98,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.Admin;
-            var expectedResponse = new Core.Models.ModelActionResult<StringsSet>((int)HttpStatusCode.InternalServerError,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.StringsSet>((int)HttpStatusCode.InternalServerError,
                 null, "Exception has occured during proccesing deletion of a StringsSet");
             mockedCommandExecutor.Setup(x => x.Execute(It.IsAny<RemoveStringsSetCommand>())).Throws(new System.Exception());
 

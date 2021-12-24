@@ -24,7 +24,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase(null, 1, 1)]
         [TestCase((Core.Enums.AccountType)1, 2, 21)]
         [TestCase((Core.Enums.AccountType)0, null, 18)]
-        public void ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int? userId, int instrumentId)
+        public void GetScaleLenghtsRequestValidator_ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int? userId, int instrumentId)
         {
             var testUserRequest = new GetScaleLenghtsRequest()
             {
@@ -40,7 +40,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, -1)]
         [TestCase((Core.Enums.AccountType)1, 2, -21)]
         [TestCase((Core.Enums.AccountType)0, 3, 0)]
-        public void ShouldHaveInstrumentIdErrors(Core.Enums.AccountType? accountType, int? userId, int instrumentId)
+        public void GetScaleLenghtsRequestValidator_ShouldHaveInstrumentIdErrors(Core.Enums.AccountType? accountType, int? userId, int instrumentId)
         {
             var testUserRequest = new GetScaleLenghtsRequest()
             {
@@ -56,7 +56,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, -1, 1)]
         [TestCase((Core.Enums.AccountType)1, 0, 21)]
         [TestCase((Core.Enums.AccountType)0, -3, 18)]
-        public void ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, int instrumentId)
+        public void GetScaleLenghtsRequestValidator_ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, int instrumentId)
         {
             var testUserRequest = new GetScaleLenghtsRequest()
             {
@@ -72,7 +72,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)(-1), 1, 1)]
         [TestCase((Core.Enums.AccountType)6, 2, 21)]
         [TestCase((Core.Enums.AccountType)18, 3, 18)]
-        public void ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, int instrumentId)
+        public void GetScaleLenghtsRequestValidator_ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, int instrumentId)
         {
             var testUserRequest = new GetScaleLenghtsRequest()
             {

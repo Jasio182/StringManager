@@ -33,7 +33,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)1, 1, 1, true, "test1", 1, 0)]
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)2, 11, 51, false, "test2", 2, 1)]
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)0, 26, 61, true, "test3", 3, 2)]
-        public void ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
+        public void AddMyInstrumentRequestValidator_ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
             int instrumentId, bool neededLuthierVisit, string ownName, int? userId, int i)
         {
             var testAddInstrumentRequestRequest = new AddMyInstrumentRequest()
@@ -56,7 +56,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)1, 1, 1, true, "test1", 1, 0)]
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)2, 11, 51, false, "test2", 2, 1)]
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)0, 26, 61, true, "test3", 3, 2)]
-        public void ShouldHaveLastStringChangeErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
+        public void AddMyInstrumentRequestValidator_ShouldHaveLastStringChangeErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
             int instrumentId, bool neededLuthierVisit, string ownName, int? userId, int i)
         {
             var testAddMyInstrumentRequestRequest = new AddMyInstrumentRequest()
@@ -79,7 +79,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)11, 1, 1, true, "test1", 1, 0)]
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)21, 11, 51, false, "test2", 2, 1)]
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)4, 26, 61, true, "test3", 3, 2)]
-        public void ShouldHaveGuitarPlaceErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
+        public void AddMyInstrumentRequestValidator_ShouldHaveGuitarPlaceErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
             int instrumentId, bool neededLuthierVisit, string ownName, int? userId, int i)
         {
             var testAddMyInstrumentRequestRequest = new AddMyInstrumentRequest()
@@ -102,7 +102,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)1, -1, 1, true, "test1", 1, 0)]
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)2, -11, 51, false, "test2", 2, 1)]
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)0, -26, 61, true, "test3", 3, 2)]
-        public void ShouldHaveHoursPlayedWeeklyErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
+        public void AddMyInstrumentRequestValidator_ShouldHaveHoursPlayedWeeklyErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
             int instrumentId, bool neededLuthierVisit, string ownName, int? userId, int i)
         {
             var testAddMyInstrumentRequestRequest = new AddMyInstrumentRequest()
@@ -125,7 +125,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)1, 1, 1, true, "test1", 1, 0)]
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)2, 11, 51, false, "test2", 2, 1)]
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)0, 26, 61, true, "test3", 3, 2)]
-        public void ShouldHaveLastDeepCleaningErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
+        public void AddMyInstrumentRequestValidator_ShouldHaveLastDeepCleaningErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
             int instrumentId, bool neededLuthierVisit, string ownName, int? userId, int i)
         {
             var testAddMyInstrumentRequestRequest = new AddMyInstrumentRequest()
@@ -148,7 +148,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)1, 1, -1, true, "test1", 1, 0)]
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)2, 11, -51, false, "test2", 2, 1)]
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)0, 26, 0, true, "test3", 3, 2)]
-        public void ShouldHaveInstrumentIdErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
+        public void AddMyInstrumentRequestValidator_ShouldHaveInstrumentIdErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
             int instrumentId, bool neededLuthierVisit, string ownName, int? userId, int i)
         {
             var testAddMyInstrumentRequestRequest = new AddMyInstrumentRequest()
@@ -169,7 +169,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
 
         [Test]
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)1, 1, 1, true, null, 1, 0)]
-        public void ShouldHaveOwnNameErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
+        public void AddMyInstrumentRequestValidator_ShouldHaveOwnNameErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
             int instrumentId, bool neededLuthierVisit, string ownName, int? userId, int i)
         {
             var testAddMyInstrumentRequestRequest = new AddMyInstrumentRequest()
@@ -192,7 +192,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)11, (Core.Enums.WhereGuitarKept)1, 1, -1, true, "test1", 1, 0)]
         [TestCase((Core.Enums.AccountType)(-6), (Core.Enums.WhereGuitarKept)2, 11, -51, false, "test2", 2, 1)]
         [TestCase(null, (Core.Enums.WhereGuitarKept)0, 26, 0, true, "test3", 3, 2)]
-        public void ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
+        public void AddMyInstrumentRequestValidator_ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
             int instrumentId, bool neededLuthierVisit, string ownName, int? userId, int i)
         {
             var testAddMyInstrumentRequestRequest = new AddMyInstrumentRequest()
@@ -215,7 +215,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)1, 1, 1, true, "test1", 0, 0)]
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)2, 11, 51, false, "test2", -6, 1)]
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)0, 26, 61, true, "test3", null, 2)]
-        public void ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
+        public void AddMyInstrumentRequestValidator_ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
             int instrumentId, bool neededLuthierVisit, string ownName, int? userId, int i)
         {
             var testAddMyInstrumentRequestRequest = new AddMyInstrumentRequest()

@@ -19,7 +19,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, "test1", 1.1, 1.1, 1)]
         [TestCase((Core.Enums.AccountType)1, 2, null, null, null, 2)]
         [TestCase((Core.Enums.AccountType)0, 3, "test3", 21.11, 152.12, 3)]
-        public void ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int? userId, string name, double? frequency, double? waveLenght, int id)
+        public void ModifyToneRequestValidator_ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int? userId, string name, double? frequency, double? waveLenght, int id)
         {
             var testToneRequest = new ModifyToneRequest()
             {
@@ -38,7 +38,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, "test1", -1.1, 1.1, 1)]
         [TestCase((Core.Enums.AccountType)1, 2, "test2", -125.234, 35.16, 2)]
         [TestCase((Core.Enums.AccountType)0, 3, "test3", 0, 152.12, 3)]
-        public void ShouldHaveFrequencyErrors(Core.Enums.AccountType? accountType, int? userId, string name, double? frequency, double? waveLenght, int id)
+        public void ModifyToneRequestValidator_ShouldHaveFrequencyErrors(Core.Enums.AccountType? accountType, int? userId, string name, double? frequency, double? waveLenght, int id)
         {
             var testToneRequest = new ModifyToneRequest()
             {
@@ -57,7 +57,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, "test1", 1.1, -1.1, 1)]
         [TestCase((Core.Enums.AccountType)1, 2, "test2", 125.234, -35.16, 2)]
         [TestCase((Core.Enums.AccountType)0, 3, "test3", 21.11, 0, 3)]
-        public void ShouldHaveWaveLenghtErrors(Core.Enums.AccountType? accountType, int? userId, string name, double? frequency, double? waveLenght, int id)
+        public void ModifyToneRequestValidator_ShouldHaveWaveLenghtErrors(Core.Enums.AccountType? accountType, int? userId, string name, double? frequency, double? waveLenght, int id)
         {
             var testToneRequest = new ModifyToneRequest()
             {
@@ -76,7 +76,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, "test1", 1.1, 1.1, -1)]
         [TestCase((Core.Enums.AccountType)1, 2, null, null, null, -2)]
         [TestCase((Core.Enums.AccountType)0, 3, "test3", 21.11, 152.12, 0)]
-        public void ShouldHaveIdErrors(Core.Enums.AccountType? accountType, int? userId, string name, double? frequency, double? waveLenght, int id)
+        public void ModifyToneRequestValidator_ShouldHaveIdErrors(Core.Enums.AccountType? accountType, int? userId, string name, double? frequency, double? waveLenght, int id)
         {
             var testToneRequest = new ModifyToneRequest()
             {
@@ -95,7 +95,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, -1, "test1", 1.1, 1.1, 1)]
         [TestCase((Core.Enums.AccountType)1, -2, "test2", 125.234, 35.16, 2)]
         [TestCase((Core.Enums.AccountType)0, 0, "test3", 21.11, 152.12, 3)]
-        public void ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, string name, double? frequency, double? waveLenght, int id)
+        public void ModifyToneRequestValidator_ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, string name, double? frequency, double? waveLenght, int id)
         {
             var testToneRequest = new ModifyToneRequest()
             {
@@ -114,7 +114,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)5, 1, "test1", 1.1, 1.1, 1)]
         [TestCase((Core.Enums.AccountType)(-1), 2, "test2", 125.234, 35.16, 2)]
         [TestCase(null, 3, "test3", 21.11, 152.12, 3)]
-        public void ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, string name, double? frequency, double? waveLenght, int id)
+        public void ModifyToneRequestValidator_ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, string name, double? frequency, double? waveLenght, int id)
         {
             var testToneRequest = new ModifyToneRequest()
             {

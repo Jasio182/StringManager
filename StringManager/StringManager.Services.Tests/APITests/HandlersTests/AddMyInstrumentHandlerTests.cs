@@ -128,7 +128,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         }
 
         [Test]
-        public void AddInstalledStringHandler_ShouldNotHaveAnyErrors()
+        public void AddMyInstrumentHandler_ShouldNotHaveAnyErrors()
         {
             //Arrange
             var expectedResponse = new Core.Models.ModelActionResult<Core.Models.MyInstrument>((int)HttpStatusCode.OK, testMappedMyInstrument);
@@ -149,7 +149,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         }
 
         [Test]
-        public void AddInstalledStringHandler_ShouldInstrumentBeNull()
+        public void AddMyInstrumentHandler_ShouldInstrumentBeNull()
         {
             //Arrange
             var expectedResponse = new Core.Models.ModelActionResult<Core.Models.MyInstrument>((int)HttpStatusCode.BadRequest,
@@ -167,7 +167,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         }
 
         [Test]
-        public void AddInstalledStringHandler_ShouldUserBeNull()
+        public void AddMyInstrumentHandler_ShouldUserBeNull()
         {
             //Arrange
             var expectedResponse = new Core.Models.ModelActionResult<Core.Models.MyInstrument>((int)HttpStatusCode.BadRequest,
@@ -184,7 +184,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         }
 
         [Test]
-        public void AddInstalledStringHandler_ThrowsException()
+        public void AddMyInstrumentHandler_ThrowsException()
         {
             //Arrange
             var expectedResponse = new Core.Models.ModelActionResult<Core.Models.MyInstrument>((int)HttpStatusCode.InternalServerError,

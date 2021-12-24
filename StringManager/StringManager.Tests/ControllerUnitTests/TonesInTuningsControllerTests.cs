@@ -9,7 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace StringManager.Tests
+namespace StringManager.Tests.ControllerUnitTests
 {
     public class TonesInTuningsControllerTests : ControllerTestsBase<TonesInTuningsController>
     {

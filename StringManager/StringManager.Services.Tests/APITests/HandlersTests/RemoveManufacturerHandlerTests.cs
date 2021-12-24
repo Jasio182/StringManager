@@ -63,7 +63,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.User;
-            var expectedResponse = new Core.Models.ModelActionResult<Manufacturer>((int)HttpStatusCode.Unauthorized,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.Manufacturer>((int)HttpStatusCode.Unauthorized,
                 null, testRequest.UserId == null ? "NonAdmin User of Id: " + testRequest.UserId : "Unregistered user" + " tried to remove an Manufacturer");
 
             //Act
@@ -80,7 +80,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.Admin;
-            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.String>((int)HttpStatusCode.NotFound,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.Manufacturer>((int)HttpStatusCode.NotFound,
                 null, "Manufacturer of given Id: " + testRequest.Id + " has not been found");
             mockedCommandExecutor.Setup(x => x.Execute(It.IsAny<RemoveManufacturerCommand>())).Returns(Task.FromResult((Manufacturer)null));
 
@@ -98,7 +98,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.Admin;
-            var expectedResponse = new Core.Models.ModelActionResult<Manufacturer>((int)HttpStatusCode.InternalServerError,
+            var expectedResponse = new Core.Models.ModelActionResult<Core.Models.Manufacturer>((int)HttpStatusCode.InternalServerError,
                 null, "Exception has occured during proccesing deletion of a Manufacturer");
             mockedCommandExecutor.Setup(x => x.Execute(It.IsAny<RemoveManufacturerCommand>())).Throws(new System.Exception());
 

@@ -159,7 +159,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         public void GetStringSizeWithCorrepondingTensionHandler_ShouldResultToneBeNull()
         {
             //Arrange
-            var expectedResponse = new Core.Models.ModelActionResult<List<String>>((int)HttpStatusCode.BadRequest,
+            var expectedResponse = new Core.Models.ModelActionResult<List<Core.Models.String>>((int)HttpStatusCode.BadRequest,
                 null, "Tone of given Id: " + testRequest.ResultToneId + " has not been found");
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetStringQuery>())).Returns(Task.FromResult(testPrimaryString));
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetStringsQuery>())).Returns(Task.FromResult(testAllStrings));
@@ -180,7 +180,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         public void GetStringSizeWithCorrepondingTensionHandler_ShouldPrimaryToneBeNull()
         {
             //Arrange
-            var expectedResponse = new Core.Models.ModelActionResult<List<String>>((int)HttpStatusCode.BadRequest,
+            var expectedResponse = new Core.Models.ModelActionResult<List<Core.Models.String>>((int)HttpStatusCode.BadRequest,
                 null, "Tone of given Id: " + testRequest.PrimaryToneId + " has not been found");
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetStringQuery>())).Returns(Task.FromResult(testPrimaryString));
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetStringsQuery>())).Returns(Task.FromResult(testAllStrings));
@@ -199,7 +199,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         public void GetStringSizeWithCorrepondingTensionHandler_ShouldStringListBeNull()
         {
             //Arrange
-            var expectedResponse = new Core.Models.ModelActionResult<List<String>>((int)HttpStatusCode.BadRequest,
+            var expectedResponse = new Core.Models.ModelActionResult<List<Core.Models.String>>((int)HttpStatusCode.BadRequest,
                 null, "Strings list is empty");
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetStringQuery>())).Returns(Task.FromResult(testPrimaryString));
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetStringsQuery>())).Returns(Task.FromResult((List<String>)null));
@@ -217,7 +217,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         public void GetStringSizeWithCorrepondingTensionHandler_ShouldPrimaryStringBeNull()
         {
             //Arrange
-            var expectedResponse = new Core.Models.ModelActionResult<List<String>>((int)HttpStatusCode.BadRequest,
+            var expectedResponse = new Core.Models.ModelActionResult<List<Core.Models.String>>((int)HttpStatusCode.BadRequest,
                 null, "String of given Id: " + testRequest.StringId + " has not been found");
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetStringQuery>())).Returns(Task.FromResult((String)null));
 
@@ -234,7 +234,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         public void GetStringSizeWithCorrepondingTensionHandler_ThrowsException()
         {
             //Arrange
-            var expectedResponse = new Core.Models.ModelActionResult<List<String>>((int)HttpStatusCode.InternalServerError,
+            var expectedResponse = new Core.Models.ModelActionResult<List<Core.Models.String>>((int)HttpStatusCode.InternalServerError,
                 null, "Exception has occured during calculating List of Strings with corresponding tensions");
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetStringQuery>())).Returns(Task.FromResult(testPrimaryString));
             mockedQueryExecutor.Setup(x => x.Execute(It.IsAny<GetStringsQuery>())).Returns(Task.FromResult(testAllStrings));

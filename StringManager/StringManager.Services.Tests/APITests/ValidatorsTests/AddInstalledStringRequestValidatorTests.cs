@@ -19,7 +19,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, 1, 1, 1, 1)]
         [TestCase((Core.Enums.AccountType)1, 15, 4, 11, 6, 2)]
         [TestCase((Core.Enums.AccountType)0, 6, 12, 21, 55, 3)]
-        public void ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int myInstrumentId, int position, int stringId, int toneId, int? userId)
+        public void AddInstalledStringRequestValidator_ShouldNotHaveAnyErrors(Core.Enums.AccountType? accountType, int myInstrumentId, int position, int stringId, int toneId, int? userId)
         {
             var testAddInstalledStringRequest = new AddInstalledStringRequest()
             {
@@ -38,7 +38,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, -1, 1, 1, 1)]
         [TestCase((Core.Enums.AccountType)1, 15, -4, 11, 6, 2)]
         [TestCase((Core.Enums.AccountType)0, 6, -12, 21, 55, 3)]
-        public void ShouldHavePositionError(Core.Enums.AccountType? accountType, int myInstrumentId, int position, int stringId, int toneId, int? userId)
+        public void AddInstalledStringRequestValidator_ShouldHavePositionError(Core.Enums.AccountType? accountType, int myInstrumentId, int position, int stringId, int toneId, int? userId)
         {
             var testAddInstalledStringRequest = new AddInstalledStringRequest()
             {
@@ -57,7 +57,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, -1, 1, 1, 1, 1)]
         [TestCase((Core.Enums.AccountType)1, -15, 4, 11, 6, 2)]
         [TestCase((Core.Enums.AccountType)0, -6, 12, 21, 55, 3)]
-        public void ShouldHaveMyInstrumentIdError(Core.Enums.AccountType? accountType, int myInstrumentId, int position, int stringId, int toneId, int? userId)
+        public void AddInstalledStringRequestValidator_ShouldHaveMyInstrumentIdError(Core.Enums.AccountType? accountType, int myInstrumentId, int position, int stringId, int toneId, int? userId)
         {
             var testAddInstalledStringRequest = new AddInstalledStringRequest()
             {
@@ -76,7 +76,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, 1, -1, 1, 1)]
         [TestCase((Core.Enums.AccountType)1, 15, 4, -11, 6, 2)]
         [TestCase((Core.Enums.AccountType)0, 6, 12, -21, 55, 3)]
-        public void ShouldHaveStringIdError(Core.Enums.AccountType? accountType, int myInstrumentId, int position, int stringId, int toneId, int? userId)
+        public void AddInstalledStringRequestValidator_ShouldHaveStringIdError(Core.Enums.AccountType? accountType, int myInstrumentId, int position, int stringId, int toneId, int? userId)
         {
             var testAddInstalledStringRequest = new AddInstalledStringRequest()
             {
@@ -95,7 +95,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)0, 1, 1, 1, 1, -1)]
         [TestCase((Core.Enums.AccountType)1, 15, 4, 11, 6, 0)]
         [TestCase((Core.Enums.AccountType)0, 6, 12, 21, 55, null)]
-        public void ShouldHaveUserIdError(Core.Enums.AccountType? accountType, int myInstrumentId, int position, int stringId, int toneId, int? userId)
+        public void AddInstalledStringRequestValidator_ShouldHaveUserIdError(Core.Enums.AccountType? accountType, int myInstrumentId, int position, int stringId, int toneId, int? userId)
         {
             var testAddInstalledStringRequest = new AddInstalledStringRequest()
             {
@@ -114,7 +114,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [TestCase((Core.Enums.AccountType)3, 1, 1, 1, 1, 1)]
         [TestCase((Core.Enums.AccountType)11, 15, 4, 11, 6, 2)]
         [TestCase(null, 6, 12, 21, 55, 3)]
-        public void ShouldHaveAccountTypeError(Core.Enums.AccountType? accountType, int myInstrumentId, int position, int stringId, int toneId, int? userId)
+        public void AddInstalledStringRequestValidator_ShouldHaveAccountTypeError(Core.Enums.AccountType? accountType, int myInstrumentId, int position, int stringId, int toneId, int? userId)
         {
             var testAddInstalledStringRequest = new AddInstalledStringRequest()
             {
