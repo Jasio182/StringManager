@@ -103,7 +103,7 @@ namespace StringManager.Controllers
         /// <response code="401">User is not authorized to delete Manufacturer item</response> 
         /// <response code="404">The specific Manufacturer item has not been found</response>
         /// <response code="500">An exception has been thrown during deletion of specific Manufacturer item</response> 
-        [HttpDelete]
+        [HttpDelete("{Id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ModelResult<Manufacturer>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ModelResult<Manufacturer>), StatusCodes.Status401Unauthorized)]

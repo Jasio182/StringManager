@@ -66,7 +66,7 @@ namespace StringManager.Controllers
         /// <response code="401">User is not authorized to delete StringInSet item</response> 
         /// <response code="404">The specific StringInSet item has not been found</response>
         /// <response code="500">An exception has been thrown during deletion of specific StringInSet item</response> 
-        [HttpDelete]
+        [HttpDelete("{Id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ModelResult<StringInSet>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ModelResult<StringInSet>), StatusCodes.Status401Unauthorized)]

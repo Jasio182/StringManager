@@ -66,7 +66,7 @@ namespace StringManager.Controllers
         /// <response code="401">User is not authorized to delete ToneInTuning item</response> 
         /// <response code="404">The specific ToneInTuning item has not been found</response>
         /// <response code="500">An exception has been thrown during deletion of specific ToneInTuning item</response> 
-        [HttpDelete]
+        [HttpDelete("{Id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ModelResult<ToneInTuning>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ModelResult<ToneInTuning>), StatusCodes.Status401Unauthorized)]
