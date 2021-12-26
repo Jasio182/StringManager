@@ -19,7 +19,7 @@ namespace StringManager.Tests.IntegrationTests
 
         [Test, Order(1)]
         [TestCase(108)]
-        public async Task GetBaseTones_ReturnsValueAsync(int numberOfTests)
+        public async Task GetTones_ReturnsValueAsync(int numberOfTests)
         {
             //Arrange
             var requestMessage = new HttpRequestMessage(HttpMethod.Get, "/Tones");
@@ -37,7 +37,9 @@ namespace StringManager.Tests.IntegrationTests
         }
 
         [Test]
-        public async Task AddTone_Unauthorised_WrongLoginDataAsync()
+        [TestCase(correctTestUserUsername, correctTestUserPassword)]
+        [TestCase(incorrectTestUsername, incorrectTestPassword)]
+        public async Task AddTone_UnauthorisedAsync(string username, string password)
         {
             //Arrange
             var requestMessage = new HttpRequestMessage(HttpMethod.Post, "/Tones");
@@ -52,32 +54,7 @@ namespace StringManager.Tests.IntegrationTests
             Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
             var data = await response.Content.ReadAsStringAsync();
             Assert.IsEmpty(data);
-        }
 
-        [Test]
-        public async Task AddTone_Unauthorised_UserAccountAsync()
-        {
-            //Arrange
-            var requestBody = new AddToneRequest()
-            {
-                Frequency = 0.1,
-                WaveLenght = 0.1,
-                Name = "testToneToAdd"
-            };
-            var requestMessage = new HttpRequestMessage(HttpMethod.Post, "/Tones");
-            requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Basic",
-                System.Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes($"{correctTestUserUsername}:{correctTestUserPassword}")));
-            var jsonBody = JsonConvert.SerializeObject(requestBody);
-            requestMessage.Content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-            //Act
-            var response = await client.SendAsync(requestMessage);
-
-            //Assert
-            Assert.IsNotNull(response);
-            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
-            var data = await response.Content.ReadAsStringAsync();
-            Assert.IsNotEmpty(data);
         }
 
         [Test]
@@ -130,29 +107,13 @@ namespace StringManager.Tests.IntegrationTests
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             var data = await response.Content.ReadAsStringAsync();
             Assert.IsNotEmpty(data);
-            await GetBaseTones_ReturnsValueAsync(109);
+            await GetTones_ReturnsValueAsync(109);
         }
 
         [Test]
-        public async Task ModifyTone_Unauthorised_WrongLoginDataAsync()
-        {
-            //Arrange
-            var requestMessage = new HttpRequestMessage(HttpMethod.Put, "/Tones");
-            requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Basic",
-                System.Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes($"{incorrectTestUsername}:{incorrectTestPassword}")));
-
-            //Act
-            var response = await client.SendAsync(requestMessage);
-
-            //Assert
-            Assert.IsNotNull(response);
-            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
-            var data = await response.Content.ReadAsStringAsync();
-            Assert.IsEmpty(data);
-        }
-
-        [Test]
-        public async Task ModifyTone_Unauthorised_UserAccountAsync()
+        [TestCase(correctTestUserUsername, correctTestUserPassword)]
+        [TestCase(incorrectTestUsername, incorrectTestPassword)]
+        public async Task ModifyTone_UnauthorisedAsync(string username, string password)
         {
             //Arrange
             var requestBody = new ModifyToneRequest()
@@ -179,38 +140,15 @@ namespace StringManager.Tests.IntegrationTests
         }
 
         [Test]
-        public async Task ModifyTone_BadRequest_WrongDataAsync()
-        {
-            //Arrange
-            var requestBody = new AddToneRequest()
-            {
-                Frequency = -0.1,
-                WaveLenght = 0.1,
-                Name = ""
-            };
-            var requestMessage = new HttpRequestMessage(HttpMethod.Put, "/Tones");
-            requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Basic",
-                System.Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes($"{correctTestAdminUsername}:{correctTestAdminPassword}")));
-            var jsonBody = JsonConvert.SerializeObject(requestBody);
-            requestMessage.Content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-            //Act
-            var response = await client.SendAsync(requestMessage);
-
-            //Assert
-            Assert.IsNotNull(response);
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            var data = await response.Content.ReadAsStringAsync();
-            Assert.IsNotEmpty(data);
-        }
-
-        [Test, Order(3)]
-        public async Task ModifyTone_SuccessAsync()
+        [TestCase(300, HttpStatusCode.NotFound)]
+        [TestCase(109, HttpStatusCode.NoContent), Order(3)]
+        [TestCase(0, HttpStatusCode.BadRequest)]
+        public async Task ModifyTone_AuthorisedAsync(int id, HttpStatusCode statusCode)
         {
             //Arrange
             var requestBody = new ModifyToneRequest()
             {
-                Id = 109,
+                Id = id,
                 Frequency = 0.2,
                 WaveLenght = 0.2,
                 Name = "modifyTestToneToAdd"
@@ -226,53 +164,51 @@ namespace StringManager.Tests.IntegrationTests
 
             //Assert
             Assert.IsNotNull(response);
-            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
+            Assert.AreEqual(statusCode, response.StatusCode);
             var data = await response.Content.ReadAsStringAsync();
-            Assert.IsEmpty(data);
-            await GetBaseTones_ReturnsValueAsync(109);
+            if (statusCode == HttpStatusCode.NoContent)
+            {
+                Assert.IsEmpty(data);
+                await GetTones_ReturnsValueAsync(109);
+            }
+            else
+            {
+                Assert.IsNotEmpty(data);
+            }
         }
 
         [Test]
-        public async Task RemoveTone_Unauthorised_WrongLoginDataAsync()
+        [TestCase(correctTestUserUsername, correctTestUserPassword, false)]
+        [TestCase(incorrectTestUsername, incorrectTestPassword, true)]
+        public async Task RemoveTone_UnauthorisedAsync(string username, string password, bool isEmpty)
         {
-            //Arrange
-            var requestMessage = new HttpRequestMessage(HttpMethod.Delete, "/Tones/109");
-            requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Basic",
-                System.Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes($"{incorrectTestUsername}:{incorrectTestPassword}")));
+            {
+                //Arrange
+                var requestMessage = new HttpRequestMessage(HttpMethod.Delete, "/Tones/109");
+                requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Basic",
+                    System.Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes($"{username}:{password}")));
 
-            //Act
-            var response = await client.SendAsync(requestMessage);
+                //Act
+                var response = await client.SendAsync(requestMessage);
 
-            //Assert
-            Assert.IsNotNull(response);
-            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
-            var data = await response.Content.ReadAsStringAsync();
-            Assert.IsEmpty(data);
+                //Assert
+                Assert.IsNotNull(response);
+                Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
+                var data = await response.Content.ReadAsStringAsync();
+                if (isEmpty)
+                    Assert.IsEmpty(data);
+                else
+                    Assert.IsNotEmpty(data);
+            }
         }
 
         [Test]
-        public async Task RemoveTone_Unauthorised_UserAccountAsync()
+        [TestCase(300, HttpStatusCode.NotFound)]
+        [TestCase(109, HttpStatusCode.NoContent), Order(4)]
+        public async Task RemoveTone_AuthorisedAsync(int id, HttpStatusCode statusCode)
         {
             //Arrange
-            var requestMessage = new HttpRequestMessage(HttpMethod.Delete, "/Tones/109");
-            requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Basic",
-                System.Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes($"{correctTestUserUsername}:{correctTestUserPassword}")));
-
-            //Act
-            var response = await client.SendAsync(requestMessage);
-
-            //Assert
-            Assert.IsNotNull(response);
-            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
-            var data = await response.Content.ReadAsStringAsync();
-            Assert.IsNotEmpty(data);
-        }
-
-        [Test, Order(4)]
-        public async Task RemoveTone_SuccessAsync()
-        {
-            //Arrange
-            var requestMessage = new HttpRequestMessage(HttpMethod.Delete, "/Tones/109");
+            var requestMessage = new HttpRequestMessage(HttpMethod.Delete, "/Tones/"+id);
             requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Basic",
                 System.Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes($"{correctTestAdminUsername}:{correctTestAdminPassword}")));
 
@@ -281,10 +217,17 @@ namespace StringManager.Tests.IntegrationTests
 
             //Assert
             Assert.IsNotNull(response);
-            Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
+            Assert.AreEqual(statusCode, response.StatusCode);
             var data = await response.Content.ReadAsStringAsync();
-            Assert.IsEmpty(data);
-            await GetBaseTones_ReturnsValueAsync(108);
+            if (statusCode == HttpStatusCode.NotFound)
+            {
+                Assert.IsNotEmpty(data);
+            }
+            else
+            {
+                Assert.IsEmpty(data);
+                await GetTones_ReturnsValueAsync(108);
+            }
         }
     }
 }

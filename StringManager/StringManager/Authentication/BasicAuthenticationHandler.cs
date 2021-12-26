@@ -35,7 +35,7 @@ namespace StringManager.Authentication
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             var endpoint = Context.GetEndpoint();
-            if (endpoint?.Metadata?.GetMetadata<IAllowAnonymous>() != null)
+            if (endpoint?.Metadata?.GetMetadata<IAllowAnonymous>() != null && !Request.Headers.ContainsKey("Authorization"))
             {
                 return AuthenticateResult.NoResult();
             }

@@ -48,7 +48,6 @@ namespace StringManager.Controllers
         [HttpGet]
         [Route("single")]
         [ProducesResponseType(typeof(ModelResult<User>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ModelResult<User>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ModelResult<User>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ModelResult<User>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> GetUserAsync()

@@ -673,7 +673,31 @@ namespace StringManager.Tests.IntegrationTests.Setup
         {
             Tuning[] tunings =
             {
-
+                new Tuning()
+                {
+                    NumberOfStrings = 6,
+                    Name = "Standard E",
+                },
+                new Tuning()
+                {
+                    NumberOfStrings = 6,
+                    Name = "Standard D",
+                },
+                new Tuning()
+                {
+                    NumberOfStrings = 6,
+                    Name = "Drop D",
+                },
+                new Tuning()
+                {
+                    NumberOfStrings = 7,
+                    Name = "Standard B",
+                },
+                new Tuning()
+                {
+                    NumberOfStrings = 7,
+                    Name = "Drop A",
+                }
             };
             return tunings;
         }

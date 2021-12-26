@@ -15,12 +15,12 @@ namespace StringManager.Tests.IntegrationTests.Setup
         protected APIWebApplicationFactory factory;
         protected HttpClient client;
 
-        protected readonly string correctTestUserUsername = "testUser";
-        protected readonly string correctTestUserPassword = "testUserPass";
-        protected readonly string correctTestAdminUsername = "testAdmin";
-        protected readonly string correctTestAdminPassword = "testAdminPass";
-        protected readonly string incorrectTestUsername = "testWrong";
-        protected readonly string incorrectTestPassword = "testWrongPass";
+        protected const string correctTestUserUsername = "testUser";
+        protected const string correctTestUserPassword = "testUserPass";
+        protected const string correctTestAdminUsername = "testAdmin";
+        protected const string correctTestAdminPassword = "testAdminPass";
+        protected const string incorrectTestUsername = "testWrong";
+        protected const string incorrectTestPassword = "testWrongPass";
         private readonly string databaseName;
 
         public EndpointTestBase(string databaseName)
@@ -29,7 +29,7 @@ namespace StringManager.Tests.IntegrationTests.Setup
         }
 
         [OneTimeSetUp]
-        public void GivenARequestToTheController()
+        public void Setup()
         {
             factory = new APIWebApplicationFactory(databaseName);
             client = factory.CreateClient();
