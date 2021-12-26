@@ -8,6 +8,10 @@ namespace StringManager.Tests.IntegrationTests
 {
     internal class InstalledStringsEndpointsTests : EndpointTestBase
     {
+        public InstalledStringsEndpointsTests() : base("InstalledStringsEndpointsTestsDatabase")
+        {
+        }
+
         [Test]
         public async Task RemoveInstalledString_UnauthorisedAsync()
         {

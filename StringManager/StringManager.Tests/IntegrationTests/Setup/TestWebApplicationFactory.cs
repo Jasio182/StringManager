@@ -13,6 +13,12 @@ namespace StringManager.Tests.IntegrationTests.Setup
     {
         private ILogger<TestWebApplicationFactory<TStartup>> logger;
         private OnMemoryDatabaseHandler databaseHandler;
+        private readonly string databaseName;
+
+        public TestWebApplicationFactory(string databaseName)
+        {
+            this.databaseName = databaseName;
+        }
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -26,7 +32,7 @@ namespace StringManager.Tests.IntegrationTests.Setup
 
                 services.AddDbContext<StringManagerStorageContext>(options =>
                 {
-                    options.UseInMemoryDatabase("TestStringManagerDatabase");
+                    options.UseInMemoryDatabase(databaseName);
                 });
 
                 var sp = services.BuildServiceProvider();

@@ -10,6 +10,10 @@ namespace StringManager.Tests.IntegrationTests
 {
     internal class StringsEndpointsTests : EndpointTestBase
     {
+        public StringsEndpointsTests() : base("StringsEndpointsTestsDatabase")
+        {
+        }
+
         [Test]
         public async Task GetString_ReturnsValueAsync()
         {

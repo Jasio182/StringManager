@@ -12,6 +12,10 @@ namespace StringManager.Tests.IntegrationTests
 {
     internal class TonesEndpointsTests : EndpointTestBase
     {
+        public TonesEndpointsTests() : base("TonesEndpointsTestsDatabase")
+        {
+        }
+
         [Test]
         public async Task GetTones_ReturnsValueAsync()
         {

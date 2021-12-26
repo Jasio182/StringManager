@@ -836,7 +836,7 @@ namespace StringManager.Tests.IntegrationTests.Setup
             {
                 context.Instruments.Add(instrument);
             };
-          foreach (var user in SetupUsers())
+            foreach (var user in SetupUsers())
             {
                 context.Users.Add(user);
             };
