@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.MediatorRequestsAndResponses;
+using StringManager.Core.MediatorRequestsAndResponses.Requests;
 using StringManager.Core.Models;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
-using StringManager.Services.API.Domain;
-using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.InternalClasses;
 using System.Net;
 using System.Threading;

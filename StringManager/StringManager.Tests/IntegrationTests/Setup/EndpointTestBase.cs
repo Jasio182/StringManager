@@ -29,7 +29,7 @@ namespace StringManager.Tests.IntegrationTests.Setup
         [OneTimeTearDown]
         public void TearDown()
         {
-            factory.dropDatabase();
+            factory.DropDatabase();
         }
     }
 }

@@ -6,7 +6,7 @@ namespace StringManager.Tests.IntegrationTests.Setup
 {
     internal class OnMemoryDatabaseHandler
     {
-        private StringManagerStorageContext context;
+        private readonly StringManagerStorageContext context;
 
         public OnMemoryDatabaseHandler(StringManagerStorageContext context)
         {

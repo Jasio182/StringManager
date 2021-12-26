@@ -1,20 +1,20 @@
 ﻿using FluentValidation.TestHelper;
 using NUnit.Framework;
-using StringManager.Services.API.Domain.Requests;
+using StringManager.Core.MediatorRequestsAndResponses.Requests;
 using StringManager.Services.API.Validators;
 
 namespace StringManager.Services.Tests.APITests.ValidatorsTests
 {
     internal class ModifyMyInstrumentRequestValidatorTests
     {
-        private static System.DateTime[] correctDates =
+        private static readonly System.DateTime[] correctDates =
         {
             System.DateTime.Now.Subtract(System.TimeSpan.FromDays(28)),
             System.DateTime.Now.Subtract(System.TimeSpan.FromDays(365)),
             System.DateTime.Now.Subtract(System.TimeSpan.FromDays(422))
         };
 
-        private static System.DateTime[] incorrectDates =
+        private static readonly System.DateTime[] incorrectDates =
 {
             System.DateTime.Now.AddDays(28),
             System.DateTime.Now.AddDays(365),

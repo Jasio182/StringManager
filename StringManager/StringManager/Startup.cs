@@ -10,9 +10,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using StringManager.Authentication;
+using StringManager.Core.MediatorRequestsAndResponses;
 using StringManager.DataAccess;
 using StringManager.DataAccess.CQRS;
-using StringManager.Services.API.Domain;
+using StringManager.Services.API.Handlers;
 using StringManager.Services.API.Validators;
 using StringManager.Services.Mappings;
 using System;
@@ -44,7 +45,7 @@ namespace StringManager
             services.AddTransient<IQueryExecutor, QueryExecutor>();
             services.AddTransient<ICommandExecutor, CommandExecutor>();
             services.AddAutoMapper(typeof(ToneMapping).Assembly);
-            services.AddMediatR(typeof(StatusCodeResponse<>));
+            services.AddMediatR(typeof(StatusCodeResponse<>), typeof(AddInstalledStringHandler));
             services.AddDbContext<StringManagerStorageContext>(
                 opt => opt.UseSqlServer(Configuration.GetConnectionString("StringManagerConnectionString")));
             services.AddControllers();

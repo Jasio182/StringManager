@@ -2,10 +2,10 @@
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
+using StringManager.Core.MediatorRequestsAndResponses.Requests;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.DataAccess.Entities;
-using StringManager.Services.API.Domain.Requests;
 using StringManager.Services.API.Handlers;
 using System.Collections.Generic;
 using System.Net;

@@ -39,12 +39,12 @@ namespace StringManager.Tests.IntegrationTests.Setup
                     logger = scopedServices
                         .GetRequiredService<ILogger<TestWebApplicationFactory<TStartup>>>();
 
-                    setupDatabase();
+                    SetupDatabase();
                 }
             });
         }
 
-        private void setupDatabase()
+        private void SetupDatabase()
         {
             try
             {
@@ -56,7 +56,7 @@ namespace StringManager.Tests.IntegrationTests.Setup
             }
         }
 
-        public void dropDatabase()
+        public void DropDatabase()
         {
             try
             {

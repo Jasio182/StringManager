@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using StringManager.Core.MediatorRequestsAndResponses.Requests;
 using StringManager.DataAccess.Entities;
-using StringManager.Services.API.Domain.Requests;
 
 namespace StringManager.Services.Mappings
 {

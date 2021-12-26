@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using StringManager.Core.MediatorRequestsAndResponses;
+using StringManager.Core.MediatorRequestsAndResponses.Requests;
 using StringManager.DataAccess.CQRS;
 using StringManager.DataAccess.CQRS.Commands;
 using StringManager.DataAccess.CQRS.Queries;
 using StringManager.DataAccess.Entities;
-using StringManager.Services.API.Domain;
-using StringManager.Services.API.Domain.Requests;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;

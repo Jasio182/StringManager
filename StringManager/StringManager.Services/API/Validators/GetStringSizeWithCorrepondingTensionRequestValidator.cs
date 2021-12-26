@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
+using StringManager.Core.MediatorRequestsAndResponses.Requests;
 using StringManager.Core.Models;
-using StringManager.Services.API.Domain.Requests;
 using System.Collections.Generic;
 
 namespace StringManager.Services.API.Validators

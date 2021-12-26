@@ -1,6 +1,6 @@
 ﻿using FluentValidation.TestHelper;
 using NUnit.Framework;
-using StringManager.Services.API.Domain.Requests;
+using StringManager.Core.MediatorRequestsAndResponses.Requests;
 using StringManager.Services.API.Validators;
 using System;
 using System.Collections.Generic;

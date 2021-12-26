@@ -2,9 +2,9 @@
 using Moq;
 using NUnit.Framework;
 using StringManager.Controllers;
+using StringManager.Core.MediatorRequestsAndResponses;
+using StringManager.Core.MediatorRequestsAndResponses.Requests;
 using StringManager.Core.Models;
-using StringManager.Services.API.Domain;
-using StringManager.Services.API.Domain.Requests;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;

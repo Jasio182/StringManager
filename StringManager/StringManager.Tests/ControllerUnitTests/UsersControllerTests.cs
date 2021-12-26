@@ -2,9 +2,9 @@
 using Moq;
 using NUnit.Framework;
 using StringManager.Controllers;
+using StringManager.Core.MediatorRequestsAndResponses;
+using StringManager.Core.MediatorRequestsAndResponses.Requests;
 using StringManager.Core.Models;
-using StringManager.Services.API.Domain;
-using StringManager.Services.API.Domain.Requests;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +14,7 @@ namespace StringManager.Tests.ControllerUnitTests
     internal class UsersControllerTests : ControllerTestsBase<UsersController>
     {
         private UsersController controller;
-        private string exceptionResponse = "An error occured during preparation to send an request via controller: UsersController";
+        private readonly string exceptionResponse = "An error occured during preparation to send an request via controller: UsersController";
 
         [SetUp]
         public void Setup()

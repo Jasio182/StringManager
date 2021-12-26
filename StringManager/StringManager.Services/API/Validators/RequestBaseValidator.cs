@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using StringManager.Services.API.Domain.Requests;
+using StringManager.Core.MediatorRequestsAndResponses.Requests;
 
 namespace StringManager.Services.API.Validators
 {
