@@ -9,8 +9,15 @@ namespace StringManager.Tests.IntegrationTests.Setup
 
     public abstract class EndpointTestBase
     {
-        public APIWebApplicationFactory factory;
-        public HttpClient client;
+        protected APIWebApplicationFactory factory;
+        protected HttpClient client;
+
+        protected readonly string correctTestUserUsername = "testUser";
+        protected readonly string correctTestUserPassword = "testUserPass";
+        protected readonly string correctTestAdminUsername = "testAdmin";
+        protected readonly string correctTestAdminPassword = "testAdminPass";
+        protected readonly string incorrectTestUsername = "testWrong";
+        protected readonly string incorrectTestPassword = "testWrongPass";
 
         [OneTimeSetUp]
         public void GivenARequestToTheController()

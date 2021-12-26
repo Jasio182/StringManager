@@ -11,8 +11,8 @@ namespace StringManager.Tests.IntegrationTests.Setup
     public class TestWebApplicationFactory<TStartup>
     : WebApplicationFactory<TStartup> where TStartup : class
     {
-        private StringManagerStorageContext dbContext;
         private ILogger<TestWebApplicationFactory<TStartup>> logger;
+        private OnMemoryDatabaseHandler databaseHandler;
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -33,8 +33,9 @@ namespace StringManager.Tests.IntegrationTests.Setup
 
                 using (var scope = sp.CreateScope())
                 {
+                    
                     var scopedServices = scope.ServiceProvider;
-                    dbContext = scopedServices.GetRequiredService<StringManagerStorageContext>();
+                    databaseHandler = new OnMemoryDatabaseHandler(scopedServices.GetRequiredService<StringManagerStorageContext>());
                     logger = scopedServices
                         .GetRequiredService<ILogger<TestWebApplicationFactory<TStartup>>>();
 
@@ -45,11 +46,9 @@ namespace StringManager.Tests.IntegrationTests.Setup
 
         private void setupDatabase()
         {
-            dbContext.Database.EnsureCreated();
-
             try
             {
-                OnMemoryDatabaseHandling.InitializeDbForTests(dbContext);
+                databaseHandler.InitializeDbForTests();
             }
             catch (System.Exception ex)
             {
@@ -61,7 +60,7 @@ namespace StringManager.Tests.IntegrationTests.Setup
         {
             try
             {
-                OnMemoryDatabaseHandling.DropTestDb(dbContext);
+                databaseHandler.DropTestDb();
             }
             catch (System.Exception ex)
             {
