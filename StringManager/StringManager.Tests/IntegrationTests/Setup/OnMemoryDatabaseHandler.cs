@@ -849,7 +849,6 @@ namespace StringManager.Tests.IntegrationTests.Setup
                 context.InstalledStrings.Add(installedString);
             };
             context.SaveChanges();
-            var test = context.Users.ToListAsync();
         }
 
         public void DropTestDb()

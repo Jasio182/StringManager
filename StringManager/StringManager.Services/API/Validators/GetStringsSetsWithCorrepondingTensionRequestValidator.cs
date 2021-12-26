@@ -12,8 +12,6 @@ namespace StringManager.Services.API.Validators
             RuleFor(request => request.MyInstrumentId).GreaterThan(0);
             RuleFor(request => request.ResultTuningId).GreaterThan(0);
             RuleFor(request => request.StringType).IsInEnum();
-            RuleFor(user => user.AccountType).NotNull();
-            RuleFor(user => user.UserId).NotNull();
         }
     }
 }

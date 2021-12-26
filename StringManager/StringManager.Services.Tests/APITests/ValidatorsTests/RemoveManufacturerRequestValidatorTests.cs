@@ -50,7 +50,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [Test]
         [TestCase((Core.Enums.AccountType)2, 1, 1)]
         [TestCase((Core.Enums.AccountType)(-1), 12, 11)]
-        [TestCase(null, 13, 21)]
+        [TestCase((Core.Enums.AccountType)241, 13, 21)]
         public void RemoveManufacturerRequestValidator_ShouldHaveAccountTypeError(Core.Enums.AccountType? accountType, int? userId, int id)
         {
             var testRemoveManufacturerRequest = new RemoveManufacturerRequest()
@@ -66,7 +66,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [Test]
         [TestCase((Core.Enums.AccountType)0, -1, 1)]
         [TestCase((Core.Enums.AccountType)1, 0, 11)]
-        [TestCase((Core.Enums.AccountType)0, null, 21)]
+        [TestCase((Core.Enums.AccountType)0, -15, 21)]
         public void RemoveManufacturerRequestValidator_ShouldHaveUserIdError(Core.Enums.AccountType? accountType, int? userId, int id)
         {
             var testRemoveManufacturerRequest = new RemoveManufacturerRequest()

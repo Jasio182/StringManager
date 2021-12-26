@@ -9,8 +9,6 @@ namespace StringManager.Services.API.Validators
         public RemoveStringInSetRequestValidator()
         {
             RuleFor(stringInSet => stringInSet.Id).GreaterThan(0);
-            RuleFor(stringInSet => stringInSet.AccountType).NotNull();
-            RuleFor(stringInSet => stringInSet.UserId).NotNull();
         }
     }
 }

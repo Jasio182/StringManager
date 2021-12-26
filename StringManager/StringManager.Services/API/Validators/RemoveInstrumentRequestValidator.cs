@@ -9,8 +9,6 @@ namespace StringManager.Services.API.Validators
         public RemoveInstrumentRequestValidator()
         {
             RuleFor(instrument => instrument.Id).GreaterThan(0);
-            RuleFor(instrument => instrument.AccountType).NotNull();
-            RuleFor(instrument => instrument.UserId).NotNull();
         }
     }
 }

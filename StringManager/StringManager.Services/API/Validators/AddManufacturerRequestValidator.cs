@@ -8,9 +8,7 @@ namespace StringManager.Services.API.Validators
     {
         public AddManufacturerRequestValidator()
         {
-            RuleFor(manufacturer => manufacturer.Name).NotNull();
-            RuleFor(manufacturer => manufacturer.AccountType).NotNull();
-            RuleFor(manufacturer => manufacturer.UserId).NotNull();
+            RuleFor(manufacturer => manufacturer.Name).NotNull().NotEmpty();
         }
     }
 }

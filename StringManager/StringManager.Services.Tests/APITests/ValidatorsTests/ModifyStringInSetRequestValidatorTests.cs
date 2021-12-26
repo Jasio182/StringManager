@@ -113,7 +113,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [Test]
         [TestCase((Core.Enums.AccountType)0, -1, 1, 1, 1, 1)]
         [TestCase((Core.Enums.AccountType)1, 0, 2, 4, 123, 154)]
-        [TestCase((Core.Enums.AccountType)0, null, 3, 6, 51, 21)]
+        [TestCase((Core.Enums.AccountType)0, -8, 3, 6, 51, 21)]
         public void ModifyStringInSetRequestValidator_ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, int id, int position, int stringId, int stringSetId)
         {
             var testStringInSetRequest = new ModifyStringInSetRequest()
@@ -132,7 +132,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [Test]
         [TestCase((Core.Enums.AccountType)6, 1, 1, 1, 1, 1)]
         [TestCase((Core.Enums.AccountType)(-1), 2, 2, 4, 123, 154)]
-        [TestCase(null, 3, 3, 6, 51, 21)]
+        [TestCase((Core.Enums.AccountType)6145, 3, 3, 6, 51, 21)]
         public void ModifyStringInSetRequestValidator_ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, int id, int position, int stringId, int stringSetId)
         {
             var testStringInSetRequest = new ModifyStringInSetRequest()

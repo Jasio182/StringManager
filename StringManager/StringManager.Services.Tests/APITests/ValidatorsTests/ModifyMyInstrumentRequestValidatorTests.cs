@@ -127,7 +127,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [Test]
         [TestCase((Core.Enums.AccountType)0, -1, 1, 1, 0)]
         [TestCase((Core.Enums.AccountType)1, 0, 7, 1, 1)]
-        [TestCase((Core.Enums.AccountType)0, null, 12, 1, 2)]
+        [TestCase((Core.Enums.AccountType)0, -11, 12, 1, 2)]
         public void ModifyMyInstrumentRequestValidator_ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, int id, int hoursPlayedWeekly, int i)
         {
             var testModifyMyInstrumentRequest = new ModifyMyInstrumentRequest()
@@ -146,7 +146,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [Test]
         [TestCase((Core.Enums.AccountType)6, 1, 1, 1, 0)]
         [TestCase((Core.Enums.AccountType)(-1), 6, 7, 1, 1)]
-        [TestCase(null, 9, 12, 1, 2)]
+        [TestCase((Core.Enums.AccountType)651, 9, 12, 1, 2)]
         public void ModifyMyInstrumentRequestValidator_ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, int id, int hoursPlayedWeekly, int i)
         {
             var testModifyMyInstrumentRequest = new ModifyMyInstrumentRequest()

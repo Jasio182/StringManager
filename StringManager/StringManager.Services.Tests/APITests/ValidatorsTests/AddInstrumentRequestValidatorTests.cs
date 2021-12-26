@@ -57,6 +57,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
 
         [Test]
         [TestCase((Core.Enums.AccountType)0, 1, null, 1, 1, 1, 1)]
+        [TestCase((Core.Enums.AccountType)0, 1, "", 1, 1, 1, 1)]
         public void AddInstrumentRequestValidator_ShouldHaveModelError(Core.Enums.AccountType? accountType, int manufacturerId, string model, int numberOfStrings, int scaleLenghtBass, int scaleLenghtTreble, int? userId)
         {
             var testAddInstrumentRequestRequest = new AddInstrumentRequest()
@@ -135,7 +136,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
 
         [Test]
         [TestCase((Core.Enums.AccountType)0, 1, "test1", 1, 1, 1, -1)]
-        [TestCase((Core.Enums.AccountType)1, 15, "test2", 4, 11, 6, null)]
+        [TestCase((Core.Enums.AccountType)1, 15, "test2", 4, 11, 6, 0)]
         [TestCase((Core.Enums.AccountType)0, 6, "test3", 12, 21, 55, -21)]
         public void AddInstrumentRequestValidator_ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int manufacturerId, string model, int numberOfStrings, int scaleLenghtBass, int scaleLenghtTreble, int? userId)
         {
@@ -157,7 +158,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [Test]
         [TestCase((Core.Enums.AccountType)5, 1, "test1", 1, 1, 1, 1)]
         [TestCase((Core.Enums.AccountType)8, 15, "test2", 4, 11, 6, 15)]
-        [TestCase(null, 6, "test3", 12, 21, 55, 21)]
+        [TestCase((Core.Enums.AccountType)(-10), 6, "test3", 12, 21, 55, 21)]
         public void AddInstrumentRequestValidator_ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int manufacturerId, string model, int numberOfStrings, int scaleLenghtBass, int scaleLenghtTreble, int? userId)
         {
             var testAddInstrumentRequestRequest = new AddInstrumentRequest()

@@ -169,6 +169,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
 
         [Test]
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)1, 1, 1, true, null, 1, 0)]
+        [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)1, 1, 1, true, "", 1, 0)]
         public void AddMyInstrumentRequestValidator_ShouldHaveOwnNameErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
             int instrumentId, bool neededLuthierVisit, string ownName, int? userId, int i)
         {
@@ -191,7 +192,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [Test]
         [TestCase((Core.Enums.AccountType)11, (Core.Enums.WhereGuitarKept)1, 1, -1, true, "test1", 1, 0)]
         [TestCase((Core.Enums.AccountType)(-6), (Core.Enums.WhereGuitarKept)2, 11, -51, false, "test2", 2, 1)]
-        [TestCase(null, (Core.Enums.WhereGuitarKept)0, 26, 0, true, "test3", 3, 2)]
+        [TestCase((Core.Enums.AccountType)12, (Core.Enums.WhereGuitarKept)0, 26, 0, true, "test3", 3, 2)]
         public void AddMyInstrumentRequestValidator_ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
             int instrumentId, bool neededLuthierVisit, string ownName, int? userId, int i)
         {
@@ -214,7 +215,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [Test]
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)1, 1, 1, true, "test1", 0, 0)]
         [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)2, 11, 51, false, "test2", -6, 1)]
-        [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)0, 26, 61, true, "test3", null, 2)]
+        [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)0, 26, 61, true, "test3", -3, 2)]
         public void AddMyInstrumentRequestValidator_ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
             int instrumentId, bool neededLuthierVisit, string ownName, int? userId, int i)
         {

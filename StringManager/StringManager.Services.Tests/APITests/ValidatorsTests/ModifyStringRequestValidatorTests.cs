@@ -165,7 +165,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [Test]
         [TestCase((Core.Enums.AccountType)0, -1, 1, 1, 1, 0.1, Core.Enums.StringType.PlainNylon, 1)]
         [TestCase((Core.Enums.AccountType)1, 0, 4, 123, 154, 0.00001, Core.Enums.StringType.WoundNylon, 2)]
-        [TestCase((Core.Enums.AccountType)0, null, 6, 51, 21, 0.1414, Core.Enums.StringType.PlainBrass, 3)]
+        [TestCase((Core.Enums.AccountType)0, -16, 6, 51, 21, 0.1414, Core.Enums.StringType.PlainBrass, 3)]
         public void ModifyStringRequestValidator_ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, int? manufacturerId, int? numberOfDaysGood, int? size, double? specificWeight, Core.Enums.StringType? stringType, int id)
         {
             var testStringRequest = new ModifyStringRequest()
@@ -186,7 +186,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [Test]
         [TestCase((Core.Enums.AccountType)6, 1, 1, 1, 1, 0.1, Core.Enums.StringType.PlainNylon, 1)]
         [TestCase((Core.Enums.AccountType)(-1), 2, 4, 123, 154, 0.00001, Core.Enums.StringType.WoundNylon, 2)]
-        [TestCase(null, 3, 6, 51, 21, 0.1414, Core.Enums.StringType.PlainBrass, 3)]
+        [TestCase((Core.Enums.AccountType)651, 3, 6, 51, 21, 0.1414, Core.Enums.StringType.PlainBrass, 3)]
         public void ModifyStringRequestValidator_ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, int? manufacturerId, int? numberOfDaysGood, int? size, double? specificWeight, Core.Enums.StringType? stringType, int id)
         {
             var testStringRequest = new ModifyStringRequest()

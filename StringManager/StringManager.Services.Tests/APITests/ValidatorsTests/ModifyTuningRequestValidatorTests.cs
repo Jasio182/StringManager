@@ -72,7 +72,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [Test]
         [TestCase((Core.Enums.AccountType)0, -1, "test1", 1, 1)]
         [TestCase((Core.Enums.AccountType)1, 0, "test2", 125, 2)]
-        [TestCase((Core.Enums.AccountType)0, null, "test3", 21, 3)]
+        [TestCase((Core.Enums.AccountType)0, -16, "test3", 21, 3)]
         public void ModifyTuningRequestValidator_ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, string name, int numberOfStrings, int id)
         {
             var testTuningRequest = new ModifyTuningRequest()
@@ -90,7 +90,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [Test]
         [TestCase((Core.Enums.AccountType)6, 1, "test1", 1, 1)]
         [TestCase((Core.Enums.AccountType)(-1), 2, "test2", 125, 2)]
-        [TestCase(null, 3, "test3", 21, 3)]
+        [TestCase((Core.Enums.AccountType)4, 3, "test3", 21, 3)]
         public void ModifyTuningRequestValidator_ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, string name, int numberOfStrings, int id)
         {
             var testTuningRequest = new ModifyTuningRequest()

@@ -9,8 +9,6 @@ namespace StringManager.Services.API.Validators
         public RemoveTuningRequestValidator()
         {
             RuleFor(tuning => tuning.Id).GreaterThan(0);
-            RuleFor(tuning => tuning.AccountType).NotNull();
-            RuleFor(tuning => tuning.UserId).NotNull(); ;
         }
     }
 }

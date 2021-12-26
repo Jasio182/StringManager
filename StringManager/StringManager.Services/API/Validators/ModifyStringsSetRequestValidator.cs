@@ -10,8 +10,6 @@ namespace StringManager.Services.API.Validators
         {
             RuleFor(stringSet => stringSet.Id).GreaterThan(0);
             RuleFor(stringSet => stringSet.NumberOfStrings).GreaterThan(0);
-            RuleFor(stringSet => stringSet.AccountType).NotNull();
-            RuleFor(stringSet => stringSet.UserId).NotNull();
         }
     }
 }

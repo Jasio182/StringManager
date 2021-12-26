@@ -9,8 +9,6 @@ namespace StringManager.Services.API.Validators
         public RemoveToneRequestValidator()
         {
             RuleFor(tone => tone.Id).GreaterThan(0);
-            RuleFor(tone => tone.AccountType).NotNull();
-            RuleFor(tone => tone.UserId).NotNull();
         }
     }
 }

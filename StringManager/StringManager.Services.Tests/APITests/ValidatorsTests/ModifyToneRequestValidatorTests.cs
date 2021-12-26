@@ -113,7 +113,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [Test]
         [TestCase((Core.Enums.AccountType)5, 1, "test1", 1.1, 1.1, 1)]
         [TestCase((Core.Enums.AccountType)(-1), 2, "test2", 125.234, 35.16, 2)]
-        [TestCase(null, 3, "test3", 21.11, 152.12, 3)]
+        [TestCase((Core.Enums.AccountType)541, 3, "test3", 21.11, 152.12, 3)]
         public void ModifyToneRequestValidator_ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, string name, double? frequency, double? waveLenght, int id)
         {
             var testToneRequest = new ModifyToneRequest()

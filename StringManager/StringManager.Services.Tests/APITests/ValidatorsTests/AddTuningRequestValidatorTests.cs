@@ -34,6 +34,8 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
 
         [Test]
         [TestCase((Core.Enums.AccountType)0, 1, null, 1)]
+        [TestCase((Core.Enums.AccountType)0, 1, "", 1)]
+
         public void AddTuningRequestValidator_ShouldHaveNameErrors(Core.Enums.AccountType? accountType, int? userId, string name, int numberOfStrings)
         {
             var testTuningRequest = new AddTuningRequest()
@@ -67,7 +69,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [Test]
         [TestCase((Core.Enums.AccountType)0, -1, "test1", 1)]
         [TestCase((Core.Enums.AccountType)1, 0, "test2", 125)]
-        [TestCase((Core.Enums.AccountType)0, null, "test3", 21)]
+        [TestCase((Core.Enums.AccountType)0, -15, "test3", 21)]
         public void AddTuningRequestValidator_ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, string name, int numberOfStrings)
         {
             var testTuningRequest = new AddTuningRequest()
@@ -84,7 +86,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [Test]
         [TestCase((Core.Enums.AccountType)6, 1, "test1", 1)]
         [TestCase((Core.Enums.AccountType)(-1), 2, "test2", 125)]
-        [TestCase(null, 3, "test3", 21)]
+        [TestCase((Core.Enums.AccountType)15, 3, "test3", 21)]
         public void AddTuningRequestValidator_ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, string name, int numberOfStrings)
         {
             var testTuningRequest = new AddTuningRequest()

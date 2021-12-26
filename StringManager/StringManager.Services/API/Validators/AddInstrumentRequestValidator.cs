@@ -11,10 +11,8 @@ namespace StringManager.Services.API.Validators
             RuleFor(instrument => instrument.NumberOfStrings).GreaterThan(0);
             RuleFor(instrument => instrument.ScaleLenghtTreble).GreaterThan(0);
             RuleFor(instrument => instrument.ScaleLenghtBass).GreaterThan(0);
-            RuleFor(instrument => instrument.Model).NotNull();
+            RuleFor(instrument => instrument.Model).NotNull().NotEmpty();
             RuleFor(instrument => instrument.ManufacturerId).GreaterThan(0);
-            RuleFor(instrument => instrument.AccountType).NotNull();
-            RuleFor(instrument => instrument.UserId).NotNull();
         }
     }
 }

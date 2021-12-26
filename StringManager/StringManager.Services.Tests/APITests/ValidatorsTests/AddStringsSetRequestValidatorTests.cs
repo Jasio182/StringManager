@@ -34,6 +34,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
 
         [Test]
         [TestCase((Core.Enums.AccountType)0, 1, null, 1)]
+        [TestCase((Core.Enums.AccountType)0, 1, "", 1)]
         public void AddStringsSetRequestValidator_ShouldHaveNameErrors(Core.Enums.AccountType? accountType, int? userId, string name, int numberOfStrings)
         {
             var testStringsSetRequest = new AddStringsSetRequest()
@@ -66,7 +67,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
 
         [Test]
         [TestCase((Core.Enums.AccountType)0, -1, "test1", 1)]
-        [TestCase((Core.Enums.AccountType)1, null, "test2", 125321)]
+        [TestCase((Core.Enums.AccountType)1, -15, "test2", 125321)]
         [TestCase((Core.Enums.AccountType)0, 0, "test3", 21)]
         public void AddStringsSetRequestValidator_ShouldHaveUserIdErrors(Core.Enums.AccountType? accountType, int? userId, string name, int numberOfStrings)
         {
@@ -84,7 +85,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [Test]
         [TestCase((Core.Enums.AccountType)5, 1, "test1", 1)]
         [TestCase((Core.Enums.AccountType)(-1), 2, "test2", 125321)]
-        [TestCase(null, 3, "test3", 21)]
+        [TestCase((Core.Enums.AccountType)56, 3, "test3", 21)]
         public void AddStringsSetRequestValidator_ShouldHaveAccountTypeErrors(Core.Enums.AccountType? accountType, int? userId, string name, int numberOfStrings)
         {
             var testStringsSetRequest = new AddStringsSetRequest()

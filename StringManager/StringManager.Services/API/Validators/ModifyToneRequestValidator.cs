@@ -11,8 +11,6 @@ namespace StringManager.Services.API.Validators
             RuleFor(tone => tone.Id).GreaterThan(0);
             RuleFor(tone => tone.Frequency).GreaterThan(0);
             RuleFor(tone => tone.WaveLenght).GreaterThan(0);
-            RuleFor(tone => tone.AccountType).NotNull();
-            RuleFor(tone => tone.UserId).NotNull();
         }
     }
 }

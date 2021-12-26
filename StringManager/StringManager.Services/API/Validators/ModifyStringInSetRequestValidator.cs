@@ -12,8 +12,6 @@ namespace StringManager.Services.API.Validators
             RuleFor(stringInSet => stringInSet.Position).GreaterThan(0);
             RuleFor(stringInSet => stringInSet.StringId).GreaterThan(0);
             RuleFor(stringInSet => stringInSet.StringsSetId).GreaterThan(0);
-            RuleFor(stringInSet => stringInSet.AccountType).NotNull();
-            RuleFor(stringInSet => stringInSet.UserId).NotNull();
         }
     }
 }

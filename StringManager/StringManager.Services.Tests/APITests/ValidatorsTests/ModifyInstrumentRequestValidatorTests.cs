@@ -138,7 +138,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [Test]
         [TestCase((Core.Enums.AccountType)0, -1, 1, 1, 1, 1, 1)]
         [TestCase((Core.Enums.AccountType)1, 0, 11, 6, 2, 8, 12)]
-        [TestCase((Core.Enums.AccountType)0, null, 21, 55, 3, 9, 555)]
+        [TestCase((Core.Enums.AccountType)0, -15, 21, 55, 3, 9, 555)]
         public void ModifyInstrumentRequestValidator_ShouldHaveUserIdError(Core.Enums.AccountType? accountType, int? userId, int id, int manufacturerId, int scaleLenghtBass, int scaleLenghtTreble, int numberOfStrings)
         {
             var testModifyInstrumentRequest = new ModifyInstrumentRequest()
@@ -158,7 +158,7 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         [Test]
         [TestCase((Core.Enums.AccountType)15, 1, 1, 1, 1, 1, 1)]
         [TestCase((Core.Enums.AccountType)(-1), 12, 11, 6, 2, 8, 12)]
-        [TestCase(null, 13, 21, 55, 3, 9, 555)]
+        [TestCase((Core.Enums.AccountType)6, 13, 21, 55, 3, 9, 555)]
         public void ModifyInstrumentRequestValidator_ShouldHaveAccountTypeError(Core.Enums.AccountType? accountType, int? userId, int id, int manufacturerId, int scaleLenghtBass, int scaleLenghtTreble, int numberOfStrings)
         {
             var testModifyInstrumentRequest = new ModifyInstrumentRequest()

@@ -8,10 +8,8 @@ namespace StringManager.Services.API.Validators
     {
         public AddTuningRequestValidator()
         {
-            RuleFor(tuning => tuning.Name).NotNull();
+            RuleFor(tuning => tuning.Name).NotNull().NotEmpty();
             RuleFor(tuning => tuning.NumberOfStrings).GreaterThan(0);
-            RuleFor(tone => tone.AccountType).NotNull();
-            RuleFor(tone => tone.UserId).NotNull();
         }
     }
 }

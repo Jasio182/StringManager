@@ -14,8 +14,6 @@ namespace StringManager.Services.API.Validators
             RuleFor(thisString => thisString.SpecificWeight).GreaterThan(0);
             RuleFor(thisString => thisString.NumberOfDaysGood).GreaterThan(0);
             RuleFor(thisString => thisString.ManufacturerId).GreaterThan(0);
-            RuleFor(thisString => thisString.AccountType).NotNull();
-            RuleFor(thisString => thisString.UserId).NotNull();
         }
     }
 }

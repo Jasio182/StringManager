@@ -9,8 +9,6 @@ namespace StringManager.Services.API.Validators
         public RemoveStringRequestValidator()
         {
             RuleFor(thisString => thisString.Id).GreaterThan(0);
-            RuleFor(thisString => thisString.AccountType).NotNull();
-            RuleFor(thisString => thisString.UserId).NotNull();
         }
     }
 }

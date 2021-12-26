@@ -8,10 +8,8 @@ namespace StringManager.Services.API.Validators
     {
         public AddStringsSetRequestValidator()
         {
-            RuleFor(stringSet => stringSet.Name).NotNull();
+            RuleFor(stringSet => stringSet.Name).NotNull().NotEmpty();
             RuleFor(stringSet => stringSet.NumberOfStrings).GreaterThan(0);
-            RuleFor(stringSet => stringSet.AccountType).NotNull();
-            RuleFor(stringSet => stringSet.UserId).NotNull();
         }
     }
 }

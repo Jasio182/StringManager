@@ -12,8 +12,6 @@ namespace StringManager.Services.API.Validators
             RuleFor(toneInTuning => toneInTuning.Position).GreaterThan(0);
             RuleFor(toneInTuning => toneInTuning.ToneId).GreaterThan(0);
             RuleFor(toneInTuning => toneInTuning.TuningId).GreaterThan(0);
-            RuleFor(toneInTuning => toneInTuning.AccountType).NotNull();
-            RuleFor(toneInTuning => toneInTuning.UserId).NotNull();
         }
     }
 }

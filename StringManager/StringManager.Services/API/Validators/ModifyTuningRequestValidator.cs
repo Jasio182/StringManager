@@ -10,8 +10,6 @@ namespace StringManager.Services.API.Validators
         {
             RuleFor(tuning => tuning.Id).GreaterThan(0);
             RuleFor(tuning => tuning.NumberOfStrings).GreaterThan(0);
-            RuleFor(tuning => tuning.AccountType).NotNull();
-            RuleFor(tuning => tuning.UserId).NotNull();
         }
     }
 }
