@@ -18,7 +18,7 @@ namespace StringManager.DataAccess.CQRS.Queries
                 .ThenInclude(toneInTuning => toneInTuning.Tone)
                 .FirstAsync(tuning => tuning.Id == Id);
             }
-            catch(System.InvalidOperationException e)
+            catch(System.InvalidOperationException)
             {
                 return null;
             }
