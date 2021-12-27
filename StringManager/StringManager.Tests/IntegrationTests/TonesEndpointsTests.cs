@@ -19,7 +19,7 @@ namespace StringManager.Tests.IntegrationTests
 
         [Test, Order(1)]
         [TestCase(108)]
-        public async Task GetTones_ReturnsValueAsync(int numberOfTests)
+        public async Task GetTones_ReturnsValueAsync(int numberOfTones)
         {
             //Arrange
             var requestMessage = new HttpRequestMessage(HttpMethod.Get, "/Tones");
@@ -33,18 +33,26 @@ namespace StringManager.Tests.IntegrationTests
             var data = await response.Content.ReadAsStringAsync();
             var deserialisedData = JsonConvert.DeserializeObject<Core.Models.ModelActionResult<List<Core.Models.Tone>>>(data);
             Assert.IsNull(deserialisedData.result.Error);
-            Assert.AreEqual(numberOfTests, deserialisedData.result.Data.Count);
+            Assert.AreEqual(numberOfTones, deserialisedData.result.Data.Count);
         }
 
         [Test]
-        [TestCase(correctTestUserUsername, correctTestUserPassword)]
-        [TestCase(incorrectTestUsername, incorrectTestPassword)]
-        public async Task AddTone_UnauthorisedAsync(string username, string password)
+        [TestCase(correctTestUserUsername, correctTestUserPassword, false)]
+        [TestCase(incorrectTestUsername, incorrectTestPassword, true)]
+        public async Task AddTone_UnauthorisedAsync(string username, string password, bool isEmpty)
         {
             //Arrange
+            var requestBody = new AddToneRequest()
+            {
+                Frequency = 0.1,
+                WaveLenght = 0.1,
+                Name = "testToneToAdd"
+            };
             var requestMessage = new HttpRequestMessage(HttpMethod.Post, "/Tones");
             requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Basic",
-                System.Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes($"{incorrectTestUsername}:{incorrectTestPassword}")));
+                System.Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes($"{username}:{password}")));
+            var jsonBody = JsonConvert.SerializeObject(requestBody);
+            requestMessage.Content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
 
             //Act
             var response = await client.SendAsync(requestMessage);
@@ -53,8 +61,10 @@ namespace StringManager.Tests.IntegrationTests
             Assert.IsNotNull(response);
             Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
             var data = await response.Content.ReadAsStringAsync();
-            Assert.IsEmpty(data);
-
+            if(isEmpty)
+                Assert.IsEmpty(data);
+            else
+                Assert.IsNotEmpty(data);
         }
 
         [Test]

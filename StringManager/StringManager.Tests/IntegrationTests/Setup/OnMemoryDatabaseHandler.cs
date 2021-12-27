@@ -706,7 +706,202 @@ namespace StringManager.Tests.IntegrationTests.Setup
         {
             ToneInTuning[] tonesInTunings =
             {
+                new ToneInTuning()
+                {
+                    Position = 1,
+                    ToneId = 53,
+                    TuningId = 1
+                },
+                new ToneInTuning()
+                {
+                    Position = 2,
+                    ToneId = 48,
+                    TuningId = 1
+                },
+                new ToneInTuning()
+                {
+                    Position = 3,
+                    ToneId = 44,
+                    TuningId = 1
+                },
+                new ToneInTuning()
+                {
+                    Position = 4,
+                    ToneId = 39,
+                    TuningId = 1
+                },
+                new ToneInTuning()
+                {
+                    Position = 5,
+                    ToneId = 34,
+                    TuningId = 1
+                },
+                new ToneInTuning()
+                {
+                    Position = 6,
+                    ToneId = 29,
+                    TuningId = 1
+                },
 
+                new ToneInTuning()
+                {
+                    Position = 1,
+                    ToneId = 51,
+                    TuningId = 2
+                },
+                new ToneInTuning()
+                {
+                    Position = 2,
+                    ToneId = 46,
+                    TuningId = 2
+                },
+                new ToneInTuning()
+                {
+                    Position = 3,
+                    ToneId = 42,
+                    TuningId = 2
+                },
+                new ToneInTuning()
+                {
+                    Position = 4,
+                    ToneId = 37,
+                    TuningId = 2
+                },
+                new ToneInTuning()
+                {
+                    Position = 5,
+                    ToneId = 32,
+                    TuningId = 2
+                },
+                new ToneInTuning()
+                {
+                    Position = 6,
+                    ToneId = 27,
+                    TuningId = 2
+                },
+
+                new ToneInTuning()
+                {
+                    Position = 1,
+                    ToneId = 53,
+                    TuningId = 3
+                },
+                new ToneInTuning()
+                {
+                    Position = 2,
+                    ToneId = 48,
+                    TuningId = 3
+                },
+                new ToneInTuning()
+                {
+                    Position = 3,
+                    ToneId = 44,
+                    TuningId = 3
+                },
+                new ToneInTuning()
+                {
+                    Position = 4,
+                    ToneId = 39,
+                    TuningId = 3
+                },
+                new ToneInTuning()
+                {
+                    Position = 5,
+                    ToneId = 34,
+                    TuningId = 3
+                },
+                new ToneInTuning()
+                {
+                    Position = 6,
+                    ToneId = 27,
+                    TuningId = 3
+                },
+
+                new ToneInTuning()
+                {
+                    Position = 1,
+                    ToneId = 53,
+                    TuningId = 4
+                },
+                new ToneInTuning()
+                {
+                    Position = 2,
+                    ToneId = 48,
+                    TuningId = 4
+                },
+                new ToneInTuning()
+                {
+                    Position = 3,
+                    ToneId = 44,
+                    TuningId = 4
+                },
+                new ToneInTuning()
+                {
+                    Position = 4,
+                    ToneId = 39,
+                    TuningId = 4
+                },
+                new ToneInTuning()
+                {
+                    Position = 5,
+                    ToneId = 34,
+                    TuningId = 4
+                },
+                new ToneInTuning()
+                {
+                    Position = 6,
+                    ToneId = 29,
+                    TuningId = 4
+                },
+                new ToneInTuning()
+                {
+                    Position = 7,
+                    ToneId = 24,
+                    TuningId = 4
+                },
+
+                new ToneInTuning()
+                {
+                    Position = 1,
+                    ToneId = 53,
+                    TuningId = 5
+                },
+                new ToneInTuning()
+                {
+                    Position = 2,
+                    ToneId = 48,
+                    TuningId = 5
+                },
+                new ToneInTuning()
+                {
+                    Position = 3,
+                    ToneId = 44,
+                    TuningId = 5
+                },
+                new ToneInTuning()
+                {
+                    Position = 4,
+                    ToneId = 39,
+                    TuningId = 5
+                },
+                new ToneInTuning()
+                {
+                    Position = 5,
+                    ToneId = 34,
+                    TuningId = 5
+                },
+                new ToneInTuning()
+                {
+                    Position = 6,
+                    ToneId = 29,
+                    TuningId = 5
+                },
+                new ToneInTuning()
+                {
+                    Position = 7,
+                    ToneId = 22,
+                    TuningId = 5
+                }
             };
             return tonesInTunings;
         }

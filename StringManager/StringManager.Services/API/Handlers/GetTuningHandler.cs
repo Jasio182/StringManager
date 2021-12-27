@@ -38,9 +38,13 @@ namespace StringManager.Services.API.Handlers
                     Id = request.Id
                 };
                 var tuningFromDb = await queryExecutor.Execute(query);
-                var mappedTuningFromDb = mapper.Map<Tuning>(tuningFromDb);
-                var mappedTonesInTuning = mapper.Map<List<ToneInTuning>>(tuningFromDb.TonesInTuning);
-                mappedTuningFromDb.TonesInTuning = mappedTonesInTuning;
+                Tuning mappedTuningFromDb = null;
+                if (tuningFromDb != null)
+                {
+                    mappedTuningFromDb = mapper.Map<Tuning>(tuningFromDb);
+                    var mappedTonesInTuning = mapper.Map<List<ToneInTuning>>(tuningFromDb.TonesInTuning);
+                    mappedTuningFromDb.TonesInTuning = mappedTonesInTuning;
+                }
                 return new StatusCodeResponse<Tuning>()
                 {
                     Result = new ModelActionResult<Tuning>((int)HttpStatusCode.OK, mappedTuningFromDb)

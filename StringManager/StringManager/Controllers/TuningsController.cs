@@ -31,9 +31,12 @@ namespace StringManager.Controllers
         [AllowAnonymous]
         [ProducesResponseType(typeof(ModelResult<List<TuningList>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ModelResult<List<TuningList>>), StatusCodes.Status500InternalServerError)]
-        public Task<IActionResult> GetTuningsAsync()
+        public Task<IActionResult> GetTuningsAsync([FromQuery] int? numberOfStrings)
         {
-            var request = new GetTuningsRequest();
+            var request = new GetTuningsRequest()
+            {
+                NumberOfStrings = numberOfStrings
+            };
             return HandleResult<GetTuningsRequest, StatusCodeResponse<List<TuningList>>, List<TuningList>>(request);
         }
 
@@ -49,7 +52,6 @@ namespace StringManager.Controllers
         [HttpGet]
         [Route("{Id}")]
         [ProducesResponseType(typeof(ModelResult<Tuning>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ModelResult<Tuning>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ModelResult<Tuning>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> GetTuningAsync([FromQuery] GetTuningRequest request)
         {

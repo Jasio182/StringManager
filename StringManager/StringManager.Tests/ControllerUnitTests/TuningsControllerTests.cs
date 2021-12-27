@@ -109,7 +109,7 @@ namespace StringManager.Tests.ControllerUnitTests
             mediatorMock.Setup(m => m.Send(It.IsAny<GetTuningsRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(mockResponse));
 
             //Act
-            var returnedValue = controller.GetTuningsAsync().Result as ModelActionResult<List<TuningList>>;
+            var returnedValue = controller.GetTuningsAsync(null).Result as ModelActionResult<List<TuningList>>;
 
             //Assert
             Assert.IsNotNull(returnedValue);
@@ -123,7 +123,7 @@ namespace StringManager.Tests.ControllerUnitTests
             mediatorMock.Setup(m => m.Send(It.IsAny<GetTuningsRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult((StatusCodeResponse<List<TuningList>>)null));
 
             //Act
-            var returnedValue = controller.GetTuningsAsync().Result as ModelActionResult<object>;
+            var returnedValue = controller.GetTuningsAsync(null).Result as ModelActionResult<object>;
 
             //Assert
             Assert.IsNotNull(returnedValue);
@@ -139,7 +139,7 @@ namespace StringManager.Tests.ControllerUnitTests
             mediatorMock.Setup(m => m.Send(It.IsAny<GetTuningsRequest>(), It.IsAny<CancellationToken>())).Throws<System.Exception>();
 
             //Act
-            var returnedValue = controller.GetTuningsAsync().Result as ModelActionResult<object>;
+            var returnedValue = controller.GetTuningsAsync(null).Result as ModelActionResult<object>;
 
             //Assert
             Assert.IsNotNull(returnedValue);
@@ -155,7 +155,7 @@ namespace StringManager.Tests.ControllerUnitTests
             controller.ModelState.AddModelError("Data", "Data is invalid");
 
             //Act
-            var returnedValue = controller.GetTuningsAsync().Result as ModelActionResult<object>;
+            var returnedValue = controller.GetTuningsAsync(null).Result as ModelActionResult<object>;
 
             //Assert
             Assert.IsNotNull(returnedValue);
