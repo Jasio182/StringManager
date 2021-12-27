@@ -25,7 +25,7 @@ namespace StringManager.DataAccess.Tests
                 NumberOfDaysGood = 11,
                 Size = 11,
                 SpecificWeight = 0.001,
-                StringType = Core.Enums.StringType.PlainBrass,
+                StringType = Core.Enums.StringType.WoundBrass,
                 ManufacturerId = 1
             }
         };

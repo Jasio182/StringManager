@@ -29,7 +29,7 @@ namespace StringManager.Tests.IntegrationTests
             var data = await response.Content.ReadAsStringAsync();
             var deserialisedData = JsonConvert.DeserializeObject<Core.Models.ModelActionResult<List<Core.Models.String>>>(data);
             Assert.IsNull(deserialisedData.result.Error);
-            Assert.AreEqual(0, deserialisedData.result.Data.Count);
+            Assert.AreEqual(37, deserialisedData.result.Data.Count);
         }
     }
 }

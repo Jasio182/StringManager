@@ -93,7 +93,7 @@ namespace StringManager.DataAccess.Tests
             using (var context = new StringManagerStorageContext(options))
             {
                 var mockParameter = context.Strings.FirstOrDefault(x => x.Id == 1);
-                mockParameter.StringType = Core.Enums.StringType.PlainBrass;
+                mockParameter.StringType = Core.Enums.StringType.WoundBrass;
                 var commandExecutor = new CommandExecutor(context);
                 var StringCommand = new ModifyStringCommand()
                 {

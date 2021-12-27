@@ -121,9 +121,10 @@ namespace StringManager.Tests.IntegrationTests
         }
 
         [Test]
-        [TestCase(correctTestUserUsername, correctTestUserPassword)]
-        [TestCase(incorrectTestUsername, incorrectTestPassword)]
-        public async Task ModifyTone_UnauthorisedAsync(string username, string password)
+        [TestCase(correctTestUserUsername, correctTestUserPassword, false)]
+        [TestCase(incorrectTestUsername, incorrectTestPassword, true)]
+        [TestCase(null, null, true)]
+        public async Task ModifyTone_UnauthorisedAsync(string username, string password, bool isEmpty)
         {
             //Arrange
             var requestBody = new ModifyToneRequest()
@@ -135,7 +136,7 @@ namespace StringManager.Tests.IntegrationTests
             };
             var requestMessage = new HttpRequestMessage(HttpMethod.Put, "/Tones");
             requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Basic",
-                System.Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes($"{correctTestUserUsername}:{correctTestUserPassword}")));
+                System.Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes($"{username}:{password}")));
             var jsonBody = JsonConvert.SerializeObject(requestBody);
             requestMessage.Content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
 
@@ -146,7 +147,10 @@ namespace StringManager.Tests.IntegrationTests
             Assert.IsNotNull(response);
             Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
             var data = await response.Content.ReadAsStringAsync();
-            Assert.IsNotEmpty(data);
+            if (isEmpty)
+                Assert.IsEmpty(data);
+            else
+                Assert.IsNotEmpty(data);
         }
 
         [Test]
@@ -190,6 +194,7 @@ namespace StringManager.Tests.IntegrationTests
         [Test]
         [TestCase(correctTestUserUsername, correctTestUserPassword, false)]
         [TestCase(incorrectTestUsername, incorrectTestPassword, true)]
+        [TestCase(null, null, true)]
         public async Task RemoveTone_UnauthorisedAsync(string username, string password, bool isEmpty)
         {
             {

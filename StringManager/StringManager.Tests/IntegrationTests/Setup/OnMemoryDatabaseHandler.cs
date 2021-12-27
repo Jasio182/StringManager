@@ -942,7 +942,307 @@ namespace StringManager.Tests.IntegrationTests.Setup
         {
             String[] strings = 
             {
+                new String()
+                {
+                    Size = 9,
+                    SpecificWeight = 0.00032037193,
+                    StringType = Core.Enums.StringType.PlainNikled,
+                    ManufacturerId = 2,
+                    NumberOfDaysGood = 300
+                },
+                new String()
+                {
+                    Size = 11,
+                    SpecificWeight = 0.00047859352,
+                    StringType = Core.Enums.StringType.PlainNikled,
+                    ManufacturerId = 2,
+                    NumberOfDaysGood = 300
+                },
+                new String()
+                {
+                    Size = 16,
+                    SpecificWeight = 0.00101272532,
+                    StringType = Core.Enums.StringType.PlainNikled,
+                    ManufacturerId = 2,
+                    NumberOfDaysGood = 300
+                },
+                new String()
+                {
+                    Size = 26,
+                    SpecificWeight = 0.00226278303,
+                    StringType = Core.Enums.StringType.WoundNikled,
+                    ManufacturerId = 2,
+                    NumberOfDaysGood = 300
+                },
+                new String()
+                {
+                    Size = 36,
+                    SpecificWeight = 0.00427948328,
+                    StringType = Core.Enums.StringType.WoundNikled,
+                    ManufacturerId = 2,
+                    NumberOfDaysGood = 300
+                },
+                new String()
+                {
+                    Size = 46,
+                    SpecificWeight = 0.00682460079,
+                    StringType = Core.Enums.StringType.WoundNikled,
+                    ManufacturerId = 2,
+                    NumberOfDaysGood = 300
+                },
 
+                new String()
+                {
+                    Size = 12,
+                    SpecificWeight = 0.00056966915,
+                    StringType = Core.Enums.StringType.PlainNikled,
+                    ManufacturerId = 3,
+                    NumberOfDaysGood = 360
+                },
+                new String()
+                {
+                    Size = 16,
+                    SpecificWeight = 0.00101272532,
+                    StringType = Core.Enums.StringType.PlainNikled,
+                    ManufacturerId = 3,
+                    NumberOfDaysGood = 360
+                },
+                new String()
+                {
+                    Size = 24,
+                    SpecificWeight = 0.00227867663,
+                    StringType = Core.Enums.StringType.PlainNikled,
+                    ManufacturerId = 3,
+                    NumberOfDaysGood = 360
+                },
+                new String()
+                {
+                    Size = 32,
+                    SpecificWeight = 0.00345498093,
+                    StringType = Core.Enums.StringType.WoundNikled,
+                    ManufacturerId = 3,
+                    NumberOfDaysGood = 360
+                },
+                new String()
+                {
+                    Size = 42,
+                    SpecificWeight = 0.00576437327,
+                    StringType = Core.Enums.StringType.WoundNikled,
+                    ManufacturerId = 3,
+                    NumberOfDaysGood = 360
+                },
+                new String()
+                {
+                    Size = 52,
+                    SpecificWeight = 0.00859128949,
+                    StringType = Core.Enums.StringType.WoundNikled,
+                    ManufacturerId = 3,
+                    NumberOfDaysGood = 360
+                },
+
+                new String()
+                {
+                    Size = 11,
+                    SpecificWeight = 0.00047859352,
+                    StringType = Core.Enums.StringType.PlainNikled,
+                    ManufacturerId = 1,
+                    NumberOfDaysGood = 120
+                },
+                new String()
+                {
+                    Size = 14,
+                    SpecificWeight = 0.00077539294,
+                    StringType = Core.Enums.StringType.PlainNikled,
+                    ManufacturerId = 1,
+                    NumberOfDaysGood = 120
+                },
+                new String()
+                {
+                    Size = 18,
+                    SpecificWeight = 0.00128166631,
+                    StringType = Core.Enums.StringType.PlainNikled,
+                    ManufacturerId = 1,
+                    NumberOfDaysGood = 120
+                },
+                new String()
+                {
+                    Size = 28,
+                    SpecificWeight = 0.00261904948,
+                    StringType = Core.Enums.StringType.WoundNikled,
+                    ManufacturerId = 1,
+                    NumberOfDaysGood = 120
+                },
+                new String()
+                {
+                    Size = 38,
+                    SpecificWeight = 0.00472718253,
+                    StringType = Core.Enums.StringType.WoundNikled,
+                    ManufacturerId = 1,
+                    NumberOfDaysGood = 120
+                },
+                new String()
+                {
+                    Size = 48,
+                    SpecificWeight = 0.00738998403,
+                    StringType = Core.Enums.StringType.WoundNikled,
+                    ManufacturerId = 1,
+                    NumberOfDaysGood = 120
+                },
+                new String()
+                {
+                    Size = 58,
+                    SpecificWeight = 0.01107193974,
+                    StringType = Core.Enums.StringType.WoundNikled,
+                    ManufacturerId = 1,
+                    NumberOfDaysGood = 120
+                },
+
+                new String()
+                {
+                    Size = 13,
+                    SpecificWeight = 0.00066860229,
+                    StringType = Core.Enums.StringType.PlainNikled,
+                    ManufacturerId = 2,
+                    NumberOfDaysGood = 180
+                },
+                new String()
+                {
+                    Size = 17,
+                    SpecificWeight = 0.00114326706,
+                    StringType = Core.Enums.StringType.PlainNikled,
+                    ManufacturerId = 2,
+                    NumberOfDaysGood = 180
+                },
+                new String()
+                {
+                    Size = 26,
+                    SpecificWeight = 0.00243582674,
+                    StringType = Core.Enums.StringType.WoundBrass,
+                    ManufacturerId = 2,
+                    NumberOfDaysGood = 180
+                },
+                new String()
+                {
+                    Size = 35,
+                    SpecificWeight = 0.00452967341,
+                    StringType = Core.Enums.StringType.WoundBrass,
+                    ManufacturerId = 2,
+                    NumberOfDaysGood = 180
+                },
+                new String()
+                {
+                    Size = 45,
+                    SpecificWeight = 0.00745587993,
+                    StringType = Core.Enums.StringType.WoundBrass,
+                    ManufacturerId = 2,
+                    NumberOfDaysGood = 180
+                },
+                new String()
+                {
+                    Size = 56,
+                    SpecificWeight = 0.01133570191,
+                    StringType = Core.Enums.StringType.WoundBrass,
+                    ManufacturerId = 2,
+                    NumberOfDaysGood = 180
+                },
+
+                new String()
+                {
+                    Size = 10,
+                    SpecificWeight = 0.00039555397,
+                    StringType = Core.Enums.StringType.PlainNikled,
+                    ManufacturerId = 1,
+                    NumberOfDaysGood = 320
+                },
+                new String()
+                {
+                    Size = 14,
+                    SpecificWeight = 0.00077539294,
+                    StringType = Core.Enums.StringType.PlainNikled,
+                    ManufacturerId = 1,
+                    NumberOfDaysGood = 320
+                },
+                new String()
+                {
+                    Size = 20,
+                    SpecificWeight = 0.00144756683,
+                    StringType = Core.Enums.StringType.WoundBrass,
+                    ManufacturerId = 1,
+                    NumberOfDaysGood = 320
+                },
+                new String()
+                {
+                    Size = 28,
+                    SpecificWeight = 0.00285727477,
+                    StringType = Core.Enums.StringType.WoundBrass,
+                    ManufacturerId = 1,
+                    NumberOfDaysGood = 320
+                },
+                new String()
+                {
+                    Size = 40,
+                    SpecificWeight = 0.00572580006,
+                    StringType = Core.Enums.StringType.WoundBrass,
+                    ManufacturerId = 1,
+                    NumberOfDaysGood = 320
+                },
+                new String()
+                {
+                    Size = 50,
+                    SpecificWeight = 0.00874468943,
+                    StringType = Core.Enums.StringType.WoundBrass,
+                    ManufacturerId = 1,
+                    NumberOfDaysGood = 320
+                },
+
+                new String()
+                {
+                    Size = 20,
+                    SpecificWeight = 0.00020179503,
+                    StringType = Core.Enums.StringType.PlainNylon,
+                    ManufacturerId = 2,
+                    NumberOfDaysGood = 200
+                },
+                new String()
+                {
+                    Size = 32,
+                    SpecificWeight = 0.00051680957,
+                    StringType = Core.Enums.StringType.PlainNylon,
+                    ManufacturerId = 2,
+                    NumberOfDaysGood = 200
+                },
+                new String()
+                {
+                    Size = 40,
+                    SpecificWeight = 0.00080753728,
+                    StringType = Core.Enums.StringType.PlainNylon,
+                    ManufacturerId = 2,
+                    NumberOfDaysGood = 200
+                },
+                new String()
+                {
+                    Size = 28,
+                    SpecificWeight = 0.00187705094,
+                    StringType = Core.Enums.StringType.WoundNylon,
+                    ManufacturerId = 2,
+                    NumberOfDaysGood = 200
+                },
+                new String()
+                {
+                    Size = 35,
+                    SpecificWeight = 0.0036907061,
+                    StringType = Core.Enums.StringType.WoundNylon,
+                    ManufacturerId = 2,
+                    NumberOfDaysGood = 200
+                },
+                new String()
+                {
+                    Size = 44,
+                    SpecificWeight = 0.00625064572,
+                    StringType = Core.Enums.StringType.WoundNylon,
+                    ManufacturerId = 2,
+                    NumberOfDaysGood = 200
+                },
             };
             return strings;
         }
@@ -951,7 +1251,36 @@ namespace StringManager.Tests.IntegrationTests.Setup
         {
             StringsSet[] stringsSets = 
             { 
-
+                new StringsSet()
+                {
+                    Name = "D'Addario XTE Nickel 9-46",
+                    NumberOfStrings = 6
+                },
+                new StringsSet()
+                {
+                    Name = "Elixir NanoWeb Nickel 12-52",
+                    NumberOfStrings = 6
+                },
+                new StringsSet()
+                {
+                    Name = "Ernie Ball Power Slinky 7 Nickel 11-58",
+                    NumberOfStrings = 7
+                },
+                new StringsSet()
+                {
+                    Name = "D'Addario 80/20 Bronze 13-56",
+                    NumberOfStrings = 6
+                },
+                new StringsSet()
+                {
+                    Name = "Ernie Ball Paradigm Phosphor 10-50",
+                    NumberOfStrings = 6
+                },
+                new StringsSet()
+                {
+                    Name = "D'Addario XTE Classical Normal",
+                    NumberOfStrings = 6
+                },
             };
             return stringsSets;
         }
@@ -960,7 +1289,233 @@ namespace StringManager.Tests.IntegrationTests.Setup
         {
             StringInSet[] stringsInSets =
             {
+                new StringInSet()
+                {
+                    StringId = 1,
+                    StringsSetId = 1,
+                    Position = 1
+                },
+                new StringInSet()
+                {
+                    StringId = 2,
+                    StringsSetId = 1,
+                    Position = 2
+                },
+                new StringInSet()
+                {
+                    StringId = 3,
+                    StringsSetId = 1,
+                    Position = 3
+                },
+                new StringInSet()
+                {
+                    StringId = 4,
+                    StringsSetId = 1,
+                    Position = 4
+                },
+                new StringInSet()
+                {
+                    StringId = 5,
+                    StringsSetId = 1,
+                    Position = 5
+                },
+                new StringInSet()
+                {
+                    StringId = 6,
+                    StringsSetId = 1,
+                    Position = 6
+                },
 
+                new StringInSet()
+                {
+                    StringId = 7,
+                    StringsSetId = 2,
+                    Position = 1
+                },
+                new StringInSet()
+                {
+                    StringId = 8,
+                    StringsSetId = 2,
+                    Position = 2
+                },
+                new StringInSet()
+                {
+                    StringId = 9,
+                    StringsSetId = 2,
+                    Position = 3
+                },
+                new StringInSet()
+                {
+                    StringId = 10,
+                    StringsSetId = 2,
+                    Position = 4
+                },
+                new StringInSet()
+                {
+                    StringId = 11,
+                    StringsSetId = 2,
+                    Position = 5
+                },
+                new StringInSet()
+                {
+                    StringId = 12,
+                    StringsSetId = 2,
+                    Position = 6
+                },
+
+                new StringInSet()
+                {
+                    StringId = 13,
+                    StringsSetId = 3,
+                    Position = 1
+                },
+                new StringInSet()
+                {
+                    StringId = 14,
+                    StringsSetId = 3,
+                    Position = 2
+                },
+                new StringInSet()
+                {
+                    StringId = 15,
+                    StringsSetId = 3,
+                    Position = 3
+                },
+                new StringInSet()
+                {
+                    StringId = 16,
+                    StringsSetId = 3,
+                    Position = 4
+                },
+                new StringInSet()
+                {
+                    StringId = 17,
+                    StringsSetId = 3,
+                    Position = 5
+                },
+                new StringInSet()
+                {
+                    StringId = 18,
+                    StringsSetId = 3,
+                    Position = 6
+                },
+                new StringInSet()
+                {
+                    StringId = 19,
+                    StringsSetId = 3,
+                    Position = 7
+                },
+
+                new StringInSet()
+                {
+                    StringId = 20,
+                    StringsSetId = 4,
+                    Position = 1
+                },
+                new StringInSet()
+                {
+                    StringId = 21,
+                    StringsSetId = 4,
+                    Position = 2
+                },
+                new StringInSet()
+                {
+                    StringId = 22,
+                    StringsSetId = 4,
+                    Position = 3
+                },
+                new StringInSet()
+                {
+                    StringId = 23,
+                    StringsSetId = 4,
+                    Position = 4
+                },
+                new StringInSet()
+                {
+                    StringId = 24,
+                    StringsSetId = 4,
+                    Position = 5
+                },
+                new StringInSet()
+                {
+                    StringId = 25,
+                    StringsSetId = 4,
+                    Position = 6
+                },
+
+                new StringInSet()
+                {
+                    StringId = 26,
+                    StringsSetId = 5,
+                    Position = 1
+                },
+                new StringInSet()
+                {
+                    StringId = 27,
+                    StringsSetId = 5,
+                    Position = 2
+                },
+                new StringInSet()
+                {
+                    StringId = 28,
+                    StringsSetId = 5,
+                    Position = 3
+                },
+                new StringInSet()
+                {
+                    StringId = 29,
+                    StringsSetId = 5,
+                    Position = 4
+                },
+                new StringInSet()
+                {
+                    StringId = 30,
+                    StringsSetId = 5,
+                    Position = 5
+                },
+                new StringInSet()
+                {
+                    StringId = 31,
+                    StringsSetId = 5,
+                    Position = 6
+                },
+
+                new StringInSet()
+                {
+                    StringId = 32,
+                    StringsSetId = 6,
+                    Position = 1
+                },
+                new StringInSet()
+                {
+                    StringId = 33,
+                    StringsSetId = 6,
+                    Position = 2
+                },
+                new StringInSet()
+                {
+                    StringId = 34,
+                    StringsSetId = 6,
+                    Position = 3
+                },
+                new StringInSet()
+                {
+                    StringId = 35,
+                    StringsSetId = 6,
+                    Position = 4
+                },
+                new StringInSet()
+                {
+                    StringId = 36,
+                    StringsSetId = 6,
+                    Position = 5
+                },
+                new StringInSet()
+                {
+                    StringId = 37,
+                    StringsSetId = 6,
+                    Position = 6
+                }
             };
             return stringsInSets;
         }
@@ -969,7 +1524,30 @@ namespace StringManager.Tests.IntegrationTests.Setup
         {
             Instrument[] instruments =
             {
-
+                new Instrument()
+                {
+                    ScaleLenghtBass = 647,
+                    ScaleLenghtTreble = 647,
+                    NumberOfStrings = 6,
+                    ManufacturerId = 4,
+                    Model = "Stratocaster"
+                },
+                new Instrument()
+                {
+                    ScaleLenghtBass = 628,
+                    ScaleLenghtTreble = 628,
+                    NumberOfStrings = 6,
+                    ManufacturerId = 5,
+                    Model = "Les Paul"
+                },
+                new Instrument()
+                {
+                    ScaleLenghtBass = 687,
+                    ScaleLenghtTreble = 645,
+                    NumberOfStrings = 7,
+                    ManufacturerId = 6,
+                    Model = "Duvell Elite V-Frets"
+                },
             };
             return instruments;
         }
@@ -1004,7 +1582,32 @@ namespace StringManager.Tests.IntegrationTests.Setup
         {
             MyInstrument[] myInstruments =
             {
-
+                new MyInstrument()
+                {
+                    LastStringChange = new System.DateTime(2021, 3, 11),
+                    LastDeepCleaning = new System.DateTime(2021, 3, 11),
+                    GuitarPlace = Core.Enums.WhereGuitarKept.Stand,
+                    InstrumentId = 1,
+                    HoursPlayedWeekly = 30,
+                    NeededLuthierVisit = true,
+                    NextStringChange = new System.DateTime(2021, 9, 3),
+                    NextDeepCleaning =  new System.DateTime(2021,12,25),
+                    OwnName = "Strato",
+                    UserId = 2
+                },
+                new MyInstrument()
+                {
+                    LastStringChange = new System.DateTime(2021, 8, 14),
+                    LastDeepCleaning = new System.DateTime(2021, 5, 11),
+                    GuitarPlace = Core.Enums.WhereGuitarKept.SoftCase,
+                    InstrumentId = 3,
+                    HoursPlayedWeekly = 20,
+                    NeededLuthierVisit = false,
+                    NextStringChange = new System.DateTime(2022, 4, 16),
+                    NextDeepCleaning =  new System.DateTime(2022, 5, 21),
+                    OwnName = "Mayo",
+                    UserId = 2
+                }
             };
             return myInstruments;
         }
@@ -1013,7 +1616,98 @@ namespace StringManager.Tests.IntegrationTests.Setup
         {
             InstalledString[] installedStrings =
             {
+                new InstalledString()
+                {
+                    StringId = 1,
+                    MyInstrumentId = 1,
+                    Position = 1,
+                    ToneId = 53
+                },
+                new InstalledString()
+                {
+                    StringId = 2,
+                    MyInstrumentId = 1,
+                    Position = 2,
+                    ToneId = 48
+                },
+                new InstalledString()
+                {
+                    StringId = 3,
+                    MyInstrumentId = 1,
+                    Position = 3,
+                    ToneId = 44
+                },
+                new InstalledString()
+                {
+                    StringId = 4,
+                    MyInstrumentId = 1,
+                    Position = 4,
+                    ToneId = 39
+                },
+                new InstalledString()
+                {
+                    StringId = 5,
+                    MyInstrumentId = 1,
+                    Position = 5,
+                    ToneId = 34
+                },
+                new InstalledString()
+                {
+                    StringId = 6,
+                    MyInstrumentId = 1,
+                    Position = 6,
+                    ToneId = 29
+                },
 
+                new InstalledString()
+                {
+                    StringId = 13,
+                    MyInstrumentId = 2,
+                    Position = 1,
+                    ToneId = 53
+                },
+                new InstalledString()
+                {
+                    StringId = 14,
+                    MyInstrumentId = 2,
+                    Position = 2,
+                    ToneId = 48
+                },
+                new InstalledString()
+                {
+                    StringId = 15,
+                    MyInstrumentId = 2,
+                    Position = 3,
+                    ToneId = 44
+                },
+                new InstalledString()
+                {
+                    StringId = 16,
+                    MyInstrumentId = 2,
+                    Position = 4,
+                    ToneId = 39
+                },
+                new InstalledString()
+                {
+                    StringId = 17,
+                    MyInstrumentId = 2,
+                    Position = 5,
+                    ToneId = 34
+                },
+                new InstalledString()
+                {
+                    StringId = 18,
+                    MyInstrumentId = 2,
+                    Position = 6,
+                    ToneId = 29
+                },
+                new InstalledString()
+                {
+                    StringId = 19,
+                    MyInstrumentId = 2,
+                    Position = 7,
+                    ToneId = 22
+                },
             };
             return installedStrings;
         }

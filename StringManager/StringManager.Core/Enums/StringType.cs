@@ -5,7 +5,6 @@ namespace StringManager.Core.Enums
     {
         PlainNikled,
         WoundNikled,
-        PlainBrass,
         WoundBrass,
         PlainNylon,
         WoundNylon

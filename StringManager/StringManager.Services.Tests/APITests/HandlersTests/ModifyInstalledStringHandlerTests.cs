@@ -57,7 +57,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
                 Size = 9,
                 SpecificWeight = 0.1,
                 StringsInSets = new List<StringInSet>(),
-                StringType = Core.Enums.StringType.PlainBrass,
+                StringType = Core.Enums.StringType.WoundBrass,
                 Manufacturer = new Manufacturer(),
                 ManufacturerId = 1,
                 NumberOfDaysGood = 12
