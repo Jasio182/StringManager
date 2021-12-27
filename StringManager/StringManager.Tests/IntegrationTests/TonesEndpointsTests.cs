@@ -39,6 +39,7 @@ namespace StringManager.Tests.IntegrationTests
         [Test]
         [TestCase(correctTestUserUsername, correctTestUserPassword, false)]
         [TestCase(incorrectTestUsername, incorrectTestPassword, true)]
+        [TestCase(null, null, true)]
         public async Task AddTone_UnauthorisedAsync(string username, string password, bool isEmpty)
         {
             //Arrange

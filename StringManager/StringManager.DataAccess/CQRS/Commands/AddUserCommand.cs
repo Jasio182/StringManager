@@ -10,7 +10,6 @@ namespace StringManager.DataAccess.CQRS.Commands
         {
             await context.Users.AddAsync(Parameter);
             await context.SaveChangesAsync();
-            context.Entry(Parameter).State = EntityState.Detached;
             return Parameter;
         }
     }

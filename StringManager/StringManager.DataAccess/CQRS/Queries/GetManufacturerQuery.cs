@@ -10,11 +10,17 @@ namespace StringManager.DataAccess.CQRS.Queries
 
         public override async Task<Manufacturer> Execute(StringManagerStorageContext context)
         {
-            var manufacturer = await context.Manufacturers
-                .Include(manufacturer=> manufacturer.Strings)
-                .Include(manufacturer => manufacturer.Instruments)
-                .FirstOrDefaultAsync(manufacturer=>manufacturer.Id == Id);
-            return manufacturer;
+            try
+            {
+                return await context.Manufacturers
+                    .Include(manufacturer => manufacturer.Strings)
+                    .Include(manufacturer => manufacturer.Instruments)
+                    .FirstAsync(manufacturer => manufacturer.Id == Id);
+            }
+            catch (System.InvalidOperationException)
+            {
+                return null;
+            }
         }
     }
 }

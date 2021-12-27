@@ -10,10 +10,16 @@ namespace StringManager.DataAccess.CQRS.Queries
 
         public override async Task<ToneInTuning> Execute(StringManagerStorageContext context)
         {
-            var toneInTuning = await context.TonesInTunings
-                .Include(toneInTuning => toneInTuning.Tone)
-                .FirstOrDefaultAsync(toneInTuning => toneInTuning.Id == Id);
-            return toneInTuning;
+            try
+            {
+                return await context.TonesInTunings
+                    .Include(toneInTuning => toneInTuning.Tone)
+                    .FirstAsync(toneInTuning => toneInTuning.Id == Id);
+            }
+            catch (System.InvalidOperationException)
+            {
+                return null;
+            }
         }
     }
 }

@@ -15,14 +15,20 @@ namespace StringManager.DataAccess.CQRS.Queries
 
         public override async Task<InstalledString> Execute(StringManagerStorageContext context)
         {
-            var installedString = await context.InstalledStrings
+            try
+            {
+                return await context.InstalledStrings
                 .Include(installedString => installedString.Tone)
                 .Include(installedString => installedString.String)
-                .Include(installedString=> installedString.MyInstrument)
-                .ThenInclude(myInstrument=>myInstrument.User)
-                .FirstOrDefaultAsync(installedString => installedString.Id == Id
+                .Include(installedString => installedString.MyInstrument)
+                .ThenInclude(myInstrument => myInstrument.User)
+                .FirstAsync(installedString => installedString.Id == Id
                     && (installedString.MyInstrument.User.Id == UserId || AccountType == AccountType.Admin));
-            return installedString;
+            }
+            catch (System.InvalidOperationException)
+            {
+                return null;
+            }
         }
     }
 }

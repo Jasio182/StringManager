@@ -9,8 +9,14 @@ namespace StringManager.DataAccess.CQRS.Queries
         public string Username { get; set; }
         public override async Task<User> Execute(StringManagerStorageContext context)
         {
-            var user = await context.Users.FirstOrDefaultAsync(user => user.Username == Username);
-            return user;
-        }
+            try
+            {
+                return await context.Users.FirstAsync(user => user.Username == Username);
+            }
+            catch (System.InvalidOperationException)
+            {
+                return null;
+            }
+}
     }
 }

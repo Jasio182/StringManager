@@ -11,10 +11,16 @@ namespace StringManager.DataAccess.CQRS.Queries
 
         public override async Task<Instrument> Execute(StringManagerStorageContext context)
         {
-            var instrument = await context.Instruments
-                .Include(instrument => instrument.Manufacturer)
-                .FirstOrDefaultAsync(instrument => instrument.Id == Id);
-            return instrument;
+            try
+            {
+                return await context.Instruments
+                    .Include(instrument => instrument.Manufacturer)
+                    .FirstAsync(instrument => instrument.Id == Id);
+            }
+            catch (System.InvalidOperationException)
+            {
+                return null;
+            }
         }
     }
 }

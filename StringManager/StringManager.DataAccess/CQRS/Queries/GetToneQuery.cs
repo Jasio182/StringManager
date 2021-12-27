@@ -10,8 +10,14 @@ namespace StringManager.DataAccess.CQRS.Queries
 
         public override async Task<Tone> Execute(StringManagerStorageContext context)
         {
-            var tone = await context.Tones.FirstOrDefaultAsync(tone=>tone.Id == Id);
-            return tone;
+            try
+            {
+                return await context.Tones.FirstAsync(tone => tone.Id == Id);
+            }
+            catch (System.InvalidOperationException)
+            {
+                return null;
+            }
         }
     }
 }
