@@ -32,8 +32,9 @@ namespace StringManager.Controllers
         [ProducesResponseType(typeof(ModelResult<List<StringsSet>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ModelResult<List<StringsSet>>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ModelResult<List<StringsSet>>), StatusCodes.Status500InternalServerError)]
-        public Task<IActionResult> GetStringsSetsAsync([FromQuery] GetStringsSetsRequest request)
+        public Task<IActionResult> GetStringsSetsAsync([FromQuery] Core.Enums.StringType? stringType)
         {
+            var request = new GetStringsSetsRequest() { StringType = stringType };
             return HandleResult<GetStringsSetsRequest, StatusCodeResponse<List<StringsSet>>, List<StringsSet>>(request);
         }
 

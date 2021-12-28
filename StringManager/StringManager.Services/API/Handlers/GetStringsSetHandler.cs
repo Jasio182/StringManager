@@ -37,8 +37,12 @@ namespace StringManager.Services.API.Handlers
                     Id = request.Id
                 };
                 var stringsSetFromDb = await queryExecutor.Execute(query);
-                var mappedStringsSet = mapper.Map<StringsSet>(stringsSetFromDb);
-                mappedStringsSet.StringsInSet = mapper.Map<List<StringInSet>>(stringsSetFromDb.StringsInSet);
+                StringsSet mappedStringsSet = null;
+                if (stringsSetFromDb != null)
+                {
+                    mappedStringsSet = mapper.Map<StringsSet>(stringsSetFromDb);
+                    mappedStringsSet.StringsInSet = mapper.Map<List<StringInSet>>(stringsSetFromDb.StringsInSet);
+                }
                 return new StatusCodeResponse<StringsSet>()
                 {
                     Result = new ModelActionResult<StringsSet>((int)HttpStatusCode.OK, mappedStringsSet)

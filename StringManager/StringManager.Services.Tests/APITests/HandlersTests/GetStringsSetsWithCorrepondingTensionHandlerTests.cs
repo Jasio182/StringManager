@@ -92,7 +92,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
                             Position = 2
                         }
                     },
-                    NumberOfStrings = 6,
+                    NumberOfStrings = 2,
                     Id = 2,
                     Name = "testSet2"
                 }
@@ -188,10 +188,40 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
             };
             testResultTuning = new Tuning()
             {
-                NumberOfStrings = 6,
+                NumberOfStrings = 2,
                 Id = 1,
                 Name = "testTuning",
                 TonesInTuning = new List<ToneInTuning>()
+                {
+                    new ToneInTuning()
+                    {
+                        Id = 1,
+                        Position = 1,
+                        Tone = new Tone()
+                        {
+                            Id = 1,
+                            Frequency = 0.1,
+                            Name = "testName1",
+                            WaveLenght = 0.1
+                        },
+                        ToneId = 1,
+                        TuningId = 1
+                    },
+                    new ToneInTuning()
+                    {
+                        Id = 2,
+                        Position = 2,
+                        Tone = new Tone()
+                        {
+                            Id = 2,
+                            Frequency = 0.2,
+                            Name = "testName2",
+                            WaveLenght = 0.2
+                        },
+                        ToneId = 2,
+                        TuningId = 1
+                    }
+                }
             };
             testAllStringsSets = new List<StringsSet>()
             {
@@ -230,7 +260,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
                             }
                         }
                     },
-                    NumberOfStrings = 6,
+                    NumberOfStrings = 2,
                     Id = 1,
                     Name = "testSet1"
                 },
@@ -269,7 +299,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
                             }
                         }
                     },
-                    NumberOfStrings = 6,
+                    NumberOfStrings = 2,
                     Id = 2,
                     Name = "testSet2"
                 },

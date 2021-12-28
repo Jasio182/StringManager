@@ -6,6 +6,6 @@ namespace StringManager.Core.MediatorRequestsAndResponses.Requests
 {
     public class GetStringsSetsRequest : RequestBase<List<StringsSet>>
     {
-        public StringType StringType { get; set; }
+        public StringType? StringType { get; set; }
     }
 }

@@ -64,6 +64,15 @@ namespace StringManager.Services.API.Handlers
                         Result = new ModelActionResult<List<StringsSet>>((int)HttpStatusCode.BadRequest, null, error)
                     };
                 }
+                if(resultTuningFromDb.NumberOfStrings != myInstrumentFromDb.Instrument.NumberOfStrings)
+                {
+                    string error = "Tuning of given Id: " + request.ResultTuningId + " does not have same amount of strings as specified MyInstrument of Id: " + request.MyInstrumentId;
+                    logger.LogError(error);
+                    return new StatusCodeResponse<List<StringsSet>>()
+                    {
+                        Result = new ModelActionResult<List<StringsSet>>((int)HttpStatusCode.BadRequest, null, error)
+                    };
+                }
                 var stringSetsQuery = new GetStringsSetsQuery()
                 {
                     StringType = (Core.Enums.StringType)request.StringType

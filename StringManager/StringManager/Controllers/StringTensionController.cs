@@ -31,9 +31,9 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during calculating scale lenghts for specific Instrument item</response> 
         [AllowAnonymous]
         [HttpGet]
-        [Route("ScaleLenght")]
+        [Route("ScaleLenght/{InstrumentId}")]
         [ProducesResponseType(typeof(ModelResult<int[]>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ModelResult<int[]>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ModelResult<int[]>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ModelResult<int[]>), StatusCodes.Status500InternalServerError)]
         public Task<IActionResult> GetScaleLenghtAsync([FromQuery] GetScaleLenghtsRequest request)
         {
@@ -49,7 +49,7 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during calculating of String size with closest tension for different Tuning</response> 
         [AllowAnonymous]
         [HttpGet]
-        [Route("StringsInSize")]
+        [Route("StringsInSize/{ScaleLength},{StringId},{PrimaryToneId},{ResultToneId}")]
         [ProducesResponseType(typeof(ModelResult<List<String>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ModelResult<List<String>>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ModelResult<List<String>>), StatusCodes.Status500InternalServerError)]
@@ -67,7 +67,7 @@ namespace StringManager.Controllers
         /// <response code="401">User is not authorized to get a StringsSet item with the closest tension for different tuning</response> 
         /// <response code="500">An exception has been thrown during calculating of a StringsSet item with the closest tension</response> 
         [HttpGet]
-        [Route("StringsSets")]
+        [Route("StringsSets/{MyInstrumentId},{StringType},{ResultTuningId}")]
         [ProducesResponseType(typeof(ModelResult<List<StringsSet>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ModelResult<List<StringsSet>>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ModelResult<List<StringsSet>>), StatusCodes.Status401Unauthorized)]
@@ -86,7 +86,7 @@ namespace StringManager.Controllers
         /// <response code="500">An exception has been thrown during calculating of tension for String</response> 
         [AllowAnonymous]
         [HttpGet]
-        [Route("StringTension")]
+        [Route("StringTension/{StringId},{ToneId},{ScaleLenght}")]
         [ProducesResponseType(typeof(ModelResult<double?>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ModelResult<double?>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ModelResult<double?>), StatusCodes.Status500InternalServerError)]
