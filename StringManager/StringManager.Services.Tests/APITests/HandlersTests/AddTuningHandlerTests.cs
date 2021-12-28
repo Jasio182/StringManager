@@ -84,7 +84,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         }
 
         [Test]
-        public void AddTuningHandler_ShouldNotHaveBeenUnauthorised()
+        public void AddTuningHandler_ShouldNotHaveBeenUnauthorized()
         {
             testRequest.AccountType = Core.Enums.AccountType.User;
             var expectedResponse = new Core.Models.ModelActionResult<Core.Models.Tuning>((int)HttpStatusCode.Unauthorized,

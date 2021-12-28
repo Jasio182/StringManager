@@ -104,7 +104,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         }
 
         [Test]
-        public void GetUsersHandler_ShouldNotHaveBeenUnauthorised()
+        public void GetUsersHandler_ShouldNotHaveBeenUnauthorized()
         {
             testRequest.AccountType = Core.Enums.AccountType.User;
             var expectedResponse = new Core.Models.ModelActionResult<List<Core.Models.User>>((int)HttpStatusCode.Unauthorized,

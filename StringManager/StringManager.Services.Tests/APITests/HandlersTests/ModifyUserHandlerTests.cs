@@ -86,7 +86,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         }
 
         [Test]
-        public void ModifyUserHandler_ShouldNotHaveBeenUnauthorised()
+        public void ModifyUserHandler_ShouldNotHaveBeenUnauthorized()
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.User;

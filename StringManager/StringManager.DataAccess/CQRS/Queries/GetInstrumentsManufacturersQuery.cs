@@ -11,7 +11,8 @@ namespace StringManager.DataAccess.CQRS.Queries
         public override async Task<List<Manufacturer>> Execute(StringManagerStorageContext context)
         {
             var manufacturers = await context.Manufacturers
-                .Where(manufacturer=>manufacturer.Instruments != null)
+                  .Include(manufacturer => manufacturer.Instruments)
+                .Where(manufacturer => manufacturer.Instruments.Count() != 0)
                 .ToListAsync();
             return manufacturers;
         }

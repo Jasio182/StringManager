@@ -32,8 +32,9 @@ namespace StringManager.Controllers
         [ProducesResponseType(typeof(ModelResult<List<MyInstrumentList>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ModelResult<List<MyInstrumentList>>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ModelResult<List<MyInstrumentList>>), StatusCodes.Status500InternalServerError)]
-        public Task<IActionResult> GetMyInstrumentsAsync([FromQuery] GetMyInstrumentsRequest request)
+        public Task<IActionResult> GetMyInstrumentsAsync([FromQuery] int? requestUserId)
         {
+            var request = new GetMyInstrumentsRequest() { RequestUserId = requestUserId };
             return HandleResult<GetMyInstrumentsRequest, StatusCodeResponse<List<MyInstrumentList>>, List<MyInstrumentList>> (request);
         }
 

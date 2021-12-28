@@ -40,7 +40,7 @@ namespace StringManager.Tests.IntegrationTests
         [TestCase(correctTestUserUsername, correctTestUserPassword, false)]
         [TestCase(incorrectTestUsername, incorrectTestPassword, true)]
         [TestCase(null, null, true)]
-        public async Task AddTone_UnauthorisedAsync(string username, string password, bool isEmpty)
+        public async Task AddTone_UnauthorizedAsync(string username, string password, bool isEmpty)
         {
             //Arrange
             var requestBody = new AddToneRequest()
@@ -125,7 +125,7 @@ namespace StringManager.Tests.IntegrationTests
         [TestCase(correctTestUserUsername, correctTestUserPassword, false)]
         [TestCase(incorrectTestUsername, incorrectTestPassword, true)]
         [TestCase(null, null, true)]
-        public async Task ModifyTone_UnauthorisedAsync(string username, string password, bool isEmpty)
+        public async Task ModifyTone_UnauthorizedAsync(string username, string password, bool isEmpty)
         {
             //Arrange
             var requestBody = new ModifyToneRequest()
@@ -196,7 +196,7 @@ namespace StringManager.Tests.IntegrationTests
         [TestCase(correctTestUserUsername, correctTestUserPassword, false)]
         [TestCase(incorrectTestUsername, incorrectTestPassword, true)]
         [TestCase(null, null, true)]
-        public async Task RemoveTone_UnauthorisedAsync(string username, string password, bool isEmpty)
+        public async Task RemoveTone_UnauthorizedAsync(string username, string password, bool isEmpty)
         {
             {
                 //Arrange

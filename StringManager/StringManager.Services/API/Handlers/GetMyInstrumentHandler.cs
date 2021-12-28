@@ -39,8 +39,12 @@ namespace StringManager.Services.API.Handlers
                     AccountType = (Core.Enums.AccountType)request.AccountType
                 };
                 var myInstrumentFromDb = await queryExecutor.Execute(query);
-                var mappedMyInstrument = mapper.Map<MyInstrument>(myInstrumentFromDb);
-                mappedMyInstrument.InstalledStrings = mapper.Map<List<InstalledString>>(myInstrumentFromDb.InstalledStrings);
+                MyInstrument mappedMyInstrument = null;
+                if (myInstrumentFromDb != null)
+                {
+                    mappedMyInstrument = mapper.Map<MyInstrument>(myInstrumentFromDb);
+                    mappedMyInstrument.InstalledStrings = mapper.Map<List<InstalledString>>(myInstrumentFromDb.InstalledStrings);
+                }
                 return new StatusCodeResponse<MyInstrument>()
                 {
                     Result = new ModelActionResult<MyInstrument>((int)HttpStatusCode.OK, mappedMyInstrument)

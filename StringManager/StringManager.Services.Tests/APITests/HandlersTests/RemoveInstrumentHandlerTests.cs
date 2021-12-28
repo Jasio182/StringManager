@@ -65,7 +65,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         }
 
         [Test]
-        public void RemoveInstrumentHandler_ShouldNotHaveBeenUnauthorised()
+        public void RemoveInstrumentHandler_ShouldNotHaveBeenUnauthorized()
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.User;

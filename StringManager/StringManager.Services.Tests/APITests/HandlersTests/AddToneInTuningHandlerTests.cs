@@ -113,7 +113,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         }
 
         [Test]
-        public void AddToneInTuningHandler_ShouldNotHaveBeenUnauthorised()
+        public void AddToneInTuningHandler_ShouldNotHaveBeenUnauthorized()
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.User;

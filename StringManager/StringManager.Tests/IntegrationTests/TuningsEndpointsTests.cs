@@ -30,10 +30,6 @@ namespace StringManager.Tests.IntegrationTests
         public async Task GetTuningsAsync(string username, string password, int? numberOfStrings, int numberOfTunings)
         {
             //Arrange
-            var requestBody = new GetTuningsRequest()
-            {
-                NumberOfStrings = numberOfStrings
-            };
             var requestMessage = new HttpRequestMessage(HttpMethod.Get, numberOfStrings == null ? "/Tunings" : "/Tunings?numberOfStrings=" + numberOfStrings);
             if(username != null)
             {
@@ -78,7 +74,7 @@ namespace StringManager.Tests.IntegrationTests
         [Test]
         [TestCase(correctTestUserUsername, correctTestUserPassword, false)]
         [TestCase(incorrectTestUsername, incorrectTestPassword, true)]
-        public async Task AddTuning_UnauthorisedAsync(string username, string password, bool isEmpty)
+        public async Task AddTuning_UnauthorizedAsync(string username, string password, bool isEmpty)
         {
             //Arrange
             var requestBody = new AddTuningRequest()
@@ -188,7 +184,7 @@ namespace StringManager.Tests.IntegrationTests
         [Test]
         [TestCase(correctTestUserUsername, correctTestUserPassword, false)]
         [TestCase(incorrectTestUsername, incorrectTestPassword, true)]
-        public async Task ModifyTuning_UnauthorisedAsync(string username, string password, bool isEmpty)
+        public async Task ModifyTuning_UnauthorizedAsync(string username, string password, bool isEmpty)
         {
             //Arrange
             var requestBody = new ModifyTuningRequest()
@@ -291,7 +287,7 @@ namespace StringManager.Tests.IntegrationTests
         [Test]
         [TestCase(correctTestUserUsername, correctTestUserPassword, false)]
         [TestCase(incorrectTestUsername, incorrectTestPassword, true)]
-        public async Task RemoveTuning_UnauthorisedAsync(string username, string password, bool isEmpty)
+        public async Task RemoveTuning_UnauthorizedAsync(string username, string password, bool isEmpty)
         {
             //Arrange
             var requestMessage = new HttpRequestMessage(HttpMethod.Delete, "/Tunings/6") ;

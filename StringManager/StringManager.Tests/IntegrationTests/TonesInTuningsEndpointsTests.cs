@@ -49,7 +49,7 @@ namespace StringManager.Tests.IntegrationTests
         [Test]
         [TestCase(correctTestUserUsername, correctTestUserPassword, false)]
         [TestCase(incorrectTestUsername, incorrectTestPassword, true)]
-        public async Task AddToneInTuning_UnauthorisedAsync(string username, string password, bool isEmpty)
+        public async Task AddToneInTuning_UnauthorizedAsync(string username, string password, bool isEmpty)
         {
             //Arrange
             var requestBody = new AddToneInTuningRequest()
@@ -147,7 +147,7 @@ namespace StringManager.Tests.IntegrationTests
         [Test]
         [TestCase(correctTestUserUsername, correctTestUserPassword, false)]
         [TestCase(incorrectTestUsername, incorrectTestPassword, true)]
-        public async Task ModifyToneInTuning_UnauthorisedAsync(string username, string password, bool isEmpty)
+        public async Task ModifyToneInTuning_UnauthorizedAsync(string username, string password, bool isEmpty)
         {
             //Arrange
             var requestBody = new ModifyToneInTuningRequest()
@@ -269,7 +269,7 @@ namespace StringManager.Tests.IntegrationTests
         [Test]
         [TestCase(correctTestUserUsername, correctTestUserPassword, false)]
         [TestCase(incorrectTestUsername, incorrectTestPassword, true)]
-        public async Task RemoveToneInTuning_UnauthorisedAsync(string username, string password, bool isEmpty)
+        public async Task RemoveToneInTuning_UnauthorizedAsync(string username, string password, bool isEmpty)
         {
             //Arrange
             var requestMessage = new HttpRequestMessage(HttpMethod.Delete, "/TonesInTunings/31");

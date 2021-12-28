@@ -20,7 +20,7 @@ namespace StringManager.Tests.IntegrationTests
         [Test]
         [TestCase(correctTestUserUsername, correctTestUserPassword, false)]
         [TestCase(incorrectTestUsername, incorrectTestPassword, true)]
-        public async Task GetUsers_Unauthorised(string username, string password, bool isEmpty)
+        public async Task GetUsers_Unauthorized(string username, string password, bool isEmpty)
         {
             //Arrange
             var requestMessage = new HttpRequestMessage(HttpMethod.Get, "/Users");
@@ -83,7 +83,7 @@ namespace StringManager.Tests.IntegrationTests
         }
 
         [Test]
-        public async Task GetUser_Unauthorised_WrongLoginDataAsync()
+        public async Task GetUser_Unauthorized_WrongLoginDataAsync()
         {
             //Arrange
             var requestMessage = new HttpRequestMessage(HttpMethod.Get, "/Users/single");
@@ -144,7 +144,7 @@ namespace StringManager.Tests.IntegrationTests
         [Test]
         [TestCase(correctTestUserUsername, correctTestUserPassword)]
         [TestCase(incorrectTestUsername, incorrectTestPassword)]
-        public async Task AddUser_UnauthorisedAsync(string username, string password)
+        public async Task AddUser_UnauthorizedAsync(string username, string password)
         {
             //Arrange
             var requestBody = new AddUserRequest()
@@ -207,7 +207,7 @@ namespace StringManager.Tests.IntegrationTests
         [TestCase(correctTestUserUsername, correctTestUserPassword, null, Core.Enums.AccountType.Admin, false)]
         [TestCase(correctTestUserUsername, correctTestUserPassword, null, Core.Enums.AccountType.User, false)]
         [TestCase(incorrectTestUsername, incorrectTestPassword, 1, null, true)]
-        public async Task ModifyUser_UnauthorisedAsync(string username, string password,
+        public async Task ModifyUser_UnauthorizedAsync(string username, string password,
             int? id, Core.Enums.AccountType? accountTypeToUpdate, bool isEmpty)
         {
             //Arrange

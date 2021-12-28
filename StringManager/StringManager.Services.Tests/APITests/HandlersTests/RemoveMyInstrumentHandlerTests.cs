@@ -32,7 +32,9 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
 
             testRequest = new RemoveMyInstrumentRequest()
             {
-                Id = 1
+                Id = 1,
+                AccountType = Core.Enums.AccountType.Admin,
+                UserId = 1
             };
             testMyInstrument = new MyInstrument()
             {

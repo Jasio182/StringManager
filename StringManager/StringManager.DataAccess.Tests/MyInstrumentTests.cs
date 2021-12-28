@@ -333,7 +333,7 @@ namespace StringManager.DataAccess.Tests
                 var commandExecutor = new CommandExecutor(context);
                 var MyInstrumentCommand = new RemoveMyInstrumentCommand()
                 {
-                    Parameter = 2
+                    Parameter = new System.Tuple<int, int, Core.Enums.AccountType>(2,3,Core.Enums.AccountType.Admin)
                 };
 
                 //Act
@@ -354,7 +354,7 @@ namespace StringManager.DataAccess.Tests
                 var commandExecutor = new CommandExecutor(context);
                 var MyInstrumentCommand = new RemoveMyInstrumentCommand()
                 {
-                    Parameter = 6
+                    Parameter = new System.Tuple<int, int, Core.Enums.AccountType>(6, 3, Core.Enums.AccountType.Admin)
                 };
 
                 //Act

@@ -84,7 +84,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         }
 
         [Test]
-        public void AddStringsSetHandler_ShouldNotHaveBeenUnauthorised()
+        public void AddStringsSetHandler_ShouldNotHaveBeenUnauthorized()
         {
             testRequest.AccountType = Core.Enums.AccountType.User;
             var expectedResponse = new Core.Models.ModelActionResult<Core.Models.StringsSet>((int)HttpStatusCode.Unauthorized,

@@ -1607,6 +1607,19 @@ namespace StringManager.Tests.IntegrationTests.Setup
                     NextDeepCleaning =  new System.DateTime(2022, 5, 21),
                     OwnName = "Mayo",
                     UserId = 2
+                },
+                new MyInstrument()
+                {
+                    LastStringChange = new System.DateTime(2021, 2, 13),
+                    LastDeepCleaning = new System.DateTime(2021, 2, 13),
+                    GuitarPlace = Core.Enums.WhereGuitarKept.Stand,
+                    InstrumentId = 2,
+                    HoursPlayedWeekly = 5,
+                    NeededLuthierVisit = false,
+                    NextStringChange = new System.DateTime(2021, 4, 1),
+                    NextDeepCleaning =  new System.DateTime(2021,5,25),
+                    OwnName = "Gibol",
+                    UserId = 1
                 }
             };
             return myInstruments;
@@ -1708,10 +1721,52 @@ namespace StringManager.Tests.IntegrationTests.Setup
                     Position = 7,
                     ToneId = 22
                 },
+
+                new InstalledString()
+                {
+                    StringId = 1,
+                    MyInstrumentId = 3,
+                    Position = 1,
+                    ToneId = 53
+                },
+                new InstalledString()
+                {
+                    StringId = 2,
+                    MyInstrumentId = 3,
+                    Position = 2,
+                    ToneId = 48
+                },
+                new InstalledString()
+                {
+                    StringId = 3,
+                    MyInstrumentId = 3,
+                    Position = 3,
+                    ToneId = 44
+                },
+                new InstalledString()
+                {
+                    StringId = 4,
+                    MyInstrumentId = 3,
+                    Position = 4,
+                    ToneId = 39
+                },
+                new InstalledString()
+                {
+                    StringId = 5,
+                    MyInstrumentId = 3,
+                    Position = 5,
+                    ToneId = 34
+                },
+                new InstalledString()
+                {
+                    StringId = 6,
+                    MyInstrumentId = 3,
+                    Position = 6,
+                    ToneId = 27
+                },
             };
             return installedStrings;
         }
-
 
         public void InitializeDbForTests()
         {

@@ -108,10 +108,9 @@ namespace StringManager.Tests.ControllerUnitTests
                 Result = mockResponseValue
             };
             mediatorMock.Setup(m => m.Send(It.IsAny<GetMyInstrumentsRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(mockResponse));
-            var test = new GetMyInstrumentsRequest();
 
             //Act
-            var returnedValue = controller.GetMyInstrumentsAsync(test).Result as ModelActionResult<List<MyInstrumentList>>;
+            var returnedValue = controller.GetMyInstrumentsAsync(null).Result as ModelActionResult<List<MyInstrumentList>>;
 
             //Assert
             Assert.IsNotNull(returnedValue);
@@ -123,10 +122,9 @@ namespace StringManager.Tests.ControllerUnitTests
         {
             //Arrange
             mediatorMock.Setup(m => m.Send(It.IsAny<GetMyInstrumentsRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult((StatusCodeResponse<List<MyInstrumentList>>)null));
-            var test = new GetMyInstrumentsRequest();
 
             //Act
-            var returnedValue = controller.GetMyInstrumentsAsync(test).Result as ModelActionResult<object>;
+            var returnedValue = controller.GetMyInstrumentsAsync(null).Result as ModelActionResult<object>;
 
             //Assert
             Assert.IsNotNull(returnedValue);
@@ -140,10 +138,9 @@ namespace StringManager.Tests.ControllerUnitTests
         {
             //Arrange
             mediatorMock.Setup(m => m.Send(It.IsAny<GetMyInstrumentsRequest>(), It.IsAny<CancellationToken>())).Throws<Exception>();
-            var test = new GetMyInstrumentsRequest();
 
             //Act
-            var returnedValue = controller.GetMyInstrumentsAsync(test).Result as ModelActionResult<object>;
+            var returnedValue = controller.GetMyInstrumentsAsync(null).Result as ModelActionResult<object>;
 
             //Assert
             Assert.IsNotNull(returnedValue);
@@ -157,10 +154,9 @@ namespace StringManager.Tests.ControllerUnitTests
         {
             //Arrange
             controller.ModelState.AddModelError("Data", "Data is invalid");
-            var test = new GetMyInstrumentsRequest();
 
             //Act
-            var returnedValue = controller.GetMyInstrumentsAsync(test).Result as ModelActionResult<object>;
+            var returnedValue = controller.GetMyInstrumentsAsync(null).Result as ModelActionResult<object>;
 
             //Assert
             Assert.IsNotNull(returnedValue);

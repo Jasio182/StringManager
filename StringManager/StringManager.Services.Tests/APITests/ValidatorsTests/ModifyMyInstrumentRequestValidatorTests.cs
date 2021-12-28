@@ -161,5 +161,25 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
             var result = validator.TestValidate(testModifyMyInstrumentRequest);
             result.ShouldHaveValidationErrorFor(request => request.AccountType);
         }
+
+        [Test]
+        [TestCase((Core.Enums.AccountType)1, 1, 1, 1, 0, (Core.Enums.WhereGuitarKept)15)]
+        [TestCase((Core.Enums.AccountType)0, 6, 7, 1, 1, (Core.Enums.WhereGuitarKept)33)]
+        [TestCase((Core.Enums.AccountType)1, 9, 12, 1, 2, (Core.Enums.WhereGuitarKept)(-1))]
+        public void ModifyMyInstrumentRequestValidator_ShouldHaveGuitarPlaceErrors(Core.Enums.AccountType? accountType, int? userId, int id, int hoursPlayedWeekly, int i, Core.Enums.WhereGuitarKept? guitarPlace)
+        {
+            var testModifyMyInstrumentRequest = new ModifyMyInstrumentRequest()
+            {
+                Id = id,
+                AccountType = accountType,
+                UserId = userId,
+                LastStringChange = correctDates[i],
+                HoursPlayedWeekly = hoursPlayedWeekly,
+                LastDeepCleaning = correctDates[i],
+                GuitarPlace = guitarPlace
+            };
+            var result = validator.TestValidate(testModifyMyInstrumentRequest);
+            result.ShouldHaveValidationErrorFor(request => request.GuitarPlace);
+        }
     }
 }

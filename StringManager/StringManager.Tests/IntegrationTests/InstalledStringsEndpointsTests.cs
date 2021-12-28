@@ -55,7 +55,7 @@ namespace StringManager.Tests.IntegrationTests
         [Test]
         [TestCase(incorrectTestUsername, incorrectTestPassword, true)]
         [TestCase(null, null, true)]
-        public async Task AddInstalledString_UnauthorisedAsync(string username, string password, bool isEmpty)
+        public async Task AddInstalledString_UnauthorizedAsync(string username, string password, bool isEmpty)
         {
             //Arrange
             var requestBody = new AddInstalledStringRequest()
@@ -119,7 +119,7 @@ namespace StringManager.Tests.IntegrationTests
         [Test]
         [TestCase(incorrectTestUsername, incorrectTestPassword, true)]
         [TestCase(null, null, true)]
-        public async Task ModifyInstalledString_UnauthorisedAsync(string username, string password, bool isEmpty)
+        public async Task ModifyInstalledString_UnauthorizedAsync(string username, string password, bool isEmpty)
         {
             //Arrange
             var requestBody = new ModifyInstalledStringRequest()
@@ -173,7 +173,7 @@ namespace StringManager.Tests.IntegrationTests
         [TestCase(correctTestUserUsername, correctTestUserPassword, false)]
         [TestCase(incorrectTestUsername, incorrectTestPassword, true)]
         [TestCase(null, null, true)]
-        public async Task RemoveInstalledString_UnauthorisedAsync(string username, string password, bool isEmpty)
+        public async Task RemoveInstalledString_UnauthorizedAsync(string username, string password, bool isEmpty)
         {
             //Arrange
             var requestMessage = new HttpRequestMessage(HttpMethod.Delete, "/InstalledStrings/11");

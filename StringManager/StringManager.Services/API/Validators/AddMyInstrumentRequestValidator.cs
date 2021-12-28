@@ -13,7 +13,6 @@ namespace StringManager.Services.API.Validators
             RuleFor(myInstrument => myInstrument.HoursPlayedWeekly).GreaterThanOrEqualTo(0);
             RuleFor(myInstrument => myInstrument.InstrumentId).GreaterThan(0);
             RuleFor(myInstrument => myInstrument.UserId).GreaterThan(0);
-            RuleFor(myInstrument => myInstrument.OwnName).NotNull().NotEmpty();
             RuleFor(myInstrument => myInstrument.LastDeepCleaning).LessThanOrEqualTo(System.DateTime.Now);
             RuleFor(myInstrument => myInstrument.LastStringChange).LessThanOrEqualTo(System.DateTime.Now);
         }

@@ -168,28 +168,6 @@ namespace StringManager.Services.Tests.APITests.ValidatorsTests
         }
 
         [Test]
-        [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)1, 1, 1, true, null, 1, 0)]
-        [TestCase((Core.Enums.AccountType)0, (Core.Enums.WhereGuitarKept)1, 1, 1, true, "", 1, 0)]
-        public void AddMyInstrumentRequestValidator_ShouldHaveOwnNameErrors(Core.Enums.AccountType? accountType, Core.Enums.WhereGuitarKept guitarPlace, int hoursPlayedWeekly,
-            int instrumentId, bool neededLuthierVisit, string ownName, int? userId, int i)
-        {
-            var testAddMyInstrumentRequestRequest = new AddMyInstrumentRequest()
-            {
-                AccountType = accountType,
-                UserId = userId,
-                LastStringChange = correctDates[i],
-                GuitarPlace = guitarPlace,
-                HoursPlayedWeekly = hoursPlayedWeekly,
-                LastDeepCleaning = correctDates[i],
-                InstrumentId = instrumentId,
-                NeededLuthierVisit = neededLuthierVisit,
-                OwnName = ownName
-            };
-            var result = validator.TestValidate(testAddMyInstrumentRequestRequest);
-            result.ShouldHaveValidationErrorFor(request => request.OwnName);
-        }
-
-        [Test]
         [TestCase((Core.Enums.AccountType)11, (Core.Enums.WhereGuitarKept)1, 1, -1, true, "test1", 1, 0)]
         [TestCase((Core.Enums.AccountType)(-6), (Core.Enums.WhereGuitarKept)2, 11, -51, false, "test2", 2, 1)]
         [TestCase((Core.Enums.AccountType)12, (Core.Enums.WhereGuitarKept)0, 26, 0, true, "test3", 3, 2)]

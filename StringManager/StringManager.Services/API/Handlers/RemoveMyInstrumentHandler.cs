@@ -29,7 +29,7 @@ namespace StringManager.Services.API.Handlers
             {
                 var command = new RemoveMyInstrumentCommand()
                 {
-                    Parameter = request.Id
+                    Parameter = new System.Tuple<int, int, Core.Enums.AccountType>(request.Id, (int)request.UserId, (Core.Enums.AccountType)request.AccountType)
                 };
                 var removedMyInstrumentFromDb = await commandExecutor.Execute(command);
                 if (removedMyInstrumentFromDb == null)

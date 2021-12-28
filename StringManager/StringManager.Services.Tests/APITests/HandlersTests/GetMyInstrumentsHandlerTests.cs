@@ -119,7 +119,7 @@ namespace StringManager.Services.Tests.APITests.HandlersTests
         }
 
         [Test]
-        public void GetMyInstrumentsHandler_ShouldNotHaveBeenUnauthorised()
+        public void GetMyInstrumentsHandler_ShouldNotHaveBeenUnauthorized()
         {
             //Arrange
             testRequest.AccountType = Core.Enums.AccountType.User;
