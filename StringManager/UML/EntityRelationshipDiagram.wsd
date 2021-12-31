@@ -1,0 +1,113 @@
+@startuml EntityDiagram
+
+entity User 
+{
+    * Id : int <<generated>>
+    --
+    * Username : string
+    * Password : string
+    * Email : string
+    * DailyMaintenance : int
+    * PlayStyle : int
+    * AccountType : int
+}
+entity Tuning
+{
+    * Id : int <<generated>>
+    --
+    * Name : string
+    * NumberOfStrings : int
+}
+entity ToneInTuning
+{
+    * Id : int <<generated>>
+    --
+    * ToneId : int <<FK>>
+    * TuningId : int <<FK>>
+    * Position : int
+}
+entity Tone
+{
+    * Id : int <<generated>>
+    --
+    * Name : string
+    * Frequency : double
+    * WaveLenght : double
+}
+entity StringsSet
+{
+    * Id : int <<generated>>
+    --
+    * Name : string
+    * NumberOfStrings : int
+}
+entity StringInSet
+{
+    * Id : int <<generated>>
+    --
+    * Position : int
+    * StringsSetId : int <<FK>>
+    * StringId : int <<FK>>
+}
+entity String
+{
+    * Id : int <<generated>>
+    --
+    * StringType : int
+    * Size : int
+    * SpecificWeight : double
+    * NumberOfDaysGood : int
+    * ManufacturerId : int <<FK>>
+}
+entity MyInstrument
+{
+    * Id : int <<generated>>
+    --
+    * InstrumentId : int <<FK>>
+    * UserId : int <<FK>>
+    * HoursPlayedWeekly : int
+    * NeededLuthierVisit : bool
+    * LastDeepCleaning : DateTime
+    * NextDeepCleaning : DateTime
+    * LastStringChange : DateTime
+    * NextStringChange : DateTime
+    OwnName : string
+}
+entity Manufacturer
+{
+    * Id : int <<generated>>
+    --
+    * Name : string
+}
+entity Instrument
+{
+    * Id : int <<generated>>
+    --
+    * Model : string
+    * NumberOfStrings : int
+    * ScaleLenghtBass : int
+    * ScaleLenghtTreble : int
+    * ManufacturerId : int <<FK>>
+}
+entity InstalledString
+{
+    * Id : int <<generated>>
+    --
+    * Position : int
+    * MyInstrumentId : int <<FK>>
+    * StringId : int <<FK>>
+    * ToneId : int <<FK>>
+}
+
+InstalledString}|--||Tone
+InstalledString}|--||String
+InstalledString}|--||MyInstrument
+Instrument||--|{MyInstrument
+Instrument}|--||Manufacturer
+String}|--||Manufacturer
+Instrument}|--||User
+StringInSet}|--||String
+StringInSet}|--||StringsSet
+Tone||--|{ToneInTuning
+Tuning||--|{ToneInTuning
+@enduml
