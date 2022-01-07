@@ -1,0 +1,63 @@
+@startuml
+
+allowmixing
+left to right direction
+
+package StringManager.Core <<Rectangle>>
+{
+    package Enums
+    {
+        note as EnumsNote
+            W tym katalogu przechowywane są pliki
+            typu enum, wykorzystywane w programie,
+            które powinny być znane przez użytkownika
+        end note
+    }
+
+    package MediatrorRequestsAndResponses
+    {
+        package Requests
+        {
+            note as RequestsNote
+                W tym folderze znajdują się zapytania
+                wykorzystywane w kontrolerach oraz przez
+                wzorzec projektowy mediator
+            end note
+        }
+
+        class StatusCodeResponse <T>
+        {
+            +Result : ModelActionResult<T>
+        }
+    }
+
+    package Models
+    {
+        package ModelResult <<Rectangle>>
+        {    
+            class ModelResult < T >
+            {
+                +Error : string 
+                +Data : T
+            }
+
+            class ModelActionResult< T >
+            {
+                -result : ModelResult<T>
+                -statusCode : int
+                +ModelActionResult(statusCode : int, data : T, error : string = null) : ModelActionResult
+                ~IActionResult.ExecuteResultAsync(context : ActionContext) : Task
+            }
+        }
+        ModelActionResult ..|> ModelResult : <<uses>>
+
+        note as ModelsNote
+            W tym folderze znajdują się pliki modeli,
+            do których dostęp ma uzytkowanik
+        end note
+    }
+
+    StatusCodeResponse ..|> Models : <<uses>>
+}
+
+@enduml

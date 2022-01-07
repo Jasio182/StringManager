@@ -1,0 +1,54 @@
+@startuml
+
+package Enums <<folder>>
+{
+    enum AccountType
+    {
+        User
+        Admin
+    }
+    
+    hide AccountType methods
+
+    enum GuitarDailyMaintanance
+    {
+        CleanHandsWipedStrings
+        WipedString
+        CleanHands
+        PlayAsIs
+    }
+
+    hide GuitarDailyMaintanance methods
+
+    enum PlayStyle
+    {
+        Hard
+        Moderate
+        Light  
+    }
+        
+    hide PlayStyle methods
+
+    enum StringType
+    {
+        PlainNikled,
+        WoundNikled,
+        WoundBrass,
+        PlainNylon,
+        WoundNylon
+    }
+
+    hide StringType methods
+
+    enum WhereGuitarKept
+    {
+        Stand,
+        SoftCase,
+        HardCase
+    }
+
+    hide WhereGuitarKept methods
+}
+
+
+@enduml

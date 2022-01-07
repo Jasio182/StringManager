@@ -105,7 +105,7 @@ InstalledString}|--||MyInstrument
 Instrument||--|{MyInstrument
 Instrument}|--||Manufacturer
 String}|--||Manufacturer
-Instrument}|--||User
+MyInstrument}|--||User
 StringInSet}|--||String
 StringInSet}|--||StringsSet
 Tone||--|{ToneInTuning

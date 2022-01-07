@@ -1,0 +1,60 @@
+@startuml Projects class diagram
+
+allowmixing
+left to right direction
+skinparam linetype polyline
+
+package StringManagerUI.Services
+{
+    note as StringManagerUIServicesNote
+        Ten projekt odpowiada
+        za połączenie z
+        udostępnionym API
+        i odczytanie informacji
+    end note
+}
+
+package StringManagerUI.Core
+{
+    note as StringManagerUICoreNote
+        W tym projekcie znajdują się
+        modele wykorzystywane przez
+        widoki.
+    end note
+}
+
+package StringManagerUI
+{
+    note as StringManagerUINote
+        W tym projekcie znajdują
+        się widoki i ich logika biznesowa.
+    end note
+}
+
+package StringManagerUI.Android
+{
+    note as StringManagerUIAndroidNote
+        W tym projekcie przechowywane
+        pliki definiujące wygląd
+        i działanie aplikacji dla
+        systemu Android.
+    end note
+}
+
+package StringManagerUI.iOS
+{
+    note as StringManagerUIiOSNote
+        W tym projekcie przechowywane
+        pliki definiujące wygląd
+        i działanie aplikacji dla
+        systemu iOS.
+    end note
+}
+
+StringManagerUI.Android ..|> StringManagerUI : Definiuje wygląd interfejsu 
+StringManagerUI.iOS ..|> StringManagerUI : Definiuje wygląd interfejsu
+StringManagerUI.Core <-> StringManagerUI
+StringManagerUI.Core .left. StringManagerUI.Services
+StringManagerUI .. StringManagerUI.Services
+
+@enduml

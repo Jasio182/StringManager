@@ -1,0 +1,46 @@
+@startuml Projects class diagram
+
+allowmixing
+left to right direction
+
+package StringManager.DataAccess
+{
+    note as StringManagerDataAccessNote
+        W tym projekcie znajduje się logika
+        odpowiadająca za wygenerowanie
+        i połączenie się z bazą danych
+    end note
+}
+
+package StringManager
+{
+    note as StringManagerNote
+        W tym projekcie
+        przechowywane
+        są kontrolery.
+    end note
+}
+
+package StringManager.Core
+{
+    note as StringManagerCoreNote
+        W tym projekcie przechowywane są
+        obiekty zapytań i odpowiedzi.
+    end note
+}
+
+package StringManager.Services
+{
+    note as StringManagerServiceNote
+        W tym projekcie znajduje się logika
+        odpowiadająca za obsługę zapytań z
+        kontrolerów.
+    end note
+}
+
+StringManager... StringManager.Core : "przesyłane modele zawarte\nw projekcie StringManager.Core"
+StringManager.Core ... StringManager.Services : "przesyłane modele zawarte\nw projekcie StringManager.Core"
+StringManager <-> StringManager.Services
+StringManager.DataAccess <--> StringManager.Services
+
+@enduml

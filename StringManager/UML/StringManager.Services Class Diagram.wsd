@@ -1,0 +1,51 @@
+@startuml
+
+allowmixing
+left to right direction
+
+package StringManager.Services <<Rectangle>>
+{
+    package API
+    {
+
+        package Handlers
+        {
+            note as HandlersNote
+                W tym katalogu przechowywane są
+                obiekty obsługujące zapytania wzroca
+                projektowego mediator.
+            end note
+        }
+
+        package Validators
+        {
+            note as ValidatorsNote
+                W tym folderze znajdują się zasady
+                oceny poprawności plików zapytań do 
+                kontrolerów.
+            end note
+        }
+    }
+
+    package InternalClasses
+    {
+        note as InternalClassesnote
+            W tym folderze znajdują się pliki klas
+            odpowiedzialnych za wyliczanie naprężenia
+            strun, określanie następnej daty zmiany
+            strun i hashowanie hasła.
+        end note
+    }
+    package Mappings
+    {
+        note as MappingsNote
+            W tym katalogu przechowywane są pliki
+            opisujące sposob przepisywania danych
+            z bazy danych do formatu zwracanego przez
+            metody w kontrolerach.
+        end note
+    }
+
+
+
+@enduml

@@ -1,0 +1,143 @@
+@startuml
+
+package Models <<folder>>
+{
+    class "InstalledString" as ModelInstalledString
+    {
+        +Id : int 
+        +StringId : int
+        +ToneId : int 
+        +Manufacturer : string
+        +StringType : StringType
+        +Size : int 
+        +SpecificWeight : double
+        +Position : int
+        +ToneName : string
+        +Frequency : int
+        +WaveLenght : int
+    }
+
+    class "Instrument" as ModelInstrument
+    {
+        +Id : int
+        +Manufacturer : string
+        +Model : string 
+        +NumberOfStrings : int
+        +ScaleLenghtBass : int
+        +ScaleLenghtTreble : int
+    }
+
+    class "Manufacturer" as ModelManufacturer
+    {
+        +Id : int 
+        +Name : string
+    }
+
+
+
+    class "MyInstrument" as ModelMyInstrument
+    {
+        +Id : int
+        +OwnName : string
+        +Manufacturer : string 
+        +Model : string
+        +NumberOfStrings : int
+        +ScaleLenghtBass : int
+        +ScaleLenghtTreble : int
+        +GuitarPlace : WhereGuitarKept
+        +HoursPlayedWeekly : int
+        +InstalledStrings : List<InstalledString>
+        +NeededLuthierVisit : bool 
+        +LastDeepCleaning : DateTime? 
+        +NextDeepCleaning : DateTime? 
+        +LastStringChange : DateTime? 
+        +NextStringChange : DateTime? 
+    }
+
+    class MyInstrumentList 
+    {
+        +Id : int
+        +OwnName : string
+        +Manufacturer : string
+        +Model : string
+        +NumberOfStrings : int
+        +ScaleLenghtBass : int
+        +ScaleLenghtTreble : int
+    }
+
+    class "String" as ModelString
+    {
+        +Id : int
+        +Manufacturer : string
+        +NumberOfDaysGood : int
+        +StringType : StringType
+        +Size : int
+        +SpecificWeight : double
+    }
+
+    class "StringInSet" as ModelStringInSet
+    {
+        +Id : int
+        +StringId : int
+        +Manufacturer : string
+        +StringType : StringType
+        +Size : int
+        +SpecificWeight : double
+        +Position : int
+    }
+
+    class "StringsSet" as ModelStringsSet
+    {
+        +Id : int 
+        +Name : string 
+        +NumberOfStrings : int 
+        +StringsInSet : List<StringInSet> 
+    }
+
+    class "Tone" as ModelTone
+    {
+        +Id : int 
+        +Name : string
+        +Frequency : int 
+        +WaveLenght : int 
+    }
+
+    class "ToneInTuning" as ModelToneInTuning
+    {
+        +Id : int 
+        +Position : int 
+        +ToneName : string
+        +Frequency : int 
+        +WaveLenght : int 
+    }
+
+    class "Tuning" as ModelTuning
+    {
+        +Id : int 
+        +Name : string
+        +NumberOfStrings : int 
+        +TonesInTuning : List<ToneInTuning> 
+    }
+
+    class TuningList
+    {
+        +Id : int 
+        +Name : string
+        +NumberOfStrings : int 
+    }
+
+    class "User" as ModelUser
+    {
+        +Id : int 
+        +Username : string
+        +Email : string
+        +DailyMaintanance : GuitarDailyMaintanance 
+        +PlayStyle : PlayStyle 
+        +AccountType : AccountType 
+    }
+    package ModelResult <<Rectangle>>
+    {
+    }
+}
+
+@enduml

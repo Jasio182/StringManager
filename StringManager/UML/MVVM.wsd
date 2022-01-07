@@ -1,0 +1,36 @@
+@startuml 
+
+
+class Widok
+hide Widok circle
+hide Widok methods
+hide Widok fields
+
+class WidokModel
+hide WidokModel circle
+hide WidokModel methods
+hide WidokModel fields
+
+class Model
+hide Model circle
+hide Model methods
+hide Model fields
+
+Widok -> WidokModel : Obsługuje zachowania
+WidokModel -> Model : Modyfikuje dane
+
+note top of Widok
+    Określa graficzne przedstawienie
+    interfejsu użytkownika.
+end note
+
+note top of WidokModel
+    Zawiera logikę wykorzystywaną
+    przy interakcjach z modelem.
+end note
+
+note top of Model
+    Przechowuje dane.
+end note
+
+@enduml

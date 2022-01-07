@@ -1,0 +1,41 @@
+@startuml
+
+skinparam linetype polyline
+skinparam linetype ortho
+
+package StringManager <<Rectangle>>
+{
+    class Program
+    {
+        +{static} Main(args : string[]) : void
+        +{static} CreateHostBuilder(args : string[]) : IHostBuilder
+    }
+
+    class Startup
+    {
+        +Configuration : IConfiguration
+        +Startup(configuration : IConfiguration ) : Startup
+        +ConfigureServices(services : IServiceCollection ) : void
+        +Configure(app : IApplicationBuilder, env : IWebHostEnvironment) : void
+    }
+
+    class BasicAuthenticationHandler
+    {
+        -IQueryExecutor queryExecutor 
+        +BasicAuthenticationHandler BasicAuthenticationHandler(options : IOptionsMonitor< AuthenticationSchemeOptions >, logger : ILoggerFactory, encoder : UrlEncoder, clock : ISystemClock, queryExecutor : IQueryExecutor)
+        #Task<AuthenticateResult> HandleAuthenticateAsync()
+    }
+
+    package Controllers <<folder>>
+    {
+        abstract class ApiControllerBase < TController >
+            hide ApiControllerBase members
+            hide ApiControllerBase methods
+    }
+
+    Startup <.. Program : <<create>>
+    BasicAuthenticationHandler <.. Startup : <<create>>
+    BasicAuthenticationHandler <.. ApiControllerBase : <<use>>
+    ApiControllerBase <..Startup : <<create>>
+}
+@enduml

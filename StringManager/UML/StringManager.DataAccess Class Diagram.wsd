@@ -1,0 +1,83 @@
+@startuml
+
+allowmixing
+left to right direction
+
+package StringManager.DataAccess <<Rectangle>>
+{
+    package CQRS
+    {
+
+        package Commands
+        {
+            note as CommandsNote
+                W tym folderze znajdują się zapytania
+                do bazy danych, modyfikujące jej
+                zawartość.
+            end note
+        }
+
+        package Queries
+        {
+            note as QueriesNote
+                W tym folderze znajdują się zapytania
+                do bazy danych, nie modyfikujące jej
+                zawartości.
+            end note
+        }
+
+        CommandExecutor <|.. Commands : <<uses>>
+        CommandExecutor <|. ICommandExecutor : <<implements>>
+
+        class CommandExecutor
+        hide CommandExecutor methods
+        hide CommandExecutor fields
+
+        interface ICommandExecutor
+        hide ICommandExecutor methods
+        hide ICommandExecutor fields
+
+        QueryExecutor <|.. Queries : <<uses>>
+        QueryExecutor <|. IQueryExecutor : <<implements>>
+
+        class QueryExecutor 
+        hide QueryExecutor methods
+        hide QueryExecutor fields
+
+        interface IQueryExecutor
+        hide IQueryExecutor methods
+        hide IQueryExecutor fields
+    }
+
+    package Entities
+    {
+        note as EntitiesNote
+            W tym folderze znajdują się obiekty
+            definiujące encje w bazie danych.
+        end note
+    }
+    package Migrations
+    {
+        note as MigrationsNote
+            W tym katalogu przechowywane są automatycznie
+            generowane pliki, przechowujące zmiany
+            wprowadzone do bazy danych.
+        end note
+    }
+
+    class StringManagerStorageContext
+    hide StringManagerStorageContext methods
+    hide StringManagerStorageContext fields
+    
+    class StringManagerStorageContextFactory
+    hide StringManagerStorageContextFactory methods
+    hide StringManagerStorageContextFactory fields
+
+    StringManagerStorageContext <|.. StringManagerStorageContextFactory : <<uses>>
+    StringManagerStorageContext .|> Entities : <<uses>>
+    StringManagerStorageContextFactory ..|> Migrations : <<creates>>
+
+    StringManagerStorageContext <|.. CommandExecutor : <<uses>>
+    StringManagerStorageContext <|.. QueryExecutor : <<uses>>
+
+@enduml
