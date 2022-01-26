@@ -1,0 +1,153 @@
+{
+	"info": {
+		"_postman_id": "00138b4e-16c5-4394-b829-094e9ab2aa72",
+		"name": "StringTension",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get scale lengths",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{user}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{pass}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{scheme}}://{{address}}:{{port}}/StringTension/ScaleLenght/{InstrumentId}",
+					"protocol": "{{scheme}}",
+					"host": [
+						"{{address}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"StringTension",
+						"ScaleLenght",
+						"{InstrumentId}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get corresponding String items for other Tone item",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{user}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{pass}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{scheme}}://{{address}}:{{port}}/StringTension/StringsInSize/{ScaleLength},{StringId},{PrimaryToneId},{ResultToneId}",
+					"protocol": "{{scheme}}",
+					"host": [
+						"{{address}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"StringTension",
+						"StringsInSize",
+						"{ScaleLength},{StringId},{PrimaryToneId},{ResultToneId}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get corresponding StringsSet items for other Tuning item",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{user}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{pass}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{scheme}}://{{address}}:{{port}}/StringTension/StringsSets/{MyInstrumentId},{StringType},{ResultTuningId}",
+					"protocol": "{{scheme}}",
+					"host": [
+						"{{address}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"StringTension",
+						"StringsSets",
+						"{MyInstrumentId},{StringType},{ResultTuningId}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get string tension",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{user}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{pass}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{scheme}}://{{address}}:{{port}}/StringTension/StringsSets/{StringId},{ToneId},{ScaleLenght}",
+					"protocol": "{{scheme}}",
+					"host": [
+						"{{address}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"StringTension",
+						"StringsSets",
+						"{StringId},{ToneId},{ScaleLenght}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

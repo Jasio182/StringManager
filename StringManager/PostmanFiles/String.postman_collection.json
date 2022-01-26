@@ -1,0 +1,164 @@
+{
+	"info": {
+		"_postman_id": "17a7a857-00e5-4d63-8477-ffce631e74b4",
+		"name": "String",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get String items",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{user}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{pass}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{scheme}}://{{address}}:{{port}}/Strings",
+					"protocol": "{{scheme}}",
+					"host": [
+						"{{address}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"Strings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add String item",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{user}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{pass}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"stringType\": 0,\r\n    \"size\": 0,\r\n    \"specificWeight\": 0,\r\n    \"numberOfDaysGood\": 0,\r\n    \"manufacturerId\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{scheme}}://{{address}}:{{port}}/Strings",
+					"protocol": "{{scheme}}",
+					"host": [
+						"{{address}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"Strings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update String item",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{user}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{pass}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 0,\r\n    \"stringType\": 0,\r\n    \"size\": 0,\r\n    \"specificWeight\": 0,\r\n    \"numberOfDaysGood\": 0,\r\n    \"manufacturerId\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{scheme}}://{{address}}:{{port}}/Strings",
+					"protocol": "{{scheme}}",
+					"host": [
+						"{{address}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"Strings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete String item",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{user}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{pass}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{scheme}}://{{address}}:{{port}}/Strings/{id}",
+					"protocol": "{{scheme}}",
+					"host": [
+						"{{address}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"Strings",
+						"{id}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

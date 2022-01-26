@@ -1,0 +1,82 @@
+@startuml UseCaseDiagram
+
+left to right direction
+
+actor Użytkownik
+actor Administrator
+actor Gość
+
+database "Baza Danych" as Database
+
+Administrator -|> Użytkownik
+Użytkownik -|> Gość
+
+MobileApp .down. API
+
+package "Aplikacja mobilna" as MobileApp {
+    (Zaloguj się) as login
+    (Zarejestruj się) as register
+    (Wyloguj się) as logout
+    (Zarejestruj konto administratora) as registerAdmin
+    (Zmień dane użytkownika) as changeUser
+    (Wyświetl listę instrumentów) as showInstruments
+    (Dodaj instrument) as addInstrument
+    (Zmodyfikuj instrument) as changeInstrument
+    (Usuń instrument) as deleteInstrument
+    (Wyślij zapytanie o dodanie) as sendPostToAPI
+    (Wyślij zapytanie o modyfikację) as sendPutToAPI
+    (Wyślij zapytanie o usunięcie) as sendDeleteToAPI
+    (Wyślij zapytanie o odczytanie) as sendGetToAPI
+    (Wyślij zapytanie do API) as sendToAPI
+}
+
+package "Interfejs Programowania Aplikacji" as API {
+    (Odczytaj dane) as select
+    (Dodaj dane) as insert
+    (Zmień dane) as update
+    (Usuń dane) as delete
+    (Obsłuż zapytanie) as handle
+    (Odczytaj nagłówek autoryzacyjny) as authenticate
+    (Sprawdź poprawność zapytania) as validate
+    (Przepisz obiekt do odpowiedniego formatu) as map
+    (Obsłuż zapytanie o odczyt danych) as httpGet
+    (Obsłuż zapytanie o dodanie danych) as httpPost
+    (Obsłuż zapytanie o modyfikację danych) as httpPut
+    (Obsłuż zapytanie o usunięcie danych) as httpDelete
+}
+
+update <.up. handle : <<extends>>
+delete <.up. handle : <<extends>>
+handle <. authenticate : <<include>>
+validate .> handle: <<include>>
+map .> httpGet : <<include>>
+httpPost <. map : <<include>>
+select <.up. handle : <<extends>>
+insert <.up. handle : <<extends>>
+httpGet <.. handle : <<include>>
+httpPost <.. handle : <<include>>
+httpPut <.. handle : <<include>>
+httpDelete <.. handle : <<include>>
+Database -up- select
+Database -up- insert 
+Database -up- update
+Database -up- delete
+
+registerAdmin --|> register
+
+sendPostToAPI .up.> sendToAPI : <<include>>
+sendPutToAPI .up.> sendToAPI : <<include>>
+sendGetToAPI .up.> sendToAPI : <<include>>
+sendDeleteToAPI .up.> sendToAPI : <<include>>
+
+Gość --- login
+Gość --- register
+registerAdmin - Administrator 
+Użytkownik --- showInstruments
+Użytkownik --- changeUser
+Administrator --- addInstrument
+Administrator --- changeInstrument
+Administrator --- deleteInstrument
+Użytkownik --- logout
+
+@enduml
